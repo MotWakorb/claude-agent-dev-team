@@ -37,6 +37,10 @@ The result: when you run `/team-plan` or `/team-review`, six agents work in para
 |-------|---------|---------|
 | **Team Plan** | `/team-plan` | Spawns all 11 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
 | **Team Review** | `/team-review` | Spawns all 11 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
+| **Standup** | `/standup` | Daily pulse — red/yellow/green across all 11 personas. Green stays silent. Blockers first, PO decisions surfaced |
+| **Grooming** | `/grooming` | Backlog refinement — pull upcoming beads, each persona evaluates readiness, sizes effort, identifies dependencies, defines acceptance criteria |
+| **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Timeboxed, evidence-based |
+| **Postmortem** | `/postmortem` | Blameless incident analysis — SRE-led, timeline-driven, evidence-based. Contributing factors from each relevant persona, action items tracked as beads |
 | **Retrospective** | `/retro` | End-of-session retrospective. Honest assessment including PO feedback, agent self-critique, and each persona's perspective with disagreements |
 
 ## Shared Foundations
@@ -89,6 +93,10 @@ cp -R sre ~/.claude/skills/sre
 cp -R qa-engineer ~/.claude/skills/qa-engineer
 cp -R technical-writer ~/.claude/skills/technical-writer
 cp -R observability-engineer ~/.claude/skills/observability-engineer
+cp -R standup ~/.claude/skills/standup
+cp -R grooming ~/.claude/skills/grooming
+cp -R spike ~/.claude/skills/spike
+cp -R postmortem ~/.claude/skills/postmortem
 
 # Create the retrospective directory
 mkdir -p ~/retros
