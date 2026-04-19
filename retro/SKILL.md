@@ -110,6 +110,26 @@ For each persona that was active or relevant during the session, capture their s
 - **Session assessment**: [Was code quality, test quality, and naming discipline maintained?]
 - **What I'd flag**: [Quality concerns from this session's work]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
+
+### Database Engineer
+- **Session assessment**: [Were data modeling and schema decisions sound? Were query patterns considered?]
+- **What I'd flag**: [Data integrity, performance, or migration concerns from this session]
+- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
+
+### SRE
+- **Session assessment**: [Were operational concerns addressed? Were SLOs, observability, and reliability considered?]
+- **What I'd flag**: [Reliability, observability, or operational concerns from this session]
+- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
+
+### QA Engineer
+- **Session assessment**: [Was the test strategy sound? Were testing gaps identified?]
+- **What I'd flag**: [Test quality, coverage, or strategy concerns from this session]
+- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
+
+### Technical Writer
+- **Session assessment**: [Was documentation considered? Were decisions and knowledge captured?]
+- **What I'd flag**: [Documentation gaps or stale docs from this session's work]
+- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 ```
 
 **Rules for persona perspectives:**

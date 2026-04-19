@@ -135,6 +135,27 @@ The PM translates the work of other personas into trackable, prioritized beads:
 - Usability findings become improvement beads
 - Accessibility requirements become acceptance criteria on implementation tasks
 
+### From `/database-engineer`
+- Schema design tasks become beads that block implementation
+- Migration tasks get explicit time allocation — they are not "just a deploy step"
+- Query optimization findings become performance improvement beads
+
+### From `/sre`
+- SLO definition tasks block launch readiness
+- Observability and alerting setup become infrastructure beads
+- Error budget status informs sprint planning — low budget means reliability work takes priority
+- Incident postmortem action items become prioritized beads
+
+### From `/qa-engineer`
+- Test strategy tasks (environment setup, data generation) become beads with dependencies
+- Performance testing needs scheduled sprint time
+- Flaky test fixes are P1 bugs — track them
+
+### From `/technical-writer`
+- Documentation tasks are part of the definition of done, not separate beads
+- Documentation audit findings become beads when gaps are critical (missing runbooks, stale API docs)
+- Onboarding guide creation is a project-level task, not per-sprint
+
 ## Artifacts
 
 ### Sprint Plan

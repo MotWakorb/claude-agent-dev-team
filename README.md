@@ -25,13 +25,17 @@ The result: when you run `/team-plan` or `/team-review`, six agents work in para
 | **Project Engineer** | `/project-engineer` | Full-stack implementation. Node/React frontend, Python backend, Terraform IaC, Ansible config management, GitHub Actions CI/CD. TDD — tests first, always |
 | **UX Designer** | `/ux-designer` | Web and mobile, customer-facing and internal. API-first design — every wireframe includes the API call that powers it. Builds design systems from scratch. Heuristic evaluation by default |
 | **Code Reviewer** | `/code-reviewer` | Code quality authority and style guide owner. Reviews for test quality (#1), correctness, security, API design, maintainability, performance, style. Can block merges. Mentoring tone |
+| **Database Engineer** | `/database-engineer` | Schema design, data modeling, query optimization, migration safety. Constraints belong in the database, not just the application. The person who asks "what happens at 50M rows?" |
+| **SRE** | `/sre` | Site reliability — SLOs, observability, incident response, capacity planning, on-call readiness. The person who gets paged at 3 AM and knows what to do |
+| **QA Engineer** | `/qa-engineer` | Holistic test strategy, test environments, test data, performance testing, regression curation, chaos testing. Complements TDD with strategic quality thinking |
+| **Technical Writer** | `/technical-writer` | Documentation as a product. API docs, runbooks, onboarding guides, architecture docs, changelogs. If it's not documented, it doesn't exist |
 
 ## Team Skills
 
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| **Team Plan** | `/team-plan` | Spawns all 6 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
-| **Team Review** | `/team-review` | Spawns all 6 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
+| **Team Plan** | `/team-plan` | Spawns all 10 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
+| **Team Review** | `/team-review` | Spawns all 10 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
 | **Retrospective** | `/retro` | End-of-session retrospective. Honest assessment including PO feedback, agent self-critique, and each persona's perspective with disagreements |
 
 ## Shared Foundations
@@ -79,6 +83,10 @@ cp -R code-reviewer ~/.claude/skills/code-reviewer
 cp -R retro ~/.claude/skills/retro
 cp -R team-plan ~/.claude/skills/team-plan
 cp -R team-review ~/.claude/skills/team-review
+cp -R database-engineer ~/.claude/skills/database-engineer
+cp -R sre ~/.claude/skills/sre
+cp -R qa-engineer ~/.claude/skills/qa-engineer
+cp -R technical-writer ~/.claude/skills/technical-writer
 
 # Create the retrospective directory
 mkdir -p ~/retros
