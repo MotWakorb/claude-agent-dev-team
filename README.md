@@ -75,10 +75,18 @@ The Product Owner makes all product and priority decisions. The one exception: C
 
 ### Quick Install (recommended)
 
+**macOS / Linux:**
 ```bash
 git clone https://github.com/MotWakorb/claude-agent-dev-team.git
 cd claude-agent-dev-team
 ./install.sh
+```
+
+**Windows (PowerShell 7+):**
+```powershell
+git clone https://github.com/MotWakorb/claude-agent-dev-team.git
+cd claude-agent-dev-team
+./install.ps1
 ```
 
 This **symlinks** the skills into `~/.claude/skills/`. Updates are just:
@@ -90,13 +98,23 @@ git pull
 
 No re-install needed — symlinks pick up changes automatically.
 
+> **Windows note:** Creating symlinks may require running as Administrator or enabling Developer Mode (Settings > Update & Security > For developers).
+
 ### Install Options
 
+**Bash:**
 ```bash
 ./install.sh            # Symlink (default) — git pull updates automatically
 ./install.sh --copy     # Copy instead — for customization without affecting the repo
 ./install.sh --uninstall  # Remove all installed skills
 ./install.sh --help     # Show options
+```
+
+**PowerShell:**
+```powershell
+./install.ps1            # Symlink (default)
+./install.ps1 -Copy      # Copy instead
+./install.ps1 -Uninstall # Remove installed skills
 ```
 
 ### Manual Install
