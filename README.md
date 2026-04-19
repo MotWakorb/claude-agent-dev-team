@@ -205,6 +205,44 @@ These are by design — the personas will argue about these:
 | Test Coverage vs. Shipping | QA ↔ PM, Engineer | Performance testing before launch or after? |
 | Documentation vs. "Later" | Technical Writer ↔ Everyone | Is docs part of done, or a follow-up that never happens? |
 
+### RACI Matrix
+
+R = Responsible (does the work), A = Accountable (final decision), C = Consulted (input before decision), I = Informed (notified after)
+
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
+| **Requirements & Scope** | A | R | C | C | I | C | I | I | I | I | I | I |
+| **Architecture Design** | A | I | R | C | C | C | I | C | C | C | I | I |
+| **Security Assessment** | I | I | C | R | C | I | C | I | I | I | I | I |
+| **UX Design** | A | I | C | C | I | R | I | I | I | I | I | C |
+| **Schema / Data Modeling** | I | I | C | C | C | I | I | R | I | I | I | I |
+| **API Contract Design** | A | I | C | I | C | C | R | C | I | I | I | I |
+| **Implementation** | A | I | C | I | R | I | I | I | I | I | I | I |
+| **Code Review** | I | I | I | C | C | I | R | C | I | I | I | I |
+| **Test Strategy** | I | I | C | C | C | I | C | C | I | I | R | I |
+| **Observability Design** | I | I | C | I | C | I | I | I | C | R | I | I |
+| **SLO Definition** | A | I | C | I | I | I | I | I | R | C | I | I |
+| **CI/CD Pipeline** | I | I | C | C | R | I | I | I | C | C | C | I |
+| **IaC (Terraform/Ansible)** | I | I | C | C | R | I | I | I | C | I | I | I |
+| **Database Migration** | I | I | I | I | C | I | C | R | I | I | C | I |
+| **Sprint Planning** | A | R | I | I | C | I | I | I | I | I | I | I |
+| **Backlog Grooming** | A | R | C | C | C | C | C | C | C | C | C | C |
+| **Deployment** | A | R | C | C | R | I | I | I | C | C | C | I |
+| **Incident Response** | I | I | C | C | C | I | I | C | R | C | I | I |
+| **Postmortem** | I | I | C | C | C | I | I | C | R | C | C | C |
+| **Documentation** | I | I | C | C | C | C | C | C | C | C | C | R |
+| **Alert / Runbook Design** | I | I | I | I | I | I | I | I | C | R | I | C |
+| **Performance Testing** | I | I | I | I | C | I | I | C | C | C | R | I |
+| **Security Scan Pipeline** | I | I | I | R | C | I | I | I | I | I | I | I |
+
+**Key principles:**
+- **PO is Accountable** for all product decisions — requirements, scope, architecture approval, deployment go/no-go
+- **PM is Responsible** for process — sprint planning, grooming, deployment coordination
+- **Domain experts are Responsible** for their domain — Security owns security assessments, DBA owns schema, SRE owns incidents
+- **Code Reviewer is Responsible** for API contract design — the arbiter of conventions. Architect is Consulted on surface design
+- **Everyone is Consulted** during grooming — every persona evaluates backlog items
+- **Technical Writer is Responsible** for documentation but **everyone contributes** — docs are part of done, not a separate task
+
 ### Conflict Resolution
 
 All conflicts follow the shared protocol (`_shared/conflict-resolution.md`):
