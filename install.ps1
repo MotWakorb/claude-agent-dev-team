@@ -1,4 +1,4 @@
-#Requires -Version 7.0
+#Requires -Version 5.0
 <#
 .SYNOPSIS
     Claude Agent Dev Team — PowerShell Installer
@@ -24,7 +24,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $RepoDir = $PSScriptRoot
-$SkillsDir = Join-Path $HOME '.claude' 'skills'
+$SkillsDir = Join-Path (Join-Path $HOME '.claude') 'skills'
 $RetroDir = Join-Path $HOME 'retros'
 
 $Skills = @(
@@ -48,6 +48,26 @@ $Skills = @(
     'postmortem'
 )
 
+function Test-Symlink {
+    param([string]$Path)
+    if (-not (Test-Path $Path)) { return $false }
+    $item = Get-Item $Path -Force
+    return [bool]($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint)
+}
+
+function Get-SymlinkTarget {
+    param([string]$Path)
+    # PS5 doesn't have .Target — use fsutil on Windows, readlink on Unix
+    if ($IsWindows -or (-not (Test-Path variable:IsWindows) -and $env:OS -eq 'Windows_NT')) {
+        $output = cmd /c "dir `"$(Split-Path $Path)`"" 2>&1 | Where-Object { $_ -match [regex]::Escape((Split-Path $Path -Leaf)) -and $_ -match '\[(.+)\]' }
+        if ($output -and $Matches[1]) { return $Matches[1] }
+        return $null
+    }
+    else {
+        try { return (readlink $Path) } catch { return $null }
+    }
+}
+
 if ($Uninstall) {
     Write-Host 'Uninstalling Claude Agent Dev Team skills...'
     foreach ($skill in $Skills) {
@@ -62,7 +82,7 @@ if ($Uninstall) {
     return
 }
 
-$Mode = if ($Copy) { 'copy' } else { 'symlink' }
+if ($Copy) { $Mode = 'copy' } else { $Mode = 'symlink' }
 
 Write-Host 'Installing Claude Agent Dev Team skills...'
 Write-Host "  Mode: $Mode"
@@ -89,11 +109,8 @@ foreach ($skill in $Skills) {
     }
 
     if (Test-Path $target) {
-        $item = Get-Item $target -Force
-        $isSymlink = $item.Attributes -band [System.IO.FileAttributes]::ReparsePoint
-
-        if ($isSymlink) {
-            $existing = $item.Target
+        if (Test-Symlink $target) {
+            $existing = Get-SymlinkTarget $target
             if ($existing -eq $source) {
                 Write-Host "  OK:   $skill (already linked)"
                 $skipped++
@@ -107,7 +124,7 @@ foreach ($skill in $Skills) {
         }
         else {
             if ($Mode -eq 'symlink') {
-                Write-Host "  SKIP: $skill (directory exists — use -Copy to overwrite, or remove manually)"
+                Write-Host "  SKIP: $skill (directory exists - use -Copy to overwrite, or remove manually)"
                 $skipped++
                 continue
             }
@@ -139,7 +156,7 @@ Write-Host "  Retro dir: $RetroDir"
 Write-Host ''
 
 if ($Mode -eq 'symlink') {
-    Write-Host "Skills are symlinked — run 'git pull' in this repo to update them."
+    Write-Host "Skills are symlinked - run 'git pull' in this repo to update them."
     Write-Host 'To customize a skill without affecting the repo, copy it manually:'
     Write-Host "  Copy-Item -Recurse $SkillsDir\<skill> $SkillsDir\<skill>-custom"
     Write-Host ''
@@ -147,6 +164,6 @@ if ($Mode -eq 'symlink') {
     Write-Host 'or enabling Developer Mode (Settings > Update & Security > For developers).'
 }
 else {
-    Write-Host "Skills are copied — changes to the repo won't auto-update."
+    Write-Host "Skills are copied - changes to the repo won't auto-update."
     Write-Host "Run './install.ps1 -Copy' again after 'git pull' to update."
 }

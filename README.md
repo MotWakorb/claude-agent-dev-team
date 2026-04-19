@@ -11,7 +11,7 @@ cd claude-agent-dev-team
 ./install.sh
 ```
 
-**Windows (PowerShell 7+):**
+**Windows (PowerShell 5.1+):**
 ```powershell
 git clone https://github.com/MotWakorb/claude-agent-dev-team.git
 cd claude-agent-dev-team
