@@ -29,13 +29,14 @@ The result: when you run `/team-plan` or `/team-review`, six agents work in para
 | **SRE** | `/sre` | Site reliability — SLOs, observability, incident response, capacity planning, on-call readiness. The person who gets paged at 3 AM and knows what to do |
 | **QA Engineer** | `/qa-engineer` | Holistic test strategy, test environments, test data, performance testing, regression curation, chaos testing. Complements TDD with strategic quality thinking |
 | **Technical Writer** | `/technical-writer` | Documentation as a product. API docs, runbooks, onboarding guides, architecture docs, changelogs. If it's not documented, it doesn't exist |
+| **Observability Engineer** | `/observability-engineer` | Observability platform design — metrics, logging, tracing, dashboards, alert design, pipeline architecture, cost management. The SRE consumes it, you build it |
 
 ## Team Skills
 
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| **Team Plan** | `/team-plan` | Spawns all 10 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
-| **Team Review** | `/team-review` | Spawns all 10 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
+| **Team Plan** | `/team-plan` | Spawns all 11 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
+| **Team Review** | `/team-review` | Spawns all 11 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
 | **Retrospective** | `/retro` | End-of-session retrospective. Honest assessment including PO feedback, agent self-critique, and each persona's perspective with disagreements |
 
 ## Shared Foundations
@@ -87,6 +88,7 @@ cp -R database-engineer ~/.claude/skills/database-engineer
 cp -R sre ~/.claude/skills/sre
 cp -R qa-engineer ~/.claude/skills/qa-engineer
 cp -R technical-writer ~/.claude/skills/technical-writer
+cp -R observability-engineer ~/.claude/skills/observability-engineer
 
 # Create the retrospective directory
 mkdir -p ~/retros
