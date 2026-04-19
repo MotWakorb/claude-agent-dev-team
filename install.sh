@@ -54,6 +54,7 @@ SKILLS=(
   grooming
   spike
   postmortem
+  onboard
 )
 
 if [ "$MODE" = "uninstall" ]; then

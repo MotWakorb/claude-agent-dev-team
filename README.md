@@ -58,6 +58,7 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 | **Grooming** | `/grooming` | Backlog refinement — pull upcoming beads, each persona evaluates readiness, sizes effort, identifies dependencies, defines acceptance criteria |
 | **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Timeboxed, evidence-based |
 | **Postmortem** | `/postmortem` | Blameless incident analysis — SRE-led, timeline-driven, evidence-based. Contributing factors from each relevant persona, action items tracked as beads |
+| **Onboard** | `/onboard` | Project onboarding — all 10 personas assess an existing project cold, produce a health scorecard (R/Y/G), documentation inventory, and initial backlog |
 | **Retrospective** | `/retro` | End-of-session retrospective. Honest assessment including PO feedback, agent self-critique, and each persona's perspective with disagreements |
 
 ## Shared Foundations
@@ -163,7 +164,10 @@ Use ceremonies to coordinate the full team:
 Here's when to use each ceremony in a typical project lifecycle:
 
 ```
-Project Start
+Existing Project
+  └─ /onboard ──────────── All personas assess the project cold, produce health scorecard + backlog
+
+New Project
   └─ /team-plan (full) ─── Deep planning, all personas, architecture + security + UX + implementation
        └─ Creates initial epics and beads
 

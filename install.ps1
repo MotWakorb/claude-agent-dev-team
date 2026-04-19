@@ -46,6 +46,7 @@ $Skills = @(
     'grooming'
     'spike'
     'postmortem'
+    'onboard'
 )
 
 function Test-Symlink {
