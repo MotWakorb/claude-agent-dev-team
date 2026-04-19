@@ -74,35 +74,47 @@ The Product Owner makes all product and priority decisions. The one exception: C
 
 ## Installation
 
-Copy the skill directories into your Claude Code skills location:
+### Quick Install (recommended)
 
 ```bash
-# Personal skills (available across all projects)
+git clone https://github.com/MotWakorb/claude-agent-dev-team.git
+cd claude-agent-dev-team
+./install.sh
+```
+
+This **symlinks** the skills into `~/.claude/skills/`. Updates are just:
+
+```bash
+cd claude-agent-dev-team
+git pull
+```
+
+No re-install needed — symlinks pick up changes automatically.
+
+### Install Options
+
+```bash
+./install.sh            # Symlink (default) — git pull updates automatically
+./install.sh --copy     # Copy instead — for customization without affecting the repo
+./install.sh --uninstall  # Remove all installed skills
+./install.sh --help     # Show options
+```
+
+### Manual Install
+
+If you prefer to copy specific skills:
+
+```bash
+mkdir -p ~/.claude/skills
 cp -R _shared ~/.claude/skills/_shared
 cp -R security-engineer ~/.claude/skills/security-engineer
-cp -R it-architect ~/.claude/skills/it-architect
-cp -R project-manager ~/.claude/skills/project-manager
-cp -R project-engineer ~/.claude/skills/project-engineer
-cp -R ux-designer ~/.claude/skills/ux-designer
-cp -R code-reviewer ~/.claude/skills/code-reviewer
-cp -R retro ~/.claude/skills/retro
-cp -R team-plan ~/.claude/skills/team-plan
-cp -R team-review ~/.claude/skills/team-review
-cp -R database-engineer ~/.claude/skills/database-engineer
-cp -R sre ~/.claude/skills/sre
-cp -R qa-engineer ~/.claude/skills/qa-engineer
-cp -R technical-writer ~/.claude/skills/technical-writer
-cp -R observability-engineer ~/.claude/skills/observability-engineer
-cp -R standup ~/.claude/skills/standup
-cp -R grooming ~/.claude/skills/grooming
-cp -R spike ~/.claude/skills/spike
-cp -R postmortem ~/.claude/skills/postmortem
-
-# Create the retrospective directory
+# ... copy whichever skills you want
 mkdir -p ~/retros
 ```
 
-Or for project-specific use, copy into your project's `.claude/skills/` directory.
+### Project-Specific Install
+
+To install for a single project instead of globally, copy into your project's `.claude/skills/` directory.
 
 ## Usage
 
