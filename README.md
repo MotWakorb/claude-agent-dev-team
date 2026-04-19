@@ -13,7 +13,7 @@ This project creates that dynamic by giving each persona:
 - **Conflict resolution protocol** — structured disagreement with clear escalation paths
 - **A voice in retrospectives** — every persona evaluates the session through their lens
 
-The result: when you run `/team-plan` or `/team-review`, six agents work in parallel, each bringing their genuine domain perspective, and the synthesis surfaces real conflicts for the Product Owner to decide — not smoothed-over consensus.
+The result: when you run `/team-plan` or `/team-review`, eleven agents work in parallel, each bringing their genuine domain perspective, and the synthesis surfaces real conflicts for the Product Owner to decide — not smoothed-over consensus.
 
 ## The Team
 
@@ -118,37 +118,167 @@ To install for a single project instead of globally, copy into your project's `.
 
 ## Usage
 
+### Individual Personas
+
+Invoke any persona directly for domain-specific consultation:
+
 ```bash
-# Invoke a single persona
 /security-engineer Review the authentication module for vulnerabilities
 /it-architect Design a system for real-time event processing
 /project-manager Plan the next sprint based on the current backlog
+/project-engineer Implement the user registration endpoint
+/ux-designer Design the onboarding flow for new users
+/code-reviewer Review this PR for quality and consistency
+/database-engineer Design the schema for the orders system
+/sre Define SLOs for the payment service
+/observability-engineer Design the instrumentation plan for this service
+/qa-engineer Create a test strategy for the checkout flow
+/technical-writer Audit the documentation for the API
+```
 
-# Run a full team planning session
-/team-plan
+### Ceremonies
 
-# Run a full team review
-/team-review
+Use ceremonies to coordinate the full team:
 
-# End-of-session retrospective
-/retro
+```bash
+/standup             # Daily pulse — red/yellow/green, blockers only
+/grooming            # Refine backlog items for sprint readiness
+/team-plan           # Full team planning for a new project or sprint
+/spike               # Targeted investigation to unblock a decision
+/team-review         # Full team review of existing work
+/postmortem          # Blameless incident analysis
+/retro               # End-of-session retrospective
+```
+
+### Ceremony Workflow
+
+Here's when to use each ceremony in a typical project lifecycle:
+
+```
+Project Start
+  └─ /team-plan (full) ─── Deep planning, all personas, architecture + security + UX + implementation
+       └─ Creates initial epics and beads
+
+Sprint Cycle
+  ├─ /grooming ─────────── Refine upcoming backlog items before sprint planning
+  ├─ /team-plan (quick) ── Sprint planning — commit work, identify dependencies
+  ├─ /standup ──────────── Daily — red/yellow/green, blockers, PO decisions
+  ├─ /spike ───────────── As needed — unblock decisions with targeted investigation
+  ├─ /team-review ─────── Sprint review — evaluate what shipped
+  └─ /retro ───────────── End of session — honest assessment, persona perspectives
+
+When Things Break
+  └─ /postmortem ────────── Blameless analysis, timeline, root cause, action items as beads
 ```
 
 ### Quick vs Full Mode
 
-Both `/team-plan` and `/team-review` support depth modes:
+`/team-plan`, `/team-review`, and `/grooming` support depth modes:
 - **Quick**: Bullet points, top 2-3 conflicts, concise output
 - **Full**: Complete structured output per each persona's format
 
+`/spike` always targets only relevant personas (2-4), not all 11.
+`/standup` is always fast — green is silent.
+`/postmortem` includes only personas relevant to the incident.
+
+## How the Team Interacts
+
+Every pair of personas (55 unique pairs across 11 personas) has documented bidirectional interactions. Each persona knows:
+- What they own (domain authority)
+- What other personas own (where to defer)
+- Where they'll naturally disagree (professional bias)
+- How to resolve conflicts (shared protocol)
+
+### Key Tension Points
+
+These are by design — the personas will argue about these:
+
+| Tension | Personas | What They'll Argue About |
+|---------|----------|------------------------|
+| Security vs. Speed | Security ↔ PM, Engineer | How much security for Phase 1? Sprint scope vs. remediation |
+| Complexity vs. Simplicity | Architect ↔ Engineer | Is this design over-engineered or appropriately future-proof? |
+| Quality vs. Velocity | Code Reviewer ↔ Engineer, PM | Style blocks when the sprint is burning |
+| User Experience vs. Constraints | UX ↔ Security, Architect, Engineer | Security friction, architectural limits, technical feasibility |
+| Reliability vs. Features | SRE ↔ PM | Error budget spent — feature freeze or keep shipping? |
+| Data Integrity vs. Speed | DBA ↔ Engineer, Architect | Normalize or denormalize? Migration safety vs. velocity |
+| Observability Cost vs. Signal | Observability ↔ SRE | 100% trace sampling vs. budget |
+| Test Coverage vs. Shipping | QA ↔ PM, Engineer | Performance testing before launch or after? |
+| Documentation vs. "Later" | Technical Writer ↔ Everyone | Is docs part of done, or a follow-up that never happens? |
+
+### Conflict Resolution
+
+All conflicts follow the shared protocol (`_shared/conflict-resolution.md`):
+1. **Domain authority decides within their domain** — Security on risk, Architect on design, Code Reviewer on quality
+2. **Cross-domain conflicts escalate to the PO** — the PO weighs trade-offs and decides
+3. **Critical security findings are non-negotiable** — no one overrides, not even the PO
+4. **Disagree and commit is documented** — the ADR or bead captures what, who, and why
+
 ## Customization
 
-These skills are designed to be adapted:
+These skills are designed to be adapted. If you install with `--copy`, you can modify freely. If you install with symlinks (default), fork the repo first or copy individual skills you want to customize.
 
-- **Technology stack**: The engineer defaults to Node/React + Python + Terraform + Ansible. Change the defaults in `project-engineer/SKILL.md`
-- **Frameworks**: Security references OWASP, NIST CSF, CIS, ISO 27001, SOC 2, Zero Trust. Add or remove in `security-engineer/SKILL.md`
-- **Board tool**: The PM uses [beads](https://github.com/steveyegge/beads) (`bd`). Swap for your project management CLI tool in `project-manager/SKILL.md`
-- **API conventions**: The code reviewer defines API naming, response envelopes, and versioning. Adjust in `code-reviewer/SKILL.md`
-- **Design system**: The UX designer builds from scratch. If you use an existing design system, update `ux-designer/SKILL.md`
+### What to Customize
+
+| What | Where | Why |
+|------|-------|-----|
+| **Technology stack** | `project-engineer/SKILL.md` | Default is Node/React + Python + Terraform + Ansible. Change to your stack |
+| **Security frameworks** | `security-engineer/SKILL.md` | Default is OWASP, NIST CSF, CIS, ISO 27001, SOC 2, Zero Trust. Add HIPAA, PCI-DSS, GDPR, etc. |
+| **Board tool** | `project-manager/SKILL.md` | Default is [beads](https://github.com/steveyegge/beads) (`bd`). Swap for Jira CLI, Linear, GitHub Issues, etc. |
+| **API conventions** | `code-reviewer/SKILL.md` | Default is REST with snake_case, versioned URLs, standard envelopes. Adjust for GraphQL, gRPC, etc. |
+| **Design system** | `ux-designer/SKILL.md` | Default is build-from-scratch. Point to your existing design system |
+| **Observability stack** | `observability-engineer/SKILL.md` | Default evaluates per-project. Set your standard stack (Datadog, Grafana Cloud, etc.) |
+| **Database preferences** | `database-engineer/SKILL.md` | Default is PostgreSQL-primary. Adjust for your data platform |
+| **Retro location** | `retro/SKILL.md` | Default is `~/retros/`. Change to your preferred location |
+| **Conflict resolution** | `_shared/conflict-resolution.md` | Adjust domain authority boundaries, security escalation tiers, or the disagree-and-commit protocol |
+| **Engineering discipline** | `_shared/engineering-discipline.md` | Add your own known failure modes, naming conventions, or principles |
+
+### Adding New Personas
+
+To add a new persona, create a directory with a `SKILL.md`:
+
+```
+~/.claude/skills/my-persona/SKILL.md
+```
+
+Follow the pattern established by existing personas:
+1. YAML frontmatter (`name`, `description`, `when_to_use`, `user-invocable: true`)
+2. Reference the shared engineering discipline and conflict resolution protocol
+3. Define the persona's domain, philosophy, and methodology
+4. Add a Professional Perspective section (what they advocate for, what they're skeptical of)
+5. Add a Conflict Resolution section with domain-specific guidance
+6. Add Relationship sections for every other persona they interact with
+7. Define structured output formats
+8. Update `team-plan/SKILL.md` and `team-review/SKILL.md` to include the new persona's agent prompt
+
+## Project Structure
+
+```
+claude-agent-dev-team/
+├── _shared/
+│   ├── conflict-resolution.md    # Conflict resolution protocol
+│   └── engineering-discipline.md # Engineering discipline principles
+├── security-engineer/SKILL.md    # Security Engineer persona
+├── it-architect/SKILL.md         # IT Architect persona
+├── project-manager/SKILL.md      # Project Manager / Scrum Master persona
+├── project-engineer/SKILL.md     # Project Engineer persona
+├── ux-designer/SKILL.md          # UX/UI Designer persona
+├── code-reviewer/SKILL.md        # Code Reviewer persona
+├── database-engineer/SKILL.md    # Database Engineer persona
+├── sre/SKILL.md                  # Site Reliability Engineer persona
+├── observability-engineer/SKILL.md # Observability Engineer persona
+├── qa-engineer/SKILL.md          # QA / Test Engineer persona
+├── technical-writer/SKILL.md     # Technical Writer persona
+├── team-plan/SKILL.md            # Team planning ceremony
+├── team-review/SKILL.md          # Team review ceremony
+├── standup/SKILL.md              # Daily standup ceremony
+├── grooming/SKILL.md             # Backlog refinement ceremony
+├── spike/SKILL.md                # Technical spike ceremony
+├── postmortem/SKILL.md           # Incident postmortem ceremony
+├── retro/SKILL.md                # Session retrospective ceremony
+├── install.sh                    # Installer script
+├── LICENSE                       # MIT License
+└── README.md                     # This file
+```
 
 ## Credits
 
