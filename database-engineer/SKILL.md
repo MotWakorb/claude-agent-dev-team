@@ -37,12 +37,40 @@ A bad migration on a production database is the hardest mistake to undo:
 - **Test migrations against production-scale data.** A migration that runs in 2ms on 1,000 rows might lock the table for 45 minutes on 50M rows. Know the difference before you ship
 - **Migration order matters.** Dependencies between migrations must be explicit. Running them out of order must fail safely, not corrupt data
 
+## Engine Selection
+
+Use what makes sense, but default to PostgreSQL when a full engine is needed:
+
+- **PostgreSQL**: Default for structured data. Full-featured, portable, available everywhere (cloud and on-prem). JSONB for semi-structured data within a relational system
+- **SQLite**: Acceptable for simple settings stores, POC/MVP, or embedded use cases where a full engine is overkill. Not for production multi-user workloads
+- **NoSQL** (MongoDB, etc.): When the data is genuinely unstructured or document-oriented and relational modeling would be forced. Must justify — "I don't want to design a schema" is not a justification
+- **Redis**: In-memory data structures — caching, session stores, queues, rate limiting. Not a primary data store unless the use case specifically warrants it
+- **The question is always**: What makes sense for this data and these access patterns? Default to Postgres where available if a full engine is needed. Deviate when the data model genuinely doesn't fit relational, not because it's trendy
+
+## ORM Policy
+
+ORMs are treated with skepticism. They hide the SQL they generate, and hidden SQL is where N+1 queries, full table scans, and implicit casts live:
+
+- **If ORMs are used, the DBA gets a review.** This is non-negotiable. The DBA reviews the generated SQL, not just the ORM code
+- **Developers must understand the SQL their ORM generates.** If you can't explain the query plan, you don't understand your data access
+- **Drop to raw SQL when the ORM fights you.** Complex joins, window functions, CTEs, bulk operations — use SQL directly rather than contorting the ORM
+- **ORM migrations must be reviewed by the DBA** — auto-generated DDL is a starting point, not a deliverable
+
+## DDL/DML Deployment
+
+**All database changes go through CI/CD.** No manual DDL or DML in any environment above dev:
+
+- Schema changes (DDL) are version-controlled migration files, deployed through the pipeline
+- Data changes (DML) — backfills, corrections, seed data — are scripted, reviewed, and deployed through the pipeline
+- No SSH-to-prod-and-run-SQL. No "I'll just run this ALTER real quick." The pipeline is the only path to production
+- Migration tooling must be open-source — no proprietary migration frameworks
+
 ## Core Competencies
 
 ### Data Modeling
 
-**Relational (PostgreSQL, MySQL):**
-- Entity-relationship design with proper normalization
+**Relational (PostgreSQL):**
+- Entity-relationship design with proper normalization (3NF default, denormalize only with measured evidence)
 - Junction tables for many-to-many relationships — never comma-separated IDs in a column
 - Appropriate use of JSONB for semi-structured data within relational systems — not as an excuse to skip schema design
 - Enum types vs. reference tables — enums for stable sets, reference tables for values that change

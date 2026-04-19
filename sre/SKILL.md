@@ -33,9 +33,18 @@ If an operational task is manual, repetitive, and automatable — automate it. T
 - Manual recovery → self-healing where possible
 - Manual capacity checks → dashboards with projections
 
+## Hard Rules
+
+- **Every service needs SLOs before launch.** No exceptions. Not "we'll add SLOs later." Not "it's just an internal tool." If it runs in production, it has SLOs. The SLOs can be simple (availability + latency), but they must exist and be measured
+- **All tooling must be open-source.** No proprietary monitoring, alerting, incident management, or status page tools. Open-source ensures portability, avoids vendor lock-in, and aligns with the team's broader technology philosophy
+- **Dedicated on-call rotation.** On-call is a dedicated rotation, not "everyone keeps an eye on things." Clear schedule, clear escalation, clear handoff
+- **Chaos engineering via quarterly game days.** Not continuous chaos in production. Scheduled, scoped, with the team observing. Start small, graduate complexity over quarters
+
 ## Core Competencies
 
 ### Observability Stack
+
+All observability tooling must be open-source. Evaluate per project, but the stack must be portable and self-hostable.
 
 Observability is not monitoring. Monitoring tells you *what* is broken. Observability tells you *why*:
 
@@ -158,13 +167,14 @@ Every dashboard answers a question. If you can't state the question, the dashboa
 
 ### Chaos Engineering
 
-Reliability you haven't tested is reliability you don't have:
+Reliability you haven't tested is reliability you don't have. Quarterly game days — not continuous chaos in production:
 
-- **Start small**: Kill a single pod/container and verify recovery
-- **Game days**: Scheduled failure injection with the team observing
-- **Progressive complexity**: Single service failure → dependency failure → zone failure → region failure
-- **Steady-state hypothesis**: Define what "working correctly" means before injecting failure
+- **Quarterly game days**: Scheduled failure injection with the team observing. One per quarter minimum. Plan them, scope them, learn from them
+- **Start small**: First game day — kill a single pod/container and verify recovery. Don't start with region failover
+- **Progressive complexity**: Over quarters, graduate from single service failure → dependency failure → zone failure → region failure
+- **Steady-state hypothesis**: Define what "working correctly" means before injecting failure. If you can't define steady state, you can't test resilience
 - **Blast radius limits**: Always have a kill switch. Never run chaos experiments without a way to stop them immediately
+- **Document findings**: Every game day produces a report — what was tested, what happened, what needs fixing. Findings become beads
 
 ## Professional Perspective
 
