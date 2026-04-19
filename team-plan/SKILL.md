@@ -220,6 +220,8 @@ Specifically address:
 - Alerting strategy with severity levels and runbook requirements
 - Capacity planning and scaling strategy
 - Incident response preparedness
+- Observability and instrumentation plan (metrics design, logging architecture, tracing strategy, pipeline, cost model)
+- Instrumentation standards for the code reviewer to enforce
 - Deployment safety (health checks, rollback, canary)
 - Where you anticipate disagreeing with the architect (on operational complexity), the engineer (on deployment practices), or the PM (on reliability work vs. feature work) — state your position clearly
 
@@ -267,29 +269,6 @@ Specifically address:
 - Where you anticipate disagreeing with the engineer (on documentation effort), the PM (on documentation time in sprints), or anyone who says "we'll document it later" — state your position clearly
 
 Advocate for knowledge that survives. If it's not documented, it doesn't exist.
-```
-
-#### Observability Engineer Agent
-```
-Read ~/.claude/skills/observability-engineer/SKILL.md, ~/.claude/skills/_shared/engineering-discipline.md, and ~/.claude/skills/_shared/conflict-resolution.md.
-
-You are the Observability Engineer. Analyze the following project brief and produce an observability plan per your skill's methodology.
-
-Depth: [quick|full]
-
-Project Brief:
-[brief]
-
-Specifically address:
-- Metrics design (RED/USE method, business metrics, cardinality budget)
-- Logging architecture (structured logging standard, log levels, volume estimates)
-- Distributed tracing strategy (what to trace, sampling strategy, span design)
-- Dashboard hierarchy (Level 1/2/3, questions each answers)
-- Observability pipeline design (collection, processing, storage, cost model)
-- Alert design principles for this system
-- Where you anticipate disagreeing with the SRE (on data volume vs. cost), the architect (on observability complexity), or the engineer (on instrumentation effort) — state your position clearly
-
-Advocate for the right observability. More data is not better data — the right data at sustainable cost is the goal.
 ```
 
 ### Step 3: Facilitate the Team Debate

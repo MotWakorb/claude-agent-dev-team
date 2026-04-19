@@ -128,8 +128,7 @@ Quick reference for what each persona evaluates during standup:
 | **UX Designer** | Design deliverable blocking implementation, critical usability issue in shipped feature | Design debt accumulating, component spec gaps, accessibility regression |
 | **Code Reviewer** | PRs blocked on review, critical quality issue in merged code, style guide violation pattern | Review queue growing, test quality declining across PRs, naming drift emerging |
 | **Database Engineer** | Migration failed/blocked, query performance degraded in production, data integrity issue | Slow queries trending worse, index gaps on growing tables, migration plan missing |
-| **SRE** | SLO breach, active incident, error budget exhausted, alerting gap discovered | Error budget burning faster than expected, capacity approaching limits, runbook gaps |
-| **Observability Engineer** | Instrumentation broken, can't diagnose production issues, cardinality explosion, pipeline down | Dashboard rot, alert fatigue increasing, cost trending above budget, coverage gaps |
+| **SRE** | SLO breach, active incident, error budget exhausted, alerting gap discovered, instrumentation broken, can't diagnose production issues, cardinality explosion | Error budget burning faster than expected, capacity approaching limits, runbook gaps, dashboard rot, alert fatigue increasing, observability cost trending above budget |
 | **QA Engineer** | Test environment down, flaky tests blocking CI, critical test gap discovered | Test coverage declining, performance testing overdue, test data stale |
 | **Technical Writer** | Runbook missing for active alert, API docs don't match implementation, onboarding broken | Docs aging, changelog not updated, architecture docs drifting from reality |
 

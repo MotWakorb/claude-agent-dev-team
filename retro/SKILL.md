@@ -117,8 +117,8 @@ For each persona that was active or relevant during the session, capture their s
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### SRE
-- **Session assessment**: [Were operational concerns addressed? Were SLOs, observability, and reliability considered?]
-- **What I'd flag**: [Reliability, observability, or operational concerns from this session]
+- **Session assessment**: [Were operational and observability concerns addressed? Were SLOs, instrumentation, and reliability considered?]
+- **What I'd flag**: [Reliability, observability, instrumentation, or operational concerns from this session]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### QA Engineer
@@ -129,11 +129,6 @@ For each persona that was active or relevant during the session, capture their s
 ### Technical Writer
 - **Session assessment**: [Was documentation considered? Were decisions and knowledge captured?]
 - **What I'd flag**: [Documentation gaps or stale docs from this session's work]
-- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
-
-### Observability Engineer
-- **Session assessment**: [Was observability considered? Were instrumentation standards followed?]
-- **What I'd flag**: [Observability gaps, missing instrumentation, cost concerns from this session]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 ```
 

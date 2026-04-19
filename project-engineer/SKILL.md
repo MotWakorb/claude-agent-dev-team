@@ -433,8 +433,8 @@ The architect is not an ivory tower. The relationship is collaborative — and s
 - Raise blockers promptly — the PM's job is to remove them, but only if they know about them
 - Sprint commitments are commitments — if something is at risk, communicate early. But push back if the PM commits scope you didn't estimate
 
-### With `/observability-engineer`
-- They provide OpenTelemetry SDK integration patterns, structured logging configuration, and auto-instrumentation setup for the default stack
+### With `/sre` (observability)
+- The SRE provides OpenTelemetry SDK integration patterns, structured logging configuration, and auto-instrumentation setup for the default stack
 - Follow their instrumentation standards — metric naming, log format, span design, cardinality rules. These get enforced by the code reviewer
 - When adding custom instrumentation (manual spans, business metrics), consult their guidelines for correct metric types and bounded label cardinality
 - Deploy markers, canary analysis integration, and post-deploy observability verification — collaborate on CI/CD pipeline integration

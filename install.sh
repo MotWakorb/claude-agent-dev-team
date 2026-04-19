@@ -45,7 +45,6 @@ SKILLS=(
   code-reviewer
   database-engineer
   sre
-  observability-engineer
   qa-engineer
   technical-writer
   retro

@@ -13,7 +13,7 @@ This project creates that dynamic by giving each persona:
 - **Conflict resolution protocol** — structured disagreement with clear escalation paths
 - **A voice in retrospectives** — every persona evaluates the session through their lens
 
-The result: when you run `/team-plan` or `/team-review`, eleven agents work in parallel, each bringing their genuine domain perspective, and the synthesis surfaces real conflicts for the Product Owner to decide — not smoothed-over consensus.
+The result: when you run `/team-plan` or `/team-review`, ten agents work in parallel, each bringing their genuine domain perspective, and the synthesis surfaces real conflicts for the Product Owner to decide — not smoothed-over consensus.
 
 ## The Team
 
@@ -26,18 +26,17 @@ The result: when you run `/team-plan` or `/team-review`, eleven agents work in p
 | **UX Designer** | `/ux-designer` | Web and mobile, customer-facing and internal. API-first design — every wireframe includes the API call that powers it. Builds design systems from scratch. Heuristic evaluation by default |
 | **Code Reviewer** | `/code-reviewer` | Code quality authority and style guide owner. Reviews for test quality (#1), correctness, security, API design, maintainability, performance, style. Can block merges. Mentoring tone |
 | **Database Engineer** | `/database-engineer` | Schema design, data modeling, query optimization, migration safety. Constraints belong in the database, not just the application. The person who asks "what happens at 50M rows?" |
-| **SRE** | `/sre` | Site reliability — SLOs, observability, incident response, capacity planning, on-call readiness. The person who gets paged at 3 AM and knows what to do |
+| **SRE** | `/sre` | Site reliability AND observability platform — SLOs, instrumentation standards, metrics/logging/tracing, dashboards, alert design, incident response, capacity planning, on-call, chaos engineering, observability cost management. Builds and consumes the observability platform |
 | **QA Engineer** | `/qa-engineer` | Holistic test strategy, test environments, test data, performance testing, regression curation, chaos testing. Complements TDD with strategic quality thinking |
 | **Technical Writer** | `/technical-writer` | Documentation as a product. API docs, runbooks, onboarding guides, architecture docs, changelogs. If it's not documented, it doesn't exist |
-| **Observability Engineer** | `/observability-engineer` | Observability platform design — metrics, logging, tracing, dashboards, alert design, pipeline architecture, cost management. The SRE consumes it, you build it |
 
 ## Team Skills
 
 | Skill | Command | Purpose |
 |-------|---------|---------|
-| **Team Plan** | `/team-plan` | Spawns all 11 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
-| **Team Review** | `/team-review` | Spawns all 11 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
-| **Standup** | `/standup` | Daily pulse — red/yellow/green across all 11 personas. Green stays silent. Blockers first, PO decisions surfaced |
+| **Team Plan** | `/team-plan` | Spawns all 10 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
+| **Team Review** | `/team-review` | Spawns all 10 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
+| **Standup** | `/standup` | Daily pulse — red/yellow/green across all 10 personas. Green stays silent. Blockers first, PO decisions surfaced |
 | **Grooming** | `/grooming` | Backlog refinement — pull upcoming beads, each persona evaluates readiness, sizes effort, identifies dependencies, defines acceptance criteria |
 | **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Timeboxed, evidence-based |
 | **Postmortem** | `/postmortem` | Blameless incident analysis — SRE-led, timeline-driven, evidence-based. Contributing factors from each relevant persona, action items tracked as beads |
@@ -209,80 +208,80 @@ These are by design — the personas will argue about these:
 
 R = Responsible (does the work), A = Accountable (final decision), C = Consulted (input before decision), I = Informed (notified after)
 
-This matrix was reviewed by all 11 personas in parallel. Contested decisions were resolved by the PO.
+This matrix was reviewed by all personas in parallel. Contested decisions were resolved by the PO. The Observability Engineer was merged into the SRE — the SRE now owns the observability platform, instrumentation standards, and cost management in addition to reliability.
 
 #### Design & Planning
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **Requirements & Scope** | A | R | C | C | I | C | I | C | I | I | C | C |
-| **Architecture Design** | A | I | R | C | C | C | I | C | C | C | C | C |
-| **Technology Selection** | A | C | R | C | C | C | C | C | C | C | C | I |
-| **API Contract Design** | A | I | R | C | C | C | C | C | I | I | C | C |
-| **ADRs** | A | C | R | C | C | I | C | C | C | C | I | C |
-| **UX Design** | A | I | C | C | I | R | I | I | I | I | C | C |
-| **Design System Definition** | A | I | C | C | C | R | C | I | I | I | I | C |
-| **Schema / Data Modeling** | A | I | C | C | C | I | I | R | I | I | I | I |
-| **DR/HA Design** | A | C | R | C | C | C | I | C | C | C | C | C |
-| **Cost Modeling** | A | C | R | I | C | I | I | C | C | C | I | I |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **Requirements & Scope** | A | R | C | C | I | C | I | C | I | C | C |
+| **Architecture Design** | A | I | R | C | C | C | I | C | C | C | C |
+| **Technology Selection** | A | C | R | C | C | C | C | C | C | C | I |
+| **API Contract Design** | A | I | R | C | C | C | C | C | I | C | C |
+| **ADRs** | A | C | R | C | C | I | C | C | C | I | C |
+| **UX Design** | A | I | C | C | I | R | I | I | I | C | C |
+| **Design System Definition** | A | I | C | C | C | R | C | I | I | I | C |
+| **Schema / Data Modeling** | A | I | C | C | C | I | I | R | I | I | I |
+| **DR/HA Design** | A | C | R | C | C | C | I | C | C | C | C |
+| **Cost Modeling** | A | C | R | I | C | I | I | C | C | I | I |
 
 #### Security & Compliance
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **Security Assessment** | A | I | C | R | C | I | C | C | C | C | I | C |
-| **Threat Modeling** | A | I | C | R | C | I | I | C | I | I | C | C |
-| **Compliance & Audit** | A | C | C | R | C | I | I | C | I | I | I | C |
-| **Secrets Management** | I | C | C | A | R | I | C | I | C | I | I | C |
-| **Security Scan Pipeline** | I | I | C | A | C | I | I | I | R | I | I | I |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **Security Assessment** | A | I | C | R | C | I | C | C | C | I | C |
+| **Threat Modeling** | A | I | C | R | C | I | I | C | I | C | C |
+| **Compliance & Audit** | A | C | C | R | C | I | I | C | I | I | C |
+| **Secrets Management** | I | C | C | A | R | I | C | I | C | I | C |
+| **Security Scan Pipeline** | I | I | C | A | C | I | I | I | R | I | I |
 
 #### Implementation & Quality
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **Implementation** | A | I | C | C | R | C | C | C | C | C | C | I |
-| **Code Review** | I | I | I | C | C | C | R | C | I | C | I | I |
-| **TDD / Unit+Integration Tests** | I | I | I | C | R | I | C | C | I | I | C | I |
-| **Test Strategy** | A | I | C | C | C | I | C | C | C | I | R | I |
-| **Test Environment Management** | I | C | C | C | C | I | I | C | C | C | R | I |
-| **Test Data Strategy** | I | I | I | C | C | I | I | C | I | I | R | I |
-| **Performance Testing** | I | I | C | C | C | I | I | C | C | C | R | I |
-| **Chaos / Resilience Testing** | I | C | C | C | C | I | I | C | R | C | C | C |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **Implementation** | A | I | C | C | R | C | C | C | C | C | I |
+| **Code Review** | I | I | I | C | C | C | R | C | C | I | I |
+| **TDD / Unit+Integration Tests** | I | I | I | C | R | I | C | C | I | C | I |
+| **Test Strategy** | A | I | C | C | C | I | C | C | C | R | I |
+| **Test Environment Management** | I | C | C | C | C | I | I | C | C | R | I |
+| **Test Data Strategy** | I | I | I | C | C | I | I | C | I | R | I |
+| **Performance Testing** | I | I | C | C | C | I | I | C | C | R | I |
+| **Chaos / Resilience Testing** | I | C | C | C | C | I | I | C | R | C | C |
 
 #### Infrastructure & Operations
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **IaC (Terraform/Ansible)** | A | I | R | C | R | I | I | I | C | I | C | C |
-| **CI/CD — Build & Deploy** | I | C | C | C | R | I | C | C | R | C | C | I |
-| **CI/CD — Test Gates** | I | I | I | C | C | I | C | I | C | C | R | I |
-| **Deployment** | A | C | C | C | R | C | C | C | R | C | C | C |
-| **Database Migration** | A | I | C | C | C | I | C | R | I | C | C | C |
-| **Backup & Recovery** | A | C | C | C | C | I | I | R | C | I | C | C |
-| **Capacity Planning** | A | C | C | I | C | I | I | C | R | C | I | I |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **IaC (Terraform/Ansible)** | A | I | R | C | R | I | I | I | C | C | C |
+| **CI/CD — Build & Deploy** | I | C | C | C | R | I | C | C | R | C | I |
+| **CI/CD — Test Gates** | I | I | I | C | C | I | C | I | C | R | I |
+| **Deployment** | A | C | C | C | R | C | C | C | R | C | C |
+| **Database Migration** | A | I | C | C | C | I | C | R | C | C | C |
+| **Backup & Recovery** | A | C | C | C | C | I | I | R | C | C | C |
+| **Capacity Planning** | A | C | C | I | C | I | I | C | R | I | I |
 
 #### Observability & Reliability
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **Observability Design** | A | I | C | C | C | C | C | C | C | R | C | I |
-| **Observability Platform & Standards** | I | I | C | C | C | C | C | C | R | R | C | C |
-| **SLO Definition** | A | I | C | C | C | C | I | I | R | C | I | C |
-| **Alert / Runbook Design** | I | I | C | C | C | I | I | I | R | R | I | C |
-| **Incident Response** | I | C | C | R | C | C | I | C | R | C | I | C |
-| **Postmortem** | I | C | C | R | C | I | I | C | R | C | C | C |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **Observability Design** | A | I | C | C | C | C | C | C | R | C | I |
+| **Observability Platform & Standards** | I | I | C | C | C | C | C | C | R | C | C |
+| **SLO Definition** | A | I | C | C | C | C | I | I | R | I | C |
+| **Alert / Runbook Design** | I | I | C | C | C | I | I | I | R | I | C |
+| **Incident Response** | I | C | C | R | C | C | I | C | R | I | C |
+| **Postmortem** | I | C | C | R | C | I | I | C | R | C | C |
 
 #### Process & Documentation
 
-| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
-|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
-| **Sprint Planning** | A | R | I | I | C | I | I | C | C | I | C | C |
-| **Backlog Grooming** | A | R | C | C | C | C | C | C | C | C | C | C |
-| **Release Management** | A | R | C | C | C | C | C | I | R | C | C | C |
-| **Risk Management** | A | R | C | C | C | I | I | I | C | I | I | I |
-| **Documentation** | I | I | C | C | C | C | C | C | C | C | C | R |
-| **Documentation Audit** | I | C | I | I | I | C | I | I | I | I | I | R |
-| **Onboarding Guide** | I | C | C | C | C | C | C | C | C | C | C | R |
+| Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
+|----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
+| **Sprint Planning** | A | R | I | I | C | I | I | C | C | C | C |
+| **Backlog Grooming** | A | R | C | C | C | C | C | C | C | C | C |
+| **Release Management** | A | R | C | C | C | C | C | I | R | C | C |
+| **Risk Management** | A | R | C | C | C | I | I | I | C | I | I |
+| **Documentation** | I | I | C | C | C | C | C | C | C | C | R |
+| **Documentation Audit** | I | C | I | I | I | C | I | I | I | I | R |
+| **Onboarding Guide** | I | C | C | C | C | C | C | C | C | C | R |
 
 **Key principles:**
 - **PO is Accountable** for all product decisions — requirements, scope, architecture, deployment, risk acceptance
