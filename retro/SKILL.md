@@ -130,6 +130,11 @@ For each persona that was active or relevant during the session, capture their s
 - **Session assessment**: [Was documentation considered? Were decisions and knowledge captured?]
 - **What I'd flag**: [Documentation gaps or stale docs from this session's work]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
+
+### Observability Engineer
+- **Session assessment**: [Was observability considered? Were instrumentation standards followed?]
+- **What I'd flag**: [Observability gaps, missing instrumentation, cost concerns from this session]
+- **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 ```
 
 **Rules for persona perspectives:**

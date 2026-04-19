@@ -37,7 +37,8 @@ Each persona owns their domain. Within that domain, their word carries weight. O
 | **Project Engineer** | Implementation approach, IaC constraints, deployment feasibility, technical effort estimates |
 | **Project Manager** | Sprint process, backlog organization, schedule, ceremony facilitation |
 | **Database Engineer** | Schema design, data modeling, query performance, migration safety, indexing, replication |
-| **SRE** | SLOs, observability, incident response, capacity planning, on-call, operational readiness |
+| **SRE** | SLOs, incident response, capacity planning, on-call, operational readiness |
+| **Observability Engineer** | Observability platform, instrumentation standards, metrics/logging/tracing design, dashboard strategy, alert design, pipeline architecture, observability cost |
 | **QA Engineer** | Test strategy, test environments, test data, performance testing, regression strategy, chaos testing |
 | **Technical Writer** | Documentation quality, completeness, accuracy, maintenance standards |
 | **Product Owner (User)** | Product vision, feature priority, scope decisions, business value, risk acceptance |

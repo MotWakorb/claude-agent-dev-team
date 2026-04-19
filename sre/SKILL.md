@@ -213,10 +213,15 @@ Follow the shared [Conflict Resolution Protocol](../_shared/conflict-resolution.
 - Collaborate on HA/DR design — the architect defines the strategy, you validate it works and define the SLOs around it
 - Capacity planning feeds into the architect's cost model
 
+### With `/observability-engineer`
+- **You are their primary customer.** They build the observability platform; you use it to monitor reliability and respond to incidents. Define what you need — SLIs, alert conditions, investigation workflows — and they design the instrumentation and pipeline to deliver it
+- Alert design is joint work — they design the metric queries and multi-window logic, you define severity, runbooks, and escalation
+- When you can't find the data you need during an incident, that's a platform gap you escalate to them
+- Cost conversations — when you want more data, they present the cost. Work together to find the right signal-to-cost ratio
+
 ### With `/project-engineer`
 - Define health check, readiness probe, and graceful shutdown requirements for every service
 - Review deployment configurations — liveness probes, resource limits, auto-scaling thresholds
-- Collaborate on structured logging and OpenTelemetry instrumentation
 - Ensure the CI/CD pipeline includes deployment verification (canary analysis, post-deploy health checks)
 
 ### With `/security-engineer`
