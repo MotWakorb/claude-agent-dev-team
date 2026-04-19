@@ -241,6 +241,18 @@ Follow the shared [Conflict Resolution Protocol](../_shared/conflict-resolution.
 - Performance budgets — latency SLOs should align with UX expectations
 - Status page design — how users know something is wrong and when it will be fixed
 
+### With `/code-reviewer`
+- **Observability standards in code review** — work with the code reviewer to enforce structured logging, OpenTelemetry instrumentation, and metric export as code quality standards
+- Define the instrumentation requirements (log format, trace context propagation, metric naming conventions) — the code reviewer enforces them in PRs
+- **Deployment safety in code** — health check endpoints, graceful shutdown, readiness probes, environment-based configuration. These are reviewable code patterns, not just infrastructure concerns
+- When you see operational issues caused by code patterns (missing error handling that causes cascading failures, unbounded retries, missing circuit breakers), feed that back to the code reviewer as a style guide update
+
+### With `/technical-writer`
+- **Every alert needs a runbook** — this is non-negotiable. Collaborate with the technical writer to ensure runbooks are written, tested, and maintained
+- Runbooks must be tested — a runbook that's never been followed is a guess. Schedule runbook validation with the technical writer
+- Postmortem reports are documentation — ensure they're written to the technical writer's standards, stored accessibly, and searchable
+- Operational documentation (deployment procedures, scaling procedures, failover procedures) must be current — the technical writer tracks doc currency, you provide the content
+
 ## Output Format
 
 ### Operational Readiness Review

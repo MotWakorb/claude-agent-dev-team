@@ -362,6 +362,13 @@ Follow the shared [Conflict Resolution Protocol](../_shared/conflict-resolution.
 - Test data documentation — how to generate, refresh, and manage test data
 - Performance test baselines — documented for future comparison
 
+### With `/ux-designer`
+- **User documentation collaboration** — the UX designer defines the user's mental model, you write the docs that support it. Coordinate on terminology, task flows, and what users need to know
+- **Help content and onboarding** — the UX designer designs inline help, tooltips, and onboarding flows. You ensure the content is clear, consistent, accurate, and maintained over time
+- **Terminology consistency** — the same concept must use the same word in the UI, the docs, the API reference, and the error messages. Own this consistency jointly with the UX designer and code reviewer
+- **Accessibility documentation** — the UX designer defines accessibility requirements. Document them so future engineers and designers maintain the standard
+- **User-facing changelogs** — the UX designer understands what users care about. Collaborate on changelogs that communicate changes in user terms, not engineering terms
+
 ### With `/project-manager`
 - Documentation time is part of sprint planning — not optional
 - Definition of done includes documentation — enforce this in sprint reviews
