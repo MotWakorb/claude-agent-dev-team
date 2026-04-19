@@ -2,6 +2,24 @@
 
 A set of Claude Code skills that simulate a full software development team with distinct professional personas. Each persona has domain expertise, professional biases, and the authority to disagree with the others. This is not a committee that politely agrees — it's a team that argues, commits, and ships.
 
+## Installation
+
+**macOS / Linux:**
+```bash
+git clone https://github.com/MotWakorb/claude-agent-dev-team.git
+cd claude-agent-dev-team
+./install.sh
+```
+
+**Windows (PowerShell 7+):**
+```powershell
+git clone https://github.com/MotWakorb/claude-agent-dev-team.git
+cd claude-agent-dev-team
+./install.ps1
+```
+
+Updates are just `git pull` — symlinks pick up changes automatically.
+
 ## Why
 
 LLMs have a tendency to "silently average" — producing safe, consensus-driven output that avoids conflict. In real teams, the best outcomes come from domain experts who advocate hard for their perspective, disagree openly, and then commit fully once a decision is made. 99% alignment, 1% vision.
@@ -71,36 +89,9 @@ Front-loading known LLM failure modes into each persona produces significantly b
 ### The PO Has Final Say (With One Exception)
 The Product Owner makes all product and priority decisions. The one exception: Critical security findings are non-negotiable — no one overrides them, not even the PO.
 
-## Installation
-
-### Quick Install (recommended)
-
-**macOS / Linux:**
-```bash
-git clone https://github.com/MotWakorb/claude-agent-dev-team.git
-cd claude-agent-dev-team
-./install.sh
-```
-
-**Windows (PowerShell 7+):**
-```powershell
-git clone https://github.com/MotWakorb/claude-agent-dev-team.git
-cd claude-agent-dev-team
-./install.ps1
-```
-
-This **symlinks** the skills into `~/.claude/skills/`. Updates are just:
-
-```bash
-cd claude-agent-dev-team
-git pull
-```
-
-No re-install needed — symlinks pick up changes automatically.
+## Install Options
 
 > **Windows note:** Creating symlinks may require running as Administrator or enabling Developer Mode (Settings > Update & Security > For developers).
-
-### Install Options
 
 **Bash:**
 ```bash
