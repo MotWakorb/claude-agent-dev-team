@@ -217,23 +217,23 @@ This matrix was reviewed by all 11 personas in parallel. Contested decisions wer
 |----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
 | **Requirements & Scope** | A | R | C | C | I | C | I | C | I | I | C | C |
 | **Architecture Design** | A | I | R | C | C | C | I | C | C | C | C | C |
-| **Technology Selection** | A | I | R | C | C | I | I | C | C | I | I | I |
+| **Technology Selection** | A | C | R | C | C | C | C | C | C | C | C | I |
 | **API Contract Design** | A | I | R | C | C | C | C | C | I | I | C | C |
-| **ADRs** | A | I | R | C | C | I | C | C | C | I | I | C |
+| **ADRs** | A | C | R | C | C | I | C | C | C | C | I | C |
 | **UX Design** | A | I | C | C | I | R | I | I | I | I | C | C |
-| **Design System Definition** | A | I | C | I | C | R | C | I | I | I | I | C |
+| **Design System Definition** | A | I | C | C | C | R | C | I | I | I | I | C |
 | **Schema / Data Modeling** | A | I | C | C | C | I | I | R | I | I | I | I |
-| **DR/HA Design** | A | I | R | C | C | I | I | C | C | C | I | I |
-| **Cost Modeling** | A | I | R | I | C | I | I | C | C | C | I | I |
+| **DR/HA Design** | A | C | R | C | C | C | I | C | C | C | C | C |
+| **Cost Modeling** | A | C | R | I | C | I | I | C | C | C | I | I |
 
 #### Security & Compliance
 
 | Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
 |----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
 | **Security Assessment** | A | I | C | R | C | I | C | C | C | C | I | C |
-| **Threat Modeling** | I | I | C | R | C | I | I | C | I | I | I | I |
+| **Threat Modeling** | A | I | C | R | C | I | I | C | I | I | C | C |
 | **Compliance & Audit** | A | C | C | R | C | I | I | C | I | I | I | C |
-| **Secrets Management** | I | I | C | A | R | I | C | I | C | I | I | I |
+| **Secrets Management** | I | C | C | A | R | I | C | I | C | I | I | C |
 | **Security Scan Pipeline** | I | I | C | A | C | I | I | I | R | I | I | I |
 
 #### Implementation & Quality
@@ -244,10 +244,10 @@ This matrix was reviewed by all 11 personas in parallel. Contested decisions wer
 | **Code Review** | I | I | I | C | C | C | R | C | I | C | I | I |
 | **TDD / Unit+Integration Tests** | I | I | I | C | R | I | C | C | I | I | C | I |
 | **Test Strategy** | A | I | C | C | C | I | C | C | C | I | R | I |
-| **Test Environment Management** | I | C | I | I | C | I | I | C | C | C | R | I |
+| **Test Environment Management** | I | C | C | C | C | I | I | C | C | C | R | I |
 | **Test Data Strategy** | I | I | I | C | C | I | I | C | I | I | R | I |
 | **Performance Testing** | I | I | C | C | C | I | I | C | C | C | R | I |
-| **Chaos / Resilience Testing** | I | C | C | I | C | I | I | I | R | C | C | I |
+| **Chaos / Resilience Testing** | I | C | C | C | C | I | I | C | R | C | C | C |
 
 #### Infrastructure & Operations
 
@@ -258,7 +258,7 @@ This matrix was reviewed by all 11 personas in parallel. Contested decisions wer
 | **CI/CD — Test Gates** | I | I | I | C | C | I | C | I | C | C | R | I |
 | **Deployment** | A | C | C | C | R | C | C | C | R | C | C | C |
 | **Database Migration** | A | I | C | C | C | I | C | R | I | C | C | C |
-| **Backup & Recovery** | A | I | C | C | C | I | I | R | C | I | I | C |
+| **Backup & Recovery** | A | C | C | C | C | I | I | R | C | I | C | C |
 | **Capacity Planning** | A | C | C | I | C | I | I | C | R | C | I | I |
 
 #### Observability & Reliability
@@ -266,7 +266,7 @@ This matrix was reviewed by all 11 personas in parallel. Contested decisions wer
 | Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | ObsEng | QA | TW |
 |----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
 | **Observability Design** | A | I | C | C | C | C | C | C | C | R | C | I |
-| **Observability Platform & Standards** | I | I | C | C | C | I | C | C | C | R | C | C |
+| **Observability Platform & Standards** | I | I | C | C | C | C | C | C | R | R | C | C |
 | **SLO Definition** | A | I | C | C | C | C | I | I | R | C | I | C |
 | **Alert / Runbook Design** | I | I | C | C | C | I | I | I | R | R | I | C |
 | **Incident Response** | I | C | C | R | C | C | I | C | R | C | I | C |
@@ -278,7 +278,7 @@ This matrix was reviewed by all 11 personas in parallel. Contested decisions wer
 |----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:------:|:--:|:--:|
 | **Sprint Planning** | A | R | I | I | C | I | I | C | C | I | C | C |
 | **Backlog Grooming** | A | R | C | C | C | C | C | C | C | C | C | C |
-| **Release Management** | A | R | C | C | C | I | I | I | C | I | C | C |
+| **Release Management** | A | R | C | C | C | C | C | I | R | C | C | C |
 | **Risk Management** | A | R | C | C | C | I | I | I | C | I | I | I |
 | **Documentation** | I | I | C | C | C | C | C | C | C | C | C | R |
 | **Documentation Audit** | I | C | I | I | I | C | I | I | I | I | I | R |
