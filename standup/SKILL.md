@@ -27,7 +27,7 @@ If no beads database exists, skip to Step 2 and work from conversation context.
 
 ### Step 2: Spawn Parallel Agents
 
-Launch all 11 persona agents simultaneously. Each agent gets a **minimal** prompt — this is a standup, not a deep dive:
+Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). Each agent gets a **minimal** prompt — this is a standup, not a deep dive:
 
 **Each agent prompt:**
 ```

@@ -81,6 +81,8 @@ Not all 11 personas are relevant to every incident. Select based on what the inc
 **Always include SRE** — they own incident response.
 **Always include the persona(s) whose domain the root cause lives in.**
 
+**IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). The persona identity comes from the prompt.
+
 **Each agent prompt:**
 ```
 Read ~/.claude/skills/[persona]/SKILL.md for your domain scope.

@@ -132,7 +132,7 @@ Default to **quick** for initial orientation. Use **full** when making investmen
 
 ### Step 2: Spawn Parallel Agents
 
-Launch all 10 persona agents simultaneously. Each gets the project context gathered in Step 0.
+Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). The persona identity comes from the prompt, not the agent type. Each agent reads its persona skill file as its first action.
 
 #### Security Engineer Agent
 ```

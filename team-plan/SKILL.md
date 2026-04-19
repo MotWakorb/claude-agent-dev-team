@@ -39,7 +39,7 @@ Default to **quick** unless the PO specifies full or the project scope clearly w
 
 ### Step 2: Spawn Parallel Agents
 
-Launch all six persona agents simultaneously using the Agent tool. Each agent must:
+Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). The persona identity comes from the prompt, not the agent type. Each agent must:
 1. Read their persona skill file for full context
 2. Read the shared engineering discipline and conflict resolution protocol
 3. Analyze the project brief from their domain perspective

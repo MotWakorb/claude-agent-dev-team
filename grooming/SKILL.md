@@ -29,7 +29,7 @@ Present the candidate list to the PO and confirm which items to refine this sess
 
 ### Step 2: For Each Item, Spawn Parallel Agents
 
-For each bead being groomed, spawn all 11 personas in parallel. Each evaluates the item from their domain:
+For each bead being groomed, spawn all 10 personas in parallel using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). Each evaluates the item from their domain:
 
 **Each agent prompt:**
 ```

@@ -39,7 +39,7 @@ Only spawn the personas relevant to the question. Common patterns:
 
 ### Step 3: Spawn Targeted Agents
 
-Launch only the selected persona agents in parallel:
+Launch only the selected persona agents in parallel. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). The persona identity comes from the prompt:
 
 **Each agent prompt:**
 ```
