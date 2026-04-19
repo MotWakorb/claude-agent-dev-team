@@ -93,7 +93,7 @@ for skill in "${SKILLS[@]}"; do
 
   if [ ! -d "$source" ]; then
     echo "  WARN: ${skill} not found in repo, skipping"
-    ((skipped++))
+    skipped=$((skipped + 1))
     continue
   fi
 
@@ -103,22 +103,22 @@ for skill in "${SKILLS[@]}"; do
     existing="$(readlink "$target")"
     if [ "$existing" = "$source" ]; then
       echo "  OK:   ${skill} (already linked)"
-      ((skipped++))
+      skipped=$((skipped + 1))
       continue
     else
       echo "  UPDATE: ${skill} (repointing symlink)"
       rm "$target"
-      ((updated++))
+      updated=$((updated + 1))
     fi
   elif [ -d "$target" ]; then
     if [ "$MODE" = "symlink" ]; then
       echo "  SKIP: ${skill} (directory exists — use --copy to overwrite, or remove manually)"
-      ((skipped++))
+      skipped=$((skipped + 1))
       continue
     else
       echo "  UPDATE: ${skill} (overwriting)"
       rm -rf "$target"
-      ((updated++))
+      updated=$((updated + 1))
     fi
   fi
 
@@ -129,7 +129,7 @@ for skill in "${SKILLS[@]}"; do
     cp -R "$source" "$target"
     echo "  COPY: ${skill}"
   fi
-  ((installed++))
+  installed=$((installed + 1))
 done
 
 echo ""
