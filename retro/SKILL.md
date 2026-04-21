@@ -32,14 +32,14 @@ Begin the file with a level-1 heading derived from the filename (underscore repl
 
 - **ModelID**: [full model identifier including suffix]
 - **TurnCount**: [total user + assistant messages in conversation]
-- **ContextUsed**: [percentage estimate of context window consumed]
+- **SessionDepth**: [light / moderate / deep — how much of the codebase and problem space was explored]
 - **Personas Active**: [list of personas invoked or consulted during session]
 - **Beads Touched**: [bead IDs created/updated/closed, or "None"]
 ```
 
 **TurnCount:** Count all user and assistant messages in the conversation. This is a critical metric — failure modes surface late in sessions, not early. The turn count contextualizes when corrections occurred.
 
-**ContextUsed:** Estimate from available signals — conversation length, tool call volume, file reads. Be honest about the estimate.
+**SessionDepth:** Estimate from available signals — how many files read, personas invoked, investigation branches explored. Light = focused single-topic session. Moderate = multi-topic with some exploration. Deep = extensive investigation across multiple domains.
 
 ### Section 1: User Value Delivered
 
@@ -73,7 +73,7 @@ One thing the agent got wrong or could have handled better. Reference the specif
 Examples:
 - "At turn 14, I started implementing before the PO finished framing the architecture — built on a partial frame and had to redo it"
 - "I subsampled the beads output instead of reading all of it, which led to a missed dependency"
-- "I should have pushed back on the timeline instead of silently accepting scope I knew was too large for the sprint"
+- "I should have pushed back on the timeline instead of silently accepting scope I knew was too large"
 
 ### Section 5: What Would Make the Project Better
 

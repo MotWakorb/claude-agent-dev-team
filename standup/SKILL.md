@@ -40,7 +40,7 @@ Current board state:
 [paste bd status/blocked/ready/stale output]
 
 Project context:
-[brief description of current sprint/project state from conversation]
+[brief description of current project state from conversation]
 
 Rate your domain status — framed by user impact:
 
@@ -74,7 +74,7 @@ Current board state:
 [paste bd status/blocked/ready/stale output]
 
 Project context:
-[brief description of current sprint/project state from conversation]
+[brief description of current project state from conversation]
 
 Provide a deeper assessment (still concise — 5-8 sentences max):
 1. What specifically is the issue? Name beads, files, systems, or metrics
@@ -96,7 +96,7 @@ After both phases complete, present ONLY the non-green statuses. This is excepti
 
 ### Value Delivery Status
 - **User value shipped since last standup**: [What user outcomes were delivered, if any]
-- **User value at risk**: [Any committed user outcomes that may not be delivered this sprint]
+- **User value at risk**: [Any committed user outcomes that may not be delivered]
 
 ### Board Snapshot
 - **In Progress**: [count]
@@ -136,7 +136,7 @@ After both phases complete, present ONLY the non-green statuses. This is excepti
 [If any RED/YELLOW items require a PO decision, list them here]
 | Decision | Context | Urgency | Raised By |
 |----------|---------|---------|-----------|
-| ... | ... | Today / This Sprint | [Persona] |
+| ... | ... | Now / Soon | [Persona] |
 ```
 
 ### Step 4: Done
@@ -145,7 +145,7 @@ That's it. No discussion, no deep dive, no planning. If a RED or YELLOW item nee
 - Architecture concern → `/it-architect`
 - Security concern → `/security-engineer`
 - Full team discussion → `/team-review`
-- Sprint replanning needed → `/project-manager`
+- Replanning needed → `/project-manager`
 
 The standup identifies problems. Other skills solve them.
 
@@ -157,7 +157,7 @@ Quick reference — every trigger is framed by user/customer impact:
 |---------|----------|-------------|
 | **Security Engineer** | Users' data is actively at risk (exploitable vulnerability, breach in progress), security issue blocking feature users need | Compliance deadline approaching that could shut down service for users, medium risk aging without remediation |
 | **IT Architect** | Architectural gap preventing delivery of user-facing feature, design choice causing user-visible performance/reliability problems | Architecture decision pending that blocks user value delivery, scaling concern with evidence of real growth |
-| **Project Manager** | Sprint's user value commitment at risk, multiple user-facing items blocked, team producing work without user impact | Scope creep adding work that doesn't serve users, carry-over of user-facing items accumulating |
+| **Project Manager** | User value commitment at risk, multiple user-facing items blocked, team producing work without user impact | Scope creep adding work that doesn't serve users, carry-over of user-facing items accumulating |
 | **Project Engineer** | Build/deploy broken (can't ship user value), blocked on dependency for user-facing feature, critical user-facing bug | Test failures blocking user-facing feature delivery, technical debt measurably slowing user value delivery |
 | **UX Designer** | Design gap blocking user-facing feature, critical usability issue users are actively experiencing | User friction identified but not yet addressed, accessibility regression in shipped feature |
 | **Code Reviewer** | Quality issue in user-facing code path, PR for user-facing feature blocked on review | Review queue delaying user value delivery, test quality declining on user-facing features |

@@ -33,7 +33,7 @@ Ask the PO or infer from context:
 - Output is a concise plan with decision points
 
 **Full mode** — complete structured output per each persona's format:
-- Each agent produces their full domain analysis (architecture proposal, threat model, sprint plan, UX research, implementation plan, quality standards)
+- Each agent produces their full domain analysis (architecture proposal, threat model, work plan, UX research, implementation plan, quality standards)
 - Debate covers all identified conflicts
 - Output is a comprehensive plan document
 
@@ -108,7 +108,7 @@ Project Brief:
 
 Specifically address:
 - Work breakdown structure — epics and key tasks, each with a user value statement
-- Sprint plan skeleton — what delivers user value first? Sequence by user impact, not technical convenience
+- Work plan skeleton — what delivers user value first? Sequence by user impact, not technical convenience
 - Risk register — what could prevent users from getting value? (Not just project risks — user outcome risks)
 - Dependencies between workstreams — which are truly blocking and which are domain preferences?
 - What the PO needs to decide before work can begin
@@ -257,7 +257,7 @@ Specifically address:
 - Documentation that serves users: API docs consumers actually reference, user guides that reduce support tickets, runbooks that reduce outage duration
 - Documentation proportional to user impact — critical user-facing APIs get thorough docs, internal utilities get inline comments
 - What documentation would actually reduce user friction or support burden?
-- Where you anticipate disagreeing with the engineer (on documentation effort), the PM (on documentation time in sprints), or anyone who says "we'll document it later" — state your position clearly
+- Where you anticipate disagreeing with the engineer (on documentation effort), the PM (on documentation time), or anyone who says "we'll document it later" — state your position clearly
 
 Advocate for documentation that helps someone. Challenge yourself: "Will anyone read this, or am I documenting for completeness?" Write for the person who needs it, not for the audit.
 ```
@@ -363,7 +363,7 @@ After the PO has made their decisions, produce a single unified plan document th
 [From code reviewer]
 
 ## Project Plan
-[From PM — WBS, sprint plan, risk register, adjusted per decisions]
+[From PM — WBS, work plan, risk register, adjusted per decisions]
 
 ## Open Items
 [Anything not yet resolved — becomes beads]

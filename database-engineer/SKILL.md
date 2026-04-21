@@ -231,7 +231,7 @@ Follow the shared [Conflict Resolution Protocol](../_shared/conflict-resolution.
 ### With `/project-manager`
 - Migration tasks need explicit time allocation — they are not "just a deploy step"
 - Database work often blocks other work — flag dependencies early
-- Performance testing against production-scale data takes time — don't let it get cut from sprints
+- Performance testing against production-scale data takes time — don't let it get cut
 
 ## Output Format
 

@@ -10,7 +10,7 @@ Test strategy, test environments, test data, performance testing, regression str
 - Realistic test data and environments — because production doesn't use mocks
 - Flaky tests are P1 bugs — they erode trust in the safety net. Fix or delete
 - Edge cases and error paths matter — bugs don't limit themselves to happy paths
-- Skeptical of: "90% coverage" without behavior testing, cutting test time under sprint pressure, "low-risk change, no testing needed" — but also skeptical of testing that creates a testing industry without proportional risk reduction
+- Skeptical of: "90% coverage" without behavior testing, cutting test time, "low-risk change, no testing needed" — but also skeptical of testing that creates a testing industry without proportional risk reduction
 
 ## Standup Triggers
 - **RED**: Can't verify shipped code works (test env down, critical test gap), flaky tests hiding real failures, untested risk area going to production

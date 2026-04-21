@@ -39,7 +39,7 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 |---------|--------------|--------|
 | **Security Engineer** | `/security-engineer` | AppSec, infrastructure/network security, multi-cloud, compliance (OWASP, NIST CSF, CIS, ISO 27001, SOC 2, Zero Trust). Quantified risk ratings — not everything is Critical |
 | **IT Architect** | `/it-architect` | System design with Phase 1 (get started) and Phase 2 (scale properly). Hybrid multi-cloud, open-source first, no vendor lock-in, cost-aware. Microservices when justified, not by default |
-| **Project Manager** | `/project-manager` | Agile Scrum Master. Sprint planning, backlog management, risk tracking using [beads](https://github.com/steveyegge/beads) (`bd`) for board/work management. The user is the Product Owner |
+| **Project Manager** | `/project-manager` | Project coordinator. Work planning, backlog management, risk tracking using [beads](https://github.com/steveyegge/beads) (`bd`) for board/work management. The user is the Product Owner |
 | **Project Engineer** | `/project-engineer` | Full-stack implementation. Node/React frontend, Python backend, Terraform IaC, Ansible config management, GitHub Actions CI/CD. TDD — tests first, always |
 | **UX Designer** | `/ux-designer` | Web and mobile, customer-facing and internal. API-first design — every wireframe includes the API call that powers it. Builds design systems from scratch. Heuristic evaluation by default |
 | **Code Reviewer** | `/code-reviewer` | Code quality authority and style guide owner. Reviews for test quality (#1), correctness, security, API design, maintainability, performance, style. Can block merges. Mentoring tone |
@@ -56,7 +56,7 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 | **Team Review** | `/team-review` | Spawns all 10 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
 | **Standup** | `/standup` | Daily pulse — red/yellow/green across all 10 personas. Green stays silent. Blockers first, PO decisions surfaced |
 | **Grooming** | `/grooming` | Backlog refinement — pull upcoming beads, each persona evaluates readiness, sizes effort, identifies dependencies, defines acceptance criteria |
-| **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Timeboxed, evidence-based |
+| **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Thorough, evidence-based |
 | **Postmortem** | `/postmortem` | Blameless incident analysis — SRE-led, timeline-driven, evidence-based. Contributing factors from each relevant persona, action items tracked as beads |
 | **Onboard** | `/onboard` | Project onboarding — all 10 personas assess an existing project cold, produce a health scorecard (R/Y/G), documentation inventory, and initial backlog |
 | **Retrospective** | `/retro` | End-of-session retrospective. Honest assessment including PO feedback, agent self-critique, and each persona's perspective with disagreements |
@@ -134,7 +134,7 @@ Invoke any persona directly for domain-specific consultation:
 ```bash
 /security-engineer Review the authentication module for vulnerabilities
 /it-architect Design a system for real-time event processing
-/project-manager Plan the next sprint based on the current backlog
+/project-manager Plan the next work cycle based on the current backlog
 /project-engineer Implement the user registration endpoint
 /ux-designer Design the onboarding flow for new users
 /code-reviewer Review this PR for quality and consistency
@@ -151,8 +151,8 @@ Use ceremonies to coordinate the full team:
 
 ```bash
 /standup             # Daily pulse — red/yellow/green, blockers only
-/grooming            # Refine backlog items for sprint readiness
-/team-plan           # Full team planning for a new project or sprint
+/grooming            # Refine backlog items for readiness
+/team-plan           # Full team planning for a new project or work cycle
 /spike               # Targeted investigation to unblock a decision
 /team-review         # Full team review of existing work
 /postmortem          # Blameless incident analysis
@@ -171,12 +171,12 @@ New Project
   └─ /team-plan (full) ─── Deep planning, all personas, architecture + security + UX + implementation
        └─ Creates initial epics and beads
 
-Sprint Cycle
-  ├─ /grooming ─────────── Refine upcoming backlog items before sprint planning
-  ├─ /team-plan (quick) ── Sprint planning — commit work, identify dependencies
-  ├─ /standup ──────────── Daily — red/yellow/green, blockers, PO decisions
+Work Cycle
+  ├─ /grooming ─────────── Refine upcoming backlog items before planning
+  ├─ /team-plan (quick) ── Work planning — commit work, identify dependencies
+  ├─ /standup ──────────── Status check — red/yellow/green, blockers, PO decisions
   ├─ /spike ───────────── As needed — unblock decisions with targeted investigation
-  ├─ /team-review ─────── Sprint review — evaluate what shipped
+  ├─ /team-review ─────── Review — evaluate what shipped
   └─ /retro ───────────── End of session — honest assessment, persona perspectives
 
 When Things Break
@@ -207,9 +207,9 @@ These are by design — the personas will argue about these:
 
 | Tension | Personas | What They'll Argue About |
 |---------|----------|------------------------|
-| Security vs. Speed | Security ↔ PM, Engineer | How much security for Phase 1? Sprint scope vs. remediation |
+| Security vs. Speed | Security ↔ PM, Engineer | How much security for Phase 1? Scope vs. remediation |
 | Complexity vs. Simplicity | Architect ↔ Engineer | Is this design over-engineered or appropriately future-proof? |
-| Quality vs. Velocity | Code Reviewer ↔ Engineer, PM | Style blocks when the sprint is burning |
+| Quality vs. Velocity | Code Reviewer ↔ Engineer, PM | Style blocks when there's pressure to ship |
 | User Experience vs. Constraints | UX ↔ Security, Architect, Engineer | Security friction, architectural limits, technical feasibility |
 | Reliability vs. Features | SRE ↔ PM | Error budget spent — feature freeze or keep shipping? |
 | Data Integrity vs. Speed | DBA ↔ Engineer, Architect | Normalize or denormalize? Migration safety vs. velocity |
@@ -288,7 +288,7 @@ This matrix was reviewed by all personas in parallel. Contested decisions were r
 
 | Activity | PO | PM | Arch | SecEng | Eng | UX | CR | DBA | SRE | QA | TW |
 |----------|:--:|:--:|:----:|:------:|:---:|:--:|:--:|:---:|:---:|:--:|:--:|
-| **Sprint Planning** | A | R | I | I | C | I | I | C | C | C | C |
+| **Work Planning** | A | R | I | I | C | I | I | C | C | C | C |
 | **Backlog Grooming** | A | R | C | C | C | C | C | C | C | C | C |
 | **Release Management** | A | R | C | C | C | C | C | I | R | C | C |
 | **Risk Management** | A | R | C | C | C | I | I | I | C | I | I |
@@ -298,7 +298,7 @@ This matrix was reviewed by all personas in parallel. Contested decisions were r
 
 **Key principles:**
 - **PO is Accountable** for all product decisions — requirements, scope, architecture, deployment, risk acceptance
-- **PM is Responsible** for process — sprint planning, grooming, release management, risk management
+- **PM is Responsible** for process — work planning, grooming, release management, risk management
 - **Domain experts are Responsible** for their domain — Security owns assessments and threat modeling, DBA owns schema and backups, SRE owns incidents and capacity, QA owns test strategy and environments
 - **Architect is Responsible** for API contract design, ADRs, DR/HA design, cost modeling, and co-R on IaC
 - **Security Engineer is Accountable** for secrets management and the scan pipeline — sets policy, others implement
@@ -360,7 +360,7 @@ claude-agent-dev-team/
 │   └── engineering-discipline.md # Engineering discipline principles
 ├── security-engineer/SKILL.md    # Security Engineer persona
 ├── it-architect/SKILL.md         # IT Architect persona
-├── project-manager/SKILL.md      # Project Manager / Scrum Master persona
+├── project-manager/SKILL.md      # Project Manager persona
 ├── project-engineer/SKILL.md     # Project Engineer persona
 ├── ux-designer/SKILL.md          # UX/UI Designer persona
 ├── code-reviewer/SKILL.md        # Code Reviewer persona

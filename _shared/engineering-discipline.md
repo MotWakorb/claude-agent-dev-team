@@ -65,7 +65,7 @@ When asked to compare, diff, review, or analyze — do the full work. A partial 
 
 ## Honest Escalation
 
-When you cannot complete a task correctly — whether because of missing data, context limits, unreachable systems, or an unresolved decision — say so explicitly. Do not ship half-right work to appear productive. Completing correctly and naming the gap are both valid outcomes. Inventing completion is not.
+When you cannot complete a task correctly — whether because of missing data, unreachable systems, or an unresolved decision — say so explicitly. Do not ship half-right work to appear productive. Completing correctly and naming the gap are both valid outcomes. Inventing completion is not.
 
 ## Naming Discipline
 

@@ -1,7 +1,7 @@
 ---
 name: grooming
-description: Backlog refinement — pull upcoming beads from the backlog, have each persona evaluate readiness, size effort, identify dependencies, define acceptance criteria, and determine if items are sprint-ready.
-when_to_use: backlog refinement, grooming, backlog grooming, sprint preparation, story refinement, sizing, estimation
+description: Backlog refinement — pull upcoming beads from the backlog, have each persona evaluate readiness, size effort, identify dependencies, define acceptance criteria, and determine if items are ready to build.
+when_to_use: backlog refinement, grooming, backlog grooming, preparation, story refinement, sizing, estimation
 user-invocable: true
 ---
 
@@ -47,7 +47,7 @@ Before spawning personas, evaluate each candidate item:
 - **Challenge** — can't articulate user value. Ask the PO: "Why does this matter to users?" If the PO can answer, reframe and proceed. If not, recommend removing from the backlog or parking it until context changes
 - **Kill** — the item creates work without user benefit. Recommend closing the bead with reason: "No demonstrated user value"
 
-Items that don't pass the value gate don't get refined. Persona time is expensive — don't spend it on work that shouldn't exist.
+Items that don't pass the value gate don't get refined. Refining work that shouldn't exist produces noise, not clarity.
 
 ### Step 2: Spawn Parallel Agents — One Per Persona, All Items at Once
 
@@ -57,7 +57,7 @@ Spawn all 10 personas in parallel using the Agent tool, each evaluating **ALL it
 ```
 Read ~/.claude/skills/[persona]/SKILL.md for your domain scope.
 
-You are the [Persona]. We are grooming the following backlog items for sprint readiness.
+You are the [Persona]. We are grooming the following backlog items for readiness.
 Advocate for your domain with evidence. Flag concerns, not accommodations.
 
 IMPORTANT: Your role is to assess feasibility and risk for work that delivers user value — not to generate additional work from your domain. If an item doesn't need your domain's involvement, say so. Do NOT invent domain tasks to justify your participation.
@@ -85,7 +85,7 @@ IMPORTANT: Your role is to assess feasibility and risk for work that delivers us
 For EACH item above, respond with:
 
 ### [Item Title] (Bead [ID])
-1. **Sprint-Ready?** [Yes / No — and why not]
+1. **Ready to Build?** [Yes / No — and why not]
 2. **Does this deliver the stated user value?** [Yes / Partially / No — if not, what's missing to actually achieve the user outcome?]
 3. **Effort from your domain**: [None / Small / Medium / Large] — what work does YOUR domain need to do for this item? Only include work that's necessary to deliver the user value — not domain best-practices that don't affect the outcome
 4. **Dependencies you see**: [What must happen before or alongside this work from your perspective?]
@@ -110,8 +110,8 @@ For each groomed item, combine all persona responses into a refinement summary:
 ### User Value: [Who benefits and how]
 ### Success Signal: [How we'll know it worked]
 
-### Sprint-Ready Verdict: [Yes / No]
-[If No — what's missing before this can enter a sprint]
+### Ready to Build: [Yes / No]
+[If No — what's missing before this can be worked]
 
 ### Effort Assessment
 | Persona | Effort | Notes |
@@ -149,7 +149,7 @@ For each groomed item, combine all persona responses into a refinement summary:
 |----------|----------|---------------------|
 | [Question] | [Persona] | [Can't size / Can't start / Changes approach] |
 
-### Recommended Actions Before Sprint
+### Recommended Actions Before Starting
 - [ ] [Create dependency bead: ...]
 - [ ] [PO to clarify: ...]
 - [ ] [Decompose into smaller items: ...]
@@ -172,13 +172,13 @@ After all per-item summaries, add a **Cross-Item Analysis** section:
 
 ### Step 4: Update Beads
 
-For items that are now sprint-ready:
+For items that are now ready to build:
 - Update the bead description with refined acceptance criteria
 - Create dependency beads identified during grooming
 - Link dependencies with `bd dep add`
 - Update priority if the grooming revealed it should change
 
-For items that are NOT sprint-ready:
+For items that are NOT ready to build:
 - Add a comment noting what's blocking readiness
 - Create any prerequisite beads (spikes, clarifications, design work)
 - Link prerequisites as dependencies
@@ -190,11 +190,11 @@ If any item has unknowns that can't be resolved in grooming, recommend a `/spike
 ## Rules
 
 - **Value first, domain second.** Every item must pass the user value gate before personas evaluate it. Domain expertise serves user needs — it doesn't generate them
-- **Grooming is not planning.** Don't assign work to sprints. Just make items ready to be planned
+- **Grooming is not planning.** Don't sequence work. Just make items ready to be worked
 - **Grooming is not work creation.** Personas assess feasibility and risk of proposed work. They do not generate new beads from their domain unless those beads directly serve the stated user value
-- **"I don't know" is a valid answer.** If a persona can't size an item because requirements are unclear, that's a finding — the item isn't sprint-ready until the question is answered
+- **"I don't know" is a valid answer.** If a persona can't size an item because requirements are unclear, that's a finding — the item isn't ready to build until the question is answered
 - **"Users don't need this" is a valid outcome.** If grooming reveals that an item's user value is weak or absent, recommend closing it. A smaller, focused backlog beats a large, unfocused one
 - **Decompose what's too big.** If the overall size is "Epic — needs decomposition," recommend breaking it into smaller beads — each with its own user value statement
-- **Don't groom more than 5-7 items per session.** Grooming has diminishing returns. Better to deeply refine 5 items than superficially touch 15
-- **Dependencies are the most important output.** A sprint with hidden dependencies will fail. Surface every dependency and create the beads
+- **Depth over breadth.** If an item needs deep analysis, go deep. Don't rush through items to hit a count — thoroughly refined items are worth more than superficially touched ones
+- **Dependencies are the most important output.** Work with hidden dependencies will fail. Surface every dependency and create the beads
 - **Acceptance criteria serve the user outcome.** The first acceptance criterion is always the user value being delivered. Domain-specific criteria support that outcome — they don't stand alone

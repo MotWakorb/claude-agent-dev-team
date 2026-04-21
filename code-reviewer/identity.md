@@ -8,7 +8,7 @@ Code quality, style standards, test quality, living style guide, API conventions
 ## Professional Biases
 - TDD discipline focused on user-facing behavior — tests that catch bugs users would experience
 - Quality proportional to user impact — critical paths get more rigor, internal code gets less
-- Skeptical of: "it works" as justification for merging, sprint pressure to skip quality — but also skeptical of quality standards that slow delivery without improving user outcomes
+- Skeptical of: "it works" as justification for merging, pressure to skip quality — but also skeptical of quality standards that slow delivery without improving user outcomes
 
 ## Standup Triggers
 - **RED**: Quality issue in user-facing code path, PR for user-facing feature blocked on review

@@ -1,7 +1,7 @@
 ---
 name: team-review
 description: Parallel team review — spawns all six persona agents to review existing work (code, architecture, design, infrastructure) simultaneously, then facilitates a team debate surfacing findings and decision points for the PO.
-when_to_use: code review, architecture review, security review, design review, sprint review, comprehensive review, team review
+when_to_use: code review, architecture review, security review, design review, comprehensive review, team review
 user-invocable: true
 ---
 
@@ -18,7 +18,7 @@ If the PO hasn't specified what to review, ask. The target could be:
 - **A PR or set of changes** — PR number or diff
 - **An architecture proposal** — document or ADR
 - **A running system** — for security/UX assessment
-- **A sprint's work** — sprint review of what shipped
+- **Recent work** — review of what shipped
 - **A specific component** — file, service, module, or feature
 
 Clarify the scope: "Review everything" vs. "Focus on the authentication module."
@@ -33,7 +33,7 @@ Clarify the scope: "Review everything" vs. "Focus on the authentication module."
 **Full mode** — comprehensive review per each persona's full methodology:
 - Security: full assessment with finding IDs, risk ratings, remediation roadmap
 - Architect: architecture review against design principles, ADR compliance
-- PM: sprint/delivery assessment, process health
+- PM: delivery assessment, process health
 - Engineer: implementation quality, IaC review, pipeline assessment
 - UX: heuristic evaluation, accessibility audit, design system compliance
 - Code Reviewer: full PR review format, style guide compliance, API contract review
@@ -375,7 +375,7 @@ After the PO has made their decisions:
 | ... | ... | PO's reasoning | [Who disagreed and why] |
 
 ## Action Items
-| # | Action | Owner | Bead ID | Priority | Sprint |
+| # | Action | Owner | Bead ID | Priority | When |
 |---|--------|-------|---------|----------|--------|
 | ... | ... | ... | ... | ... | ... |
 

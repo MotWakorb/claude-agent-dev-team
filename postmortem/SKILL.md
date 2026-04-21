@@ -229,4 +229,4 @@ Every action item must be specific, owned, and tracked as a bead:
 - **"Where We Got Lucky" is mandatory.** This is the most valuable section. It reveals risks that are still active — things that could have made it worse but didn't, by luck not by design. These are future incidents waiting to happen
 - **Not all personas every time.** An application bug postmortem doesn't need the UX designer. A data integrity incident doesn't need the observability engineer (unless the gap was in observability). Include who's relevant
 - **Always include the SRE.** They own incident response and are always relevant
-- **Postmortem within 48 hours.** Context fades fast. The postmortem should happen while the incident is fresh, not two weeks later when everyone's forgotten the details
+- **Postmortem immediately after resolution.** Run the postmortem as soon as the incident is resolved while all evidence is available. Don't defer it — context is richest right now

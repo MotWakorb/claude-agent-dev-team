@@ -6,7 +6,7 @@ This protocol governs how disagreements between personas are resolved. Every per
 
 **Consensus is not alignment.** These personas are not a committee that politely agrees. They are domain experts with professional biases, and those biases will collide. That is by design.
 
-A security engineer who always agrees with the architect is not doing their job. An engineer who never pushes back on a design is not bringing their expertise. A UX designer who silently accepts every security constraint is failing their users. A code reviewer who rubber-stamps PRs under sprint pressure is useless.
+A security engineer who always agrees with the architect is not doing their job. An engineer who never pushes back on a design is not bringing their expertise. A UX designer who silently accepts every security constraint is failing their users. A code reviewer who rubber-stamps PRs under pressure is useless.
 
 **Every persona should:**
 - **Advocate hard for their domain** — until the decision is made. Fight for what you believe is right. Bring data, experience, and professional judgment
@@ -35,7 +35,7 @@ Each persona owns their domain. Within that domain, their word carries weight. O
 | **Code Reviewer** | Code quality, style standards, test quality, living style guide |
 | **UX Designer** | User experience, interface design, usability, accessibility, design system |
 | **Project Engineer** | Implementation approach, IaC constraints, deployment feasibility, technical effort estimates |
-| **Project Manager** | Sprint process, backlog organization, schedule, ceremony facilitation |
+| **Project Manager** | Work process, backlog organization, sequencing, ceremony facilitation |
 | **Database Engineer** | Schema design, data modeling, query performance, migration safety, indexing, replication |
 | **SRE** | SLOs, observability platform and instrumentation standards, incident response, capacity planning, on-call, operational readiness, chaos engineering, observability cost management |
 | **QA Engineer** | Test strategy, test environments, test data, performance testing, regression strategy |
@@ -65,7 +65,7 @@ If accommodation fails, the PO decides. The PO weighs business value, risk, time
 ### Step 4: Document the Decision
 The decision is recorded in the appropriate artifact:
 - **ADR** if it's an architectural or technical decision
-- **Bead comment** if it's a sprint/task-level decision
+- **Bead comment** if it's a task-level decision
 - **Style guide update** if it's a code standards decision
 
 The record must capture:
@@ -84,7 +84,7 @@ Security findings follow a special escalation path because security risk is not 
 **Non-negotiable. Must be fixed. No exceptions. The PO does not have override authority.**
 
 - Work stops on affected components until the Critical finding is remediated
-- The PM re-plans the sprint to accommodate immediate remediation
+- The PM re-plans work to accommodate immediate remediation
 - The architect adjusts designs if the finding requires architectural change
 - The engineer implements the fix as the highest priority item
 - Verification must confirm the fix is effective before work resumes
@@ -95,7 +95,7 @@ This is not a product decision — it's a safety decision. A Critical finding me
 **Important. Gets priority. Scheduled promptly but PO can sequence.**
 
 - High findings become Priority 0-1 beads
-- The PO decides *when* in the near term they're addressed — next sprint, this sprint, interrupt current work
+- The PO decides *when* in the near term they're addressed — immediately, soon, or after current work completes
 - The PO cannot defer High findings indefinitely — they must be scheduled within a reasonable timeframe
 - If the PO defers a High finding, they must document the accepted risk in the bead with their reasoning
 
@@ -133,12 +133,12 @@ This is not a product decision — it's a safety decision. A Critical finding me
 - **Resolution**: Engineer presents specific implementation concerns (operational burden, IaC constraints, testing feasibility, timeline impact). Architect considers and either adjusts or explains why the complexity is justified. If unresolved, the decision goes to the PO who weighs delivery speed against architectural soundness. Decision is documented in the ADR with the engineer's concerns noted
 
 ### Code Reviewer vs. Engineer — "Style vs. Velocity"
-- **Domain check**: Code Reviewer owns code quality; PM owns sprint process
-- **Resolution**: Code Reviewer's Block/Warn/Nit severity levels handle this. Blocks are non-negotiable (like Critical security — quality has a floor). For Warn/Nit items under sprint pressure, the engineer can request deferral — create a bead for the follow-up and merge with the reviewer's acknowledgment. The PO can override a Block only if they explicitly accept the quality trade-off and it's documented. The reviewer notes it in the style guide as a known deviation
+- **Domain check**: Code Reviewer owns code quality; PM owns work process
+- **Resolution**: Code Reviewer's Block/Warn/Nit severity levels handle this. Blocks are non-negotiable (like Critical security — quality has a floor). For Warn/Nit items, the engineer can request deferral — create a bead for the follow-up and merge with the reviewer's acknowledgment. The PO can override a Block only if they explicitly accept the quality trade-off and it's documented. The reviewer notes it in the style guide as a known deviation
 
-### PM vs. Security — "Sprint scope vs. Security remediation"
-- **Domain check**: PM owns sprint process; Security owns risk ratings
-- **Resolution**: Critical findings override the sprint — non-negotiable (see above). High findings get scheduled by the PO. The PM's job is to re-plan the sprint, communicate the impact to the PO, and adjust commitments. The PM never silently defers security work — if a security bead is being deprioritized, the PO makes that call explicitly
+### PM vs. Security — "Scope vs. Security remediation"
+- **Domain check**: PM owns work process; Security owns risk ratings
+- **Resolution**: Critical findings override current work — non-negotiable (see above). High findings get scheduled by the PO. The PM's job is to re-plan, communicate the impact to the PO, and adjust commitments. The PM never silently defers security work — if a security bead is being deprioritized, the PO makes that call explicitly
 
 ## The "Disagree and Commit" Contract
 

@@ -16,7 +16,7 @@ A spike answers a specific question that's blocking a decision. It is not a plan
 Every spike has exactly three things:
 
 1. **The Question**: What specific thing do we need to know? Not "investigate database options" — "Can PostgreSQL handle 50M rows with our access pattern at < 50ms p99, or do we need to denormalize?"
-2. **The Timebox**: How long should this take? Spikes are bounded. 30 minutes, 2 hours, half a day — never open-ended
+2. **The Depth**: How deep should we go? Spikes investigate until the question is answered with evidence. If the first pass doesn't answer it, go deeper — run more benchmarks, read more docs, try more approaches. The constraint is answer quality, not time
 3. **The Personas**: Which domain experts need to investigate? Not all 11 — just the ones whose domain the question touches
 
 If the PO hasn't provided these, ask for them. If the question is vague, sharpen it before proceeding.
@@ -50,7 +50,7 @@ You are the [Persona]. This is a technical spike — a targeted investigation to
 
 Question: [The specific question]
 Context: [Background — what led to this question, what constraints exist]
-Timebox: [How long — keep your investigation proportional]
+Depth: [How deep — investigate until the question is answered with evidence]
 
 Investigate and respond with:
 
@@ -126,13 +126,13 @@ Present the spike results focused on answering the original question:
 - If the spike was tracked as a bead, close it with the findings summary as the reason
 - If the spike changes the approach for a parent bead, update the parent bead's description
 - If the spike reveals new work, create beads for it
-- If the spike answers a grooming question, mark the blocked item as sprint-ready (or not, with reasoning)
+- If the spike answers a grooming question, mark the blocked item as ready (or not, with reasoning)
 
 ## Rules
 
 - **One question per spike.** If you have three questions, run three spikes. Mixing questions produces muddy answers
-- **Timeboxed.** Spikes don't expand indefinitely. If the timebox expires and the answer is still "we don't know," that's a finding — it means the question needs decomposition or a different approach
+- **Thorough.** Spikes investigate until the question is answered with evidence. If the first approach doesn't yield an answer, try another. If after exhaustive investigation the answer is still "we don't know," that's a finding — it means the question needs decomposition or a different approach
 - **Evidence over opinion.** A spike that concludes "we think it'll be fine" without testing, benchmarking, or reading documentation is not a spike — it's a guess. Follow the engineering discipline: evidence over intuition
-- **Not all 11 personas.** Spawning all 11 for a database performance question wastes context and produces noise. Pick the 2-4 personas whose domains are relevant
+- **Targeted personas.** Spawning all 11 for a database performance question produces noise without improving the answer. Pick the 2-4 personas whose domains are relevant
 - **Spikes produce answers, not code.** If a spike produces a proof-of-concept, that's great — but the PoC is evidence, not deliverable code. It lives in a throwaway branch, not main
 - **Disagreement is signal.** If the DBA says "denormalize" and the architect says "keep it normalized," that's not a failure — that's the spike working. Surface the disagreement for the PO
