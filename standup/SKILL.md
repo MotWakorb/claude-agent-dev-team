@@ -11,7 +11,7 @@ Fast. Focused. Blockers first. If everything is green, say so and move on. This 
 
 ## Process
 
-### Step 1: Check the Board
+### Step 0: Check the Board
 
 Run these commands to get the current state:
 
@@ -23,17 +23,18 @@ bd stale           # What hasn't been touched recently
 bd list --status in_progress  # What's actively being worked
 ```
 
-If no beads database exists, skip to Step 2 and work from conversation context.
+If no beads database exists, skip to Step 1 and work from conversation context.
 
-### Step 2: Spawn Parallel Agents
+### Step 1: Phase 1 — Lightweight Triage (All 10 Voices)
 
-Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). Each agent gets a **minimal** prompt — this is a standup, not a deep dive:
+Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). Each agent loads ONLY their identity file — not the full persona. This is a triage, not a deep dive:
 
 **Each agent prompt:**
 ```
-Read ~/.claude/skills/[persona]/SKILL.md briefly for your domain scope.
+Read ~/.claude/skills/[persona]/identity.md for your domain scope and standup triggers.
 
-You are the [Persona]. This is a daily standup — be brief.
+You are the [Persona]. This is a daily standup triage — be brief.
+Advocate for your domain with evidence. Flag concerns, not accommodations.
 
 Current board state:
 [paste bd status/blocked/ready/stale output]
@@ -55,9 +56,37 @@ Rules:
 Do NOT pad your response. Do NOT list what's going well. The standup only cares about problems and risks.
 ```
 
+### Step 2: Phase 2 — Deep Assessment (Non-Green Only)
+
+After Phase 1, identify which personas reported RED or YELLOW. **Only for those personas**, spawn a second round of agents that load the **full persona SKILL.md** to provide deeper analysis:
+
+**Each Phase 2 agent prompt:**
+```
+Read ~/.claude/skills/[persona]/SKILL.md for your full domain expertise.
+
+You are the [Persona]. You flagged a [RED/YELLOW] concern in standup triage:
+"[paste their Phase 1 response]"
+
+Advocate for your domain with evidence. Flag specific disagreements with other personas if relevant.
+
+Current board state:
+[paste bd status/blocked/ready/stale output]
+
+Project context:
+[brief description of current sprint/project state from conversation]
+
+Provide a deeper assessment (still concise — 5-8 sentences max):
+1. What specifically is the issue? Name beads, files, systems, or metrics
+2. What is the impact if unaddressed?
+3. What concrete action resolves or mitigates this?
+4. Does this conflict with or depend on another persona's domain?
+```
+
+**If ALL personas report GREEN in Phase 1, skip Phase 2 entirely.**
+
 ### Step 3: Synthesize — Exception-Based Reporting
 
-After all agents report back, present ONLY the non-green statuses. This is exception-based reporting — silence is good news.
+After both phases complete, present ONLY the non-green statuses. This is exception-based reporting — silence is good news.
 
 **Output format:**
 
@@ -71,16 +100,16 @@ After all agents report back, present ONLY the non-green statuses. This is excep
 - **Stale**: [count] (not updated in [threshold])
 
 ### RED — Immediate Attention
-[If any persona reported RED, present here with their full assessment]
+[If any persona reported RED, present their Phase 2 deep assessment]
 
 #### [Persona Name] — RED
-[What's blocked/broken, impact, what's needed to unblock]
+[What's blocked/broken, impact, what's needed to unblock — from Phase 2]
 
 ### YELLOW — Developing Concerns  
-[If any persona reported YELLOW, present here]
+[If any persona reported YELLOW, present their Phase 2 assessment]
 
 #### [Persona Name] — YELLOW
-[Concern, trajectory, what prevents it from going red]
+[Concern, trajectory, what prevents it from going red — from Phase 2]
 
 ### GREEN — All Clear
 [List personas that reported green — one line]

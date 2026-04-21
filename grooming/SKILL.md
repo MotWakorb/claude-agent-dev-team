@@ -27,34 +27,47 @@ If the PO has specific items to groom, use those instead. Otherwise, work top-do
 
 Present the candidate list to the PO and confirm which items to refine this session.
 
-### Step 2: For Each Item, Spawn Parallel Agents
+### Step 2: Spawn Parallel Agents — One Per Persona, All Items at Once
 
-For each bead being groomed, spawn all 10 personas in parallel using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). Each evaluates the item from their domain:
+Spawn all 10 personas in parallel using the Agent tool, each evaluating **ALL items in a single pass**. This is batch mode — each persona is spawned once regardless of how many items are being groomed. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose").
 
 **Each agent prompt:**
 ```
 Read ~/.claude/skills/[persona]/SKILL.md for your domain scope.
-Read ~/.claude/skills/_shared/engineering-discipline.md and ~/.claude/skills/_shared/conflict-resolution.md.
 
-You are the [Persona]. We are grooming the following backlog item for sprint readiness.
+You are the [Persona]. We are grooming the following backlog items for sprint readiness.
+Advocate for your domain with evidence. Flag concerns, not accommodations.
 
-Bead: [ID]
-Title: [Title]
-Description: [Description]
-Priority: [Priority]
-Type: [epic/feature/bug/task/chore]
-Dependencies: [Any known dependencies]
+## Items to Evaluate
 
-Evaluate this item and respond with:
+### Item 1
+- Bead: [ID]
+- Title: [Title]
+- Description: [Description]
+- Priority: [Priority]
+- Type: [epic/feature/bug/task/chore]
+- Dependencies: [Any known dependencies]
 
+### Item 2
+[repeat for each item]
+
+### Item N
+[repeat for each item]
+
+## Instructions
+
+For EACH item above, respond with:
+
+### [Item Title] (Bead [ID])
 1. **Sprint-Ready?** [Yes / No — and why not]
 2. **Effort from your domain**: [None / Small / Medium / Large] — what work does YOUR domain need to do for this item?
 3. **Dependencies you see**: [What must happen before or alongside this work from your perspective?]
 4. **Acceptance criteria from your domain**: [What does "done" look like from your perspective? Only add criteria relevant to your domain — don't repeat others]
 5. **Concerns**: [Anything that makes this item risky, unclear, or likely to expand in scope]
 6. **Questions for the PO**: [Anything you need clarified before this can be worked]
+7. **Cross-item dependencies**: [Does this item depend on or conflict with another item in this batch?]
 
-Be brief. If this item doesn't touch your domain, respond with:
+Be brief per item. If an item doesn't touch your domain, respond with:
 "No concerns from [domain]. No effort required."
 ```
 
@@ -79,7 +92,6 @@ For each groomed item, combine all persona responses into a refinement summary:
 | Code Reviewer | [None/S/M/L] | [Brief note] |
 | Database Engineer | [None/S/M/L] | [Brief note] |
 | SRE | [None/S/M/L] | [Brief note] |
-| Observability Engineer | [None/S/M/L] | [Brief note] |
 | QA Engineer | [None/S/M/L] | [Brief note] |
 | Technical Writer | [None/S/M/L] | [Brief note] |
 
@@ -110,6 +122,20 @@ For each groomed item, combine all persona responses into a refinement summary:
 - [ ] [PO to clarify: ...]
 - [ ] [Decompose into smaller items: ...]
 - [ ] [Spike needed: ... (use /spike)]
+```
+
+After all per-item summaries, add a **Cross-Item Analysis** section:
+
+```markdown
+## Cross-Item Analysis
+
+### Inter-Item Dependencies
+| Item A | Item B | Relationship | Raised By |
+|--------|--------|-------------|-----------|
+| [Bead ID] | [Bead ID] | [A blocks B / Shared dependency / Conflict] | [Persona] |
+
+### Recommended Sequencing
+[If items should be worked in a specific order based on dependencies, state it here]
 ```
 
 ### Step 4: Update Beads
