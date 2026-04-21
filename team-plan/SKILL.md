@@ -372,3 +372,5 @@ After the PO has made their decisions, produce a single unified plan document th
 ### Step 6: Create Beads
 
 If a beads database is initialized, create the initial epic and task structure from the unified plan using `bd` commands. If no database exists, present the `bd create` commands the PO can run.
+
+**Planning creates the backlog — it does not start the work.** After creating beads, stop. The PO decides what gets worked first through grooming and sequencing. Do not propose "let's start with..." or begin implementation after planning.

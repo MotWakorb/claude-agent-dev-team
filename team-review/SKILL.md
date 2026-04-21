@@ -392,3 +392,5 @@ Findings map to beads:
 - High / Block → Priority 1, type bug
 - Medium / Warn → Priority 2, type task or bug
 - Low / Nit → Priority 3-4, type chore, backlog
+
+**Creating a bead is not starting the work.** Beads go into the backlog for the PO to prioritize and sequence. Do not propose immediately working on findings after creating them. The review produces a prioritized list — the PO decides what gets worked and when, through grooming and planning ceremonies.

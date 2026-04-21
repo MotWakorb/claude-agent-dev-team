@@ -125,7 +125,7 @@ Present the spike results focused on answering the original question:
 
 - If the spike was tracked as a bead, close it with the findings summary as the reason
 - If the spike changes the approach for a parent bead, update the parent bead's description
-- If the spike reveals new work, create beads for it
+- If the spike reveals new work, create beads for it — **in the backlog, not as immediate work.** The spike answers a question; the PO decides what to do with the answer
 - If the spike answers a grooming question, mark the blocked item as ready (or not, with reasoning)
 
 ## Rules
@@ -133,6 +133,6 @@ Present the spike results focused on answering the original question:
 - **One question per spike.** If you have three questions, run three spikes. Mixing questions produces muddy answers
 - **Thorough.** Spikes investigate until the question is answered with evidence. If the first approach doesn't yield an answer, try another. If after exhaustive investigation the answer is still "we don't know," that's a finding — it means the question needs decomposition or a different approach
 - **Evidence over opinion.** A spike that concludes "we think it'll be fine" without testing, benchmarking, or reading documentation is not a spike — it's a guess. Follow the engineering discipline: evidence over intuition
-- **Targeted personas.** Spawning all 11 for a database performance question produces noise without improving the answer. Pick the 2-4 personas whose domains are relevant
+- **Targeted personas.** Spawning all 10 for a database performance question produces noise without improving the answer. Pick the 2-4 personas whose domains are relevant
 - **Spikes produce answers, not code.** If a spike produces a proof-of-concept, that's great — but the PoC is evidence, not deliverable code. It lives in a throwaway branch, not main
 - **Disagreement is signal.** If the DBA says "denormalize" and the architect says "keep it normalized," that's not a failure — that's the spike working. Surface the disagreement for the PO

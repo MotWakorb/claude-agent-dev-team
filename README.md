@@ -37,16 +37,16 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 
 | Persona | Slash Command | Domain |
 |---------|--------------|--------|
-| **Security Engineer** | `/security-engineer` | AppSec, infrastructure/network security, multi-cloud, compliance (OWASP, NIST CSF, CIS, ISO 27001, SOC 2, Zero Trust). Quantified risk ratings — not everything is Critical |
-| **IT Architect** | `/it-architect` | System design with Phase 1 (get started) and Phase 2 (scale properly). Hybrid multi-cloud, open-source first, no vendor lock-in, cost-aware. Microservices when justified, not by default |
-| **Project Manager** | `/project-manager` | Project coordinator. Work planning, backlog management, risk tracking using [beads](https://github.com/steveyegge/beads) (`bd`) for board/work management. The user is the Product Owner |
-| **Project Engineer** | `/project-engineer` | Full-stack implementation. Node/React frontend, Python backend, Terraform IaC, Ansible config management, GitHub Actions CI/CD. TDD — tests first, always |
-| **UX Designer** | `/ux-designer` | Web and mobile, customer-facing and internal. API-first design — every wireframe includes the API call that powers it. Builds design systems from scratch. Heuristic evaluation by default |
-| **Code Reviewer** | `/code-reviewer` | Code quality authority and style guide owner. Reviews for test quality (#1), correctness, security, API design, maintainability, performance, style. Can block merges. Mentoring tone |
-| **Database Engineer** | `/database-engineer` | Schema design, data modeling, query optimization, migration safety. Constraints belong in the database, not just the application. The person who asks "what happens at 50M rows?" |
-| **SRE** | `/sre` | Site reliability AND observability platform — SLOs, instrumentation standards, metrics/logging/tracing, dashboards, alert design, incident response, capacity planning, on-call, chaos engineering, observability cost management. Builds and consumes the observability platform |
-| **QA Engineer** | `/qa-engineer` | Holistic test strategy, test environments, test data, performance testing, regression curation, chaos testing. Complements TDD with strategic quality thinking |
-| **Technical Writer** | `/technical-writer` | Documentation as a product. API docs, runbooks, onboarding guides, architecture docs, changelogs. If it's not documented, it doesn't exist |
+| **Security Engineer** | `/security-engineer` | **Protector role.** Guards the system and its users from harm. AppSec, infrastructure/network security, multi-cloud, compliance (OWASP, NIST CSF, CIS, ISO 27001, SOC 2, Zero Trust). Risk ratings measured by harm prevented, not checklist completeness |
+| **IT Architect** | `/it-architect` | Right architecture for the user's problem, not the most impressive one. Phase 1 (solve user's problem) and Phase 2 (only when evidence demands it). Open-source first, no vendor lock-in, cost-aware |
+| **Project Manager** | `/project-manager` | Project coordinator. Optimizes for user value delivery — every bead must trace to a user need. Work planning, backlog management, **value gate** owner, risk tracking using [beads](https://github.com/steveyegge/beads) (`bd`). The user is the Product Owner |
+| **Project Engineer** | `/project-engineer` | Full-stack implementation. Node/React frontend, Python backend, Terraform IaC, Ansible config management, GitHub Actions CI/CD. TDD — tests first. Simplest implementation that delivers user value |
+| **UX Designer** | `/ux-designer` | The user's advocate. Solves actual user problems with the simplest design that works. API-first — every wireframe includes the API call that powers it. Evidence-based design over design intuition |
+| **Code Reviewer** | `/code-reviewer` | Quality conscience — focuses rigor on code paths that affect users. Reviews for test quality (#1), correctness, security, API design, maintainability, performance, style. Quality proportional to user impact. Mentoring tone |
+| **Database Engineer** | `/database-engineer` | **Protector role.** Guards data integrity, system stability, and performance. Schema design, query optimization, migration safety. Constraints belong in the database. Safety first, then access patterns |
+| **SRE** | `/sre` | **Protector role.** Guards production reliability and operational stability. SLOs, observability platform & instrumentation standards, incident response, capacity planning, on-call, chaos engineering, observability cost management |
+| **QA Engineer** | `/qa-engineer` | **Protector role.** Last line of defense before code reaches users. Test strategy, test environments, test data, performance testing, regression curation. Test investment proportional to risk, not feature visibility |
+| **Technical Writer** | `/technical-writer` | Every doc answers "who reads this and what do they need?" API docs, runbooks, onboarding guides, architecture docs, changelogs. Documentation effort proportional to user impact |
 
 ## Team Skills
 
@@ -54,8 +54,8 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 |-------|---------|---------|
 | **Team Plan** | `/team-plan` | Spawns all 10 personas in parallel to analyze a project brief. Surfaces conflicts, facilitates debate, produces unified plan with PO decision points |
 | **Team Review** | `/team-review` | Spawns all 10 personas in parallel to review existing work. Consolidates findings, surfaces disagreements, produces prioritized action items |
-| **Standup** | `/standup` | Daily pulse — red/yellow/green across all 10 personas. Green stays silent. Blockers first, PO decisions surfaced |
-| **Grooming** | `/grooming` | Backlog refinement — pull upcoming beads, each persona evaluates readiness, sizes effort, identifies dependencies, defines acceptance criteria |
+| **Standup** | `/standup` | Two-phase daily pulse. Phase 1: lightweight triage (identity tier only) — red/yellow/green, green stays silent. Phase 2: deep assessment for non-green personas only. User value framing throughout |
+| **Grooming** | `/grooming` | Backlog refinement with **user value gate** — items must articulate who benefits before personas evaluate. Batch mode: all items in one pass per persona. Sizes effort, identifies dependencies, defines acceptance criteria |
 | **Spike** | `/spike` | Targeted investigation — spawns only relevant personas to answer a specific question blocking a decision. Thorough, evidence-based |
 | **Postmortem** | `/postmortem` | Blameless incident analysis — SRE-led, timeline-driven, evidence-based. Contributing factors from each relevant persona, action items tracked as beads |
 | **Onboard** | `/onboard` | Project onboarding — all 10 personas assess an existing project cold, produce a health scorecard (R/Y/G), documentation inventory, and initial backlog |
@@ -67,11 +67,31 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 |------|---------|
 | `_shared/conflict-resolution.md` | How personas disagree and resolve conflicts. Domain authority, escalation to PO, disagree-and-commit protocol. Critical security findings are non-negotiable |
 | `_shared/engineering-discipline.md` | Evidence over intuition. Verify before asserting. Completeness over sampling. Known failure modes. Naming discipline. One-way door protocol |
+| `*/identity.md` | Condensed identity tier for each persona — used by two-phase standup and lightweight triage. Domain authority, professional biases, and standup triggers in ~15 lines |
 
 ## Key Design Decisions
 
 ### Conflict Is Expected
 Each persona has a "Professional Perspective" section that defines what they advocate for, what they're skeptical of, and when they should push back even if everyone else agrees. The security engineer fights for security. The PM fights for shipping. The UX designer fights for the user. These biases collide — by design.
+
+### Protector Roles
+Four personas are explicitly framed as **protectors** — their domain authority exists to guard something, not to serve feature delivery on demand:
+- **Security Engineer** — guards the system and its users from harm
+- **Database Engineer** — guards data integrity, stability, and performance
+- **SRE** — guards production reliability and operational stability
+- **QA Engineer** — last line of defense before code reaches users
+
+Protectors can say no. Their findings don't need to justify themselves through feature delivery — preventing harm is the justification. This framing counteracts the LLM tendency to accommodate and smooth over legitimate domain concerns.
+
+### User Value Lens
+Every persona is oriented toward delivering **user outcomes**, not domain work. The PM owns a **value gate** — no work enters the backlog without a stated user benefit ("who benefits and how will we know?"). Standup triggers are framed by user impact ("users will experience 10s page loads" not "the architecture isn't elegant"). Domain expertise serves user needs — it doesn't generate them.
+
+### Two-Tier Identity System
+Each persona has two files:
+- **`SKILL.md`** — Full persona definition with methodologies, frameworks, output formats (~200+ lines)
+- **`identity.md`** — Condensed identity for lightweight triage (~15 lines: domain authority, biases, standup triggers)
+
+The standup uses a **two-phase approach**: Phase 1 loads only `identity.md` for fast red/yellow/green triage across all 10 personas. Phase 2 loads the full `SKILL.md` only for personas that reported non-green. This optimizes token usage — a fully green standup costs ~10% of what loading all full personas would.
 
 ### Security Escalation Tiers
 - **Critical (9.0-10.0)**: Non-negotiable. PO cannot override. Work stops
@@ -79,7 +99,7 @@ Each persona has a "Professional Perspective" section that defines what they adv
 - **Medium (4.0-6.9)**: PO weighs cost of fix against actual risk
 - **Low/Informational (0.0-3.9)**: Lowest priority. Address when convenient
 
-### Engineering Discipline (Identity Primer)
+### Engineering Discipline
 Front-loading known LLM failure modes into each persona produces significantly better session outcomes. The project engineer gets a deep version with explicit failure modes. All personas reference the shared principles. The cost of ~100 lines of context at session start is far cheaper than reworking things because the agent wouldn't follow instructions the first time.
 
 ### Tiered Security Scanning
@@ -139,8 +159,7 @@ Invoke any persona directly for domain-specific consultation:
 /ux-designer Design the onboarding flow for new users
 /code-reviewer Review this PR for quality and consistency
 /database-engineer Design the schema for the orders system
-/sre Define SLOs for the payment service
-/observability-engineer Design the instrumentation plan for this service
+/sre Define SLOs and instrumentation plan for the payment service
 /qa-engineer Create a test strategy for the checkout flow
 /technical-writer Audit the documentation for the API
 ```
@@ -189,13 +208,14 @@ When Things Break
 - **Quick**: Bullet points, top 2-3 conflicts, concise output
 - **Full**: Complete structured output per each persona's format
 
-`/spike` always targets only relevant personas (2-4), not all 11.
-`/standup` is always fast — green is silent.
+`/spike` always targets only relevant personas (2-4), not all 10.
+`/standup` uses two-phase triage — Phase 1 loads `identity.md` only for fast R/Y/G, Phase 2 loads full `SKILL.md` for non-green personas only. Green is silent.
+`/grooming` runs in batch mode — each persona evaluates all items in a single pass, with a user value gate before any persona is spawned.
 `/postmortem` includes only personas relevant to the incident.
 
 ## How the Team Interacts
 
-Every pair of personas (55 unique pairs across 11 personas) has documented bidirectional interactions. Each persona knows:
+Every pair of personas (45 unique pairs across 10 personas) has documented bidirectional interactions. Each persona knows:
 - What they own (domain authority)
 - What other personas own (where to defer)
 - Where they'll naturally disagree (professional bias)
@@ -213,7 +233,7 @@ These are by design — the personas will argue about these:
 | User Experience vs. Constraints | UX ↔ Security, Architect, Engineer | Security friction, architectural limits, technical feasibility |
 | Reliability vs. Features | SRE ↔ PM | Error budget spent — feature freeze or keep shipping? |
 | Data Integrity vs. Speed | DBA ↔ Engineer, Architect | Normalize or denormalize? Migration safety vs. velocity |
-| Observability Cost vs. Signal | Observability ↔ SRE | 100% trace sampling vs. budget |
+| Observability Cost vs. Signal | SRE ↔ Architect, Engineer | 100% trace sampling vs. budget — SRE owns both sides since the Observability Engineer merged into the SRE role |
 | Test Coverage vs. Shipping | QA ↔ PM, Engineer | Performance testing before launch or after? |
 | Documentation vs. "Later" | Technical Writer ↔ Everyone | Is docs part of done, or a follow-up that never happens? |
 
@@ -304,7 +324,7 @@ This matrix was reviewed by all personas in parallel. Contested decisions were r
 - **Security Engineer is Accountable** for secrets management and the scan pipeline — sets policy, others implement
 - **Activities are split where co-ownership was contested** — CI/CD (Build & Deploy vs. Test Gates), Test Strategy vs. TDD/Unit+Integration
 - **Everyone is Consulted** during grooming — every persona evaluates backlog items
-- **Implementation involves the whole team** — DBA, SRE, UX, ObsEng, QA, and CR are all Consulted, not just Informed
+- **Implementation involves the whole team** — DBA, SRE, UX, QA, and CR are all Consulted, not just Informed
 
 ### Conflict Resolution
 
@@ -327,7 +347,7 @@ These skills are designed to be adapted. If you install with `--copy`, you can m
 | **Board tool** | `project-manager/SKILL.md` | Default is [beads](https://github.com/steveyegge/beads) (`bd`). Swap for Jira CLI, Linear, GitHub Issues, etc. |
 | **API conventions** | `code-reviewer/SKILL.md` | Default is REST with snake_case, versioned URLs, standard envelopes. Adjust for GraphQL, gRPC, etc. |
 | **Design system** | `ux-designer/SKILL.md` | Default is build-from-scratch. Point to your existing design system |
-| **Observability stack** | `observability-engineer/SKILL.md` | Default evaluates per-project. Set your standard stack (Datadog, Grafana Cloud, etc.) |
+| **Observability stack** | `sre/SKILL.md` | Default evaluates per-project. Set your standard stack (Datadog, Grafana Cloud, etc.) |
 | **Database preferences** | `database-engineer/SKILL.md` | Default is PostgreSQL-primary. Adjust for your data platform |
 | **Retro location** | `retro/SKILL.md` | Default is `~/retros/`. Change to your preferred location |
 | **Conflict resolution** | `_shared/conflict-resolution.md` | Adjust domain authority boundaries, security escalation tiers, or the disagree-and-commit protocol |
@@ -349,36 +369,58 @@ Follow the pattern established by existing personas:
 5. Add a Conflict Resolution section with domain-specific guidance
 6. Add Relationship sections for every other persona they interact with
 7. Define structured output formats
-8. Update `team-plan/SKILL.md` and `team-review/SKILL.md` to include the new persona's agent prompt
+8. Create an `identity.md` — condensed identity (~15 lines) with domain authority, professional biases, and standup triggers
+9. Update `team-plan/SKILL.md` and `team-review/SKILL.md` to include the new persona's agent prompt
 
 ## Project Structure
 
 ```
 claude-agent-dev-team/
 ├── _shared/
-│   ├── conflict-resolution.md    # Conflict resolution protocol
-│   └── engineering-discipline.md # Engineering discipline principles
-├── security-engineer/SKILL.md    # Security Engineer persona
-├── it-architect/SKILL.md         # IT Architect persona
-├── project-manager/SKILL.md      # Project Manager persona
-├── project-engineer/SKILL.md     # Project Engineer persona
-├── ux-designer/SKILL.md          # UX/UI Designer persona
-├── code-reviewer/SKILL.md        # Code Reviewer persona
-├── database-engineer/SKILL.md    # Database Engineer persona
-├── sre/SKILL.md                  # Site Reliability Engineer persona
-├── observability-engineer/SKILL.md # Observability Engineer persona
-├── qa-engineer/SKILL.md          # QA / Test Engineer persona
-├── technical-writer/SKILL.md     # Technical Writer persona
-├── team-plan/SKILL.md            # Team planning ceremony
-├── team-review/SKILL.md          # Team review ceremony
-├── standup/SKILL.md              # Daily standup ceremony
-├── grooming/SKILL.md             # Backlog refinement ceremony
-├── spike/SKILL.md                # Technical spike ceremony
-├── postmortem/SKILL.md           # Incident postmortem ceremony
-├── retro/SKILL.md                # Session retrospective ceremony
-├── install.sh                    # Installer script
-├── LICENSE                       # MIT License
-└── README.md                     # This file
+│   ├── conflict-resolution.md       # Conflict resolution protocol
+│   └── engineering-discipline.md    # Engineering discipline principles
+├── security-engineer/
+│   ├── SKILL.md                     # Full persona — Security Engineer (protector)
+│   └── identity.md                  # Condensed identity for triage
+├── it-architect/
+│   ├── SKILL.md                     # Full persona — IT Architect
+│   └── identity.md
+├── project-manager/
+│   ├── SKILL.md                     # Full persona — Project Manager (value gate owner)
+│   └── identity.md
+├── project-engineer/
+│   ├── SKILL.md                     # Full persona — Project Engineer
+│   └── identity.md
+├── ux-designer/
+│   ├── SKILL.md                     # Full persona — UX Designer (user advocate)
+│   └── identity.md
+├── code-reviewer/
+│   ├── SKILL.md                     # Full persona — Code Reviewer
+│   └── identity.md
+├── database-engineer/
+│   ├── SKILL.md                     # Full persona — Database Engineer (protector)
+│   └── identity.md
+├── sre/
+│   ├── SKILL.md                     # Full persona — SRE + Observability (protector)
+│   └── identity.md
+├── qa-engineer/
+│   ├── SKILL.md                     # Full persona — QA Engineer (protector)
+│   └── identity.md
+├── technical-writer/
+│   ├── SKILL.md                     # Full persona — Technical Writer
+│   └── identity.md
+├── team-plan/SKILL.md               # Team planning ceremony
+├── team-review/SKILL.md             # Team review ceremony
+├── standup/SKILL.md                 # Two-phase daily standup ceremony
+├── grooming/SKILL.md                # Backlog refinement with value gate
+├── spike/SKILL.md                   # Technical spike ceremony
+├── postmortem/SKILL.md              # Incident postmortem ceremony
+├── onboard/SKILL.md                 # Project onboarding ceremony
+├── retro/SKILL.md                   # Session retrospective ceremony
+├── install.sh                       # Installer script (macOS/Linux)
+├── install.ps1                      # Installer script (Windows)
+├── LICENSE                          # MIT License
+└── README.md                        # This file
 ```
 
 ## Credits

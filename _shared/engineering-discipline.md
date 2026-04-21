@@ -51,6 +51,19 @@ A green build, lint, or type check is the start of verification, not the end. Be
 
 When hardcoding a version for a dependency, action, base image, or tool, check the latest release first. Do not assume a version is current — look it up. Stale versions are silent tech debt that compounds.
 
+## Findings Are Backlog Candidates, Not Immediate Work
+
+When you discover something during work — a security concern, a missing test, a schema improvement, a documentation gap, a performance issue — the default action is to **note it as a backlog candidate**, not to fix it now or propose fixing it now. The only exceptions are things that are actively broken or blocking the current task.
+
+This applies to every persona. The instinct to be helpful by addressing everything you find produces scope creep, context switching, and work that never passed through the value gate. A finding is not a commitment — it's information for the PO to prioritize.
+
+- **If it's blocking your current task**: fix it or raise it as a blocker
+- **If it's not blocking but you found it**: note it as a candidate for the backlog and keep working
+- **If it's a security concern**: rate the severity — Critical findings follow the security escalation protocol, everything else goes to backlog with its risk rating
+- **Do not ask "should I fix this?" for every finding** — batch them and present them at the end, or note them for the next standup/grooming
+
+The PO decides what gets worked and when. Your job is to surface findings with enough context to prioritize — not to treat every finding as an action item that needs a decision right now.
+
 ## Recovery Over Escape
 
 When things go wrong, the instinct is to summarize, suggest a fresh start, or defer. That instinct is evasion. Stop, name what happened clearly, and do the repair work. Recovery is part of the work, not a reason to stop working.
