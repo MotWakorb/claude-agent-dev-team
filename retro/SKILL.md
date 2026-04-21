@@ -41,11 +41,21 @@ Begin the file with a level-1 heading derived from the filename (underscore repl
 
 **ContextUsed:** Estimate from available signals — conversation length, tool call volume, file reads. Be honest about the estimate.
 
-### Section 1: What We Did Well Together
+### Section 1: User Value Delivered
+
+What user/customer value did this session actually produce? Be specific:
+- What user problem did we address?
+- What user outcome did we achieve or move closer to?
+- If we shipped something — how will users benefit?
+- If we didn't ship — did the work we did move toward a user outcome, or did we create work that creates more work?
+
+If the session produced no measurable user value, say so. That's the most important finding a retro can surface.
+
+### Section 2: What We Did Well Together
 
 One thing — with a concrete moment from the session. Not "good collaboration" — name the specific exchange, decision, or outcome that worked.
 
-### Section 2: What the PO Could Improve
+### Section 3: What the PO Could Improve
 
 One thing the PO did that made the work harder, slower, or lower quality — even slightly. This is the hardest section to write honestly and the most valuable one. Be specific. Reference the moment. The PO asked for this feedback because they want to improve.
 
@@ -56,7 +66,7 @@ Examples of real feedback, not softened generalizations:
 
 Do NOT write "the PO could provide more context" or other vague politeness. Name the moment.
 
-### Section 3: What the Agent Got Wrong
+### Section 4: What the Agent Got Wrong
 
 One thing the agent got wrong or could have handled better. Reference the specific turn or action. This is accountability, not self-deprecation.
 
@@ -65,7 +75,7 @@ Examples:
 - "I subsampled the beads output instead of reading all of it, which led to a missed dependency"
 - "I should have pushed back on the timeline instead of silently accepting scope I knew was too large for the sprint"
 
-### Section 4: What Would Make the Project Better
+### Section 5: What Would Make the Project Better
 
 One thing that would improve the project, team, or process. This is forward-looking. It could be:
 - A gap in the skills/personas
@@ -74,61 +84,71 @@ One thing that would improve the project, team, or process. This is forward-look
 - An architectural concern that surfaced during the session
 - A pattern that keeps recurring and should be addressed
 
-### Section 5: Persona Perspectives
+### Section 6: Persona Perspectives
 
-For each persona that was active or relevant during the session, capture their specific view. Each persona evaluates the session through their professional lens — they do NOT silently agree with each other.
+For each persona that was active or relevant during the session, capture their specific view. Each persona evaluates the session through their professional lens — they do NOT silently agree with each other. Every perspective must address user value.
 
 ```markdown
 ## Persona Perspectives
 
 ### Security Engineer
+- **User value assessment**: [Did security work this session protect users from real harm, or was it domain-driven compliance?]
 - **Session assessment**: [Did security concerns get adequate attention? Were they heard?]
-- **What I'd flag**: [Security-relevant observations from this session's work]
+- **What I'd flag**: [Security-relevant observations — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### IT Architect
+- **User value assessment**: [Did architecture decisions serve the user's needs, or did we architect for the architecture's sake?]
 - **Session assessment**: [Were architectural decisions made thoughtfully? Were trade-offs explicit?]
-- **What I'd flag**: [Architectural concerns from this session's work]
+- **What I'd flag**: [Architectural concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### Project Manager
+- **User value assessment**: [Did the work we organized this session deliver or advance user outcomes? Was any work created that doesn't serve users?]
 - **Session assessment**: [Was work organized effectively? Were commitments realistic?]
-- **What I'd flag**: [Process or delivery concerns from this session]
+- **What I'd flag**: [Process or delivery concerns — especially work-creation without user value]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### Project Engineer
+- **User value assessment**: [Did the implementation deliver the user value, or did we build technically sound features nobody asked for?]
 - **Session assessment**: [Was the implementation approach sound? Were engineering disciplines followed?]
-- **What I'd flag**: [Technical concerns from this session's work]
+- **What I'd flag**: [Technical concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### UX Designer
+- **User value assessment**: [Did we solve the user's actual problem, or did we design for an idealized user?]
 - **Session assessment**: [Were user experience implications considered? Was the user's perspective represented?]
-- **What I'd flag**: [UX concerns from this session's work]
+- **What I'd flag**: [UX concerns — framed by evidence of user impact, not design preference]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### Code Reviewer
+- **User value assessment**: [Did quality standards serve users (catching bugs they'd experience) or serve internal aesthetics?]
 - **Session assessment**: [Was code quality, test quality, and naming discipline maintained?]
-- **What I'd flag**: [Quality concerns from this session's work]
+- **What I'd flag**: [Quality concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### Database Engineer
+- **User value assessment**: [Did data work serve user-facing features and performance, or was it schema aesthetics?]
 - **Session assessment**: [Were data modeling and schema decisions sound? Were query patterns considered?]
-- **What I'd flag**: [Data integrity, performance, or migration concerns from this session]
+- **What I'd flag**: [Data concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### SRE
+- **User value assessment**: [Did reliability work protect users' experience, or was it observability for its own sake?]
 - **Session assessment**: [Were operational and observability concerns addressed? Were SLOs, instrumentation, and reliability considered?]
-- **What I'd flag**: [Reliability, observability, instrumentation, or operational concerns from this session]
+- **What I'd flag**: [Reliability concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### QA Engineer
+- **User value assessment**: [Did testing focus on user-facing behavior, or on coverage metrics?]
 - **Session assessment**: [Was the test strategy sound? Were testing gaps identified?]
-- **What I'd flag**: [Test quality, coverage, or strategy concerns from this session]
+- **What I'd flag**: [Test concerns — framed by user impact]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 
 ### Technical Writer
+- **User value assessment**: [Did documentation serve someone who needs it (user, operator, new dev), or was it documentation for completeness?]
 - **Session assessment**: [Was documentation considered? Were decisions and knowledge captured?]
-- **What I'd flag**: [Documentation gaps or stale docs from this session's work]
+- **What I'd flag**: [Documentation gaps — framed by who is harmed by the gap]
 - **Disagreement**: [Where I disagreed with another persona's approach, if applicable]
 ```
 
@@ -138,16 +158,17 @@ For each persona that was active or relevant during the session, capture their s
 - "No concerns" is acceptable only if genuinely true. Do not fill in "no concerns" as a default — think through the session from that persona's lens
 - The Disagreement field is the most important one. If every persona agrees, either the session was genuinely excellent or the retro is silently averaging. Check which one it is
 
-### Section 6: Lessons for Future Sessions
+### Section 7: Lessons for Future Sessions
 
 Durable lessons that should inform future work. These are candidates for memory — things that won't be obvious from the code or git history.
 
 ```markdown
 ## Lessons
 
-- **Keep**: [Pattern or approach that worked and should be repeated]
-- **Stop**: [Pattern or approach that didn't work and should be avoided]
-- **Start**: [Something we should try next time]
+- **Keep**: [Pattern or approach that delivered user value and should be repeated]
+- **Stop**: [Pattern or approach that created work without user value]
+- **Start**: [Something we should try next time to deliver more user value or less wasted work]
+- **Value learning**: [What did we learn about what users actually need vs. what we assumed they needed?]
 ```
 
 If a lesson is durable enough to warrant saving to memory, do so. If it's session-specific, leave it in the retro.

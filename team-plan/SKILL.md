@@ -14,12 +14,14 @@ This skill orchestrates a parallel planning session across all six personas. Eac
 ### Step 0: Get the Brief
 
 If the PO hasn't provided a project brief yet, ask for one. The brief should include:
-- What are we building and why?
-- Who is it for?
+- **What user/customer problem are we solving?** Not what we're building — what problem exists for real people
+- **Who specifically is affected?** Name the user type, customer segment, or stakeholder
+- **What does success look like for them?** How will their experience change? What metric or signal proves we solved it?
+- **What evidence do we have that this problem matters?** Support tickets, user research, revenue data, churn analysis, compliance requirement with a deadline — not "we think users would like this"
 - Any known constraints (timeline, budget, team size, existing systems)?
 - Any known technical requirements or preferences?
 
-If the PO has already provided this context in the conversation, proceed directly.
+If the PO has already provided this context in the conversation, proceed directly. If the brief describes a solution without stating the user problem, push back: "What user problem does this solve?"
 
 ### Step 1: Determine Depth
 
@@ -64,13 +66,12 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Initial threat model and attack surface assessment
-- Security requirements and constraints that will shape the architecture
-- Compliance requirements (OWASP, NIST, CIS, ISO 27001, SOC 2, Zero Trust as applicable)
-- Security risks in any proposed technology or architecture choices
+- Security risks that could harm users (data exposure, account compromise, service disruption) — prioritize by user impact, not CVSS score alone
+- Compliance requirements with real deadlines or user-facing consequences
+- Security constraints that shape the architecture — but justify each by the user harm it prevents
 - Where you anticipate disagreeing with the architect, engineer, or UX designer — state your position clearly
 
-Advocate for security. Do not soften your concerns to be agreeable.
+Frame every security recommendation in terms of user impact: "Users' payment data could be exposed" not just "This fails PCI DSS requirement 3.4." Advocate for security that protects users. Do not generate findings that create work without proportional user benefit.
 ```
 
 #### IT Architect Agent
@@ -85,14 +86,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Phase 1 (get started) and Phase 2 (scale properly) architecture
-- Technology decisions with justification and exit paths
-- Orchestration choice (justify — don't default to Kubernetes)
-- Cost model
-- Portability — no vendor lock-in
+- Phase 1 architecture that delivers the user value described in the brief — no more, no less
+- Phase 2 only if the brief includes evidence of growth (signed contracts, usage projections, capacity data) — not speculative "what if we need 100x"
+- Technology decisions justified by user needs and operational cost, not technical preference
+- Cost model tied to user value — what does each architectural choice cost per user served?
 - Where you anticipate disagreeing with security (on control complexity), the engineer (on implementation complexity), or UX (on infrastructure requirements) — state your position clearly
 
-Advocate for the right architecture. Do not over-engineer or under-engineer to avoid conflict.
+Advocate for architecture that serves the user problem. Challenge yourself: "Would I still propose this architecture if we had half the budget and twice the urgency?" Do not design for hypothetical scale.
 ```
 
 #### Project Manager Agent
@@ -107,14 +107,14 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Work breakdown structure — epics and key tasks
-- Sprint plan skeleton — what ships first?
-- Risk register — what could derail this?
-- Dependencies between workstreams (security, architecture, UX, implementation)
+- Work breakdown structure — epics and key tasks, each with a user value statement
+- Sprint plan skeleton — what delivers user value first? Sequence by user impact, not technical convenience
+- Risk register — what could prevent users from getting value? (Not just project risks — user outcome risks)
+- Dependencies between workstreams — which are truly blocking and which are domain preferences?
 - What the PO needs to decide before work can begin
-- Where you anticipate tension between personas on scope, timeline, or priority — state the trade-offs clearly
+- Where you anticipate tension between personas generating work vs. delivering user value — state the trade-offs clearly
 
-Advocate for shipping. Challenge scope creep and over-engineering from any persona.
+Advocate for delivering user value. Challenge any work that can't articulate who benefits and how. Every persona will find more work in their domain — your job is to ask "does the user need this?"
 ```
 
 #### Project Engineer Agent
@@ -129,14 +129,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Implementation feasibility and approach
-- TDD strategy — what gets tested first?
-- IaC approach (Terraform modules, Ansible roles needed)
-- CI/CD pipeline design (dev → preprod → prod with tiered scanning)
-- Technical risks and unknowns
+- Implementation feasibility — can we build what delivers the user value within the stated constraints?
+- What's the fastest path to getting the core user value into users' hands? What can wait?
+- TDD strategy focused on user-facing behavior, not internal implementation details
+- Technical risks that could prevent users from getting value
 - Where you anticipate disagreeing with the architect (on complexity), security (on implementation burden), or UX (on feasibility) — state your position clearly
 
-Advocate for practical, buildable solutions. Challenge designs that can't be implemented, tested, or operated.
+Advocate for the simplest implementation that delivers the user value. Challenge work that makes the engineering elegant but doesn't change the user outcome.
 ```
 
 #### UX Designer Agent
@@ -151,13 +150,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- User types and key user stories (with API dependencies)
-- Information architecture and key flows
-- Design system considerations
-- Accessibility approach
+- User types affected by the problem described in the brief — who are they and what do they experience today?
+- Key user stories that directly address the stated problem — not aspirational features
+- The smallest design that solves the user's problem — what's the simplest flow that delivers the value?
+- Accessibility as a baseline, not an add-on
 - Where you anticipate disagreeing with security (on user friction), the architect (on infrastructure constraints), or the engineer (on feasibility) — state your position clearly
 
-Advocate for the user. Challenge constraints that harm user experience without proportional benefit.
+Advocate for solving the user's actual problem. Challenge yourself: "Am I designing the ideal experience, or the experience that solves the stated problem?" Don't expand scope beyond the user need.
 ```
 
 #### Code Reviewer Agent
@@ -172,13 +171,12 @@ Project Brief:
 [brief]
 
 Specifically address:
-- API contract conventions for this project (naming, response envelopes, versioning)
-- Naming conventions and style guide decisions specific to this project
-- Test strategy standards (what TDD looks like for this project)
-- Quality gates and review standards
+- API contract conventions that serve API consumers (the users of the API) — not internal aesthetics
+- Quality standards proportional to user impact — critical paths get more rigor, internal utilities get less
+- Test strategy focused on user-facing behavior and the user value being delivered
 - Where you anticipate disagreeing with the engineer (on velocity vs. quality), the architect (on API design), or the PM (on timeline pressure) — state your position clearly
 
-Advocate for code quality and consistency. The codebase outlives any sprint.
+Advocate for quality that serves users. Challenge yourself: "Does this quality standard improve the user's experience, or does it improve how I feel about the code?"
 ```
 
 #### Database Engineer Agent
@@ -193,14 +191,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Data model design — entities, relationships, normalization decisions
-- Database engine selection rationale (PostgreSQL, MongoDB, Redis — when and why)
-- Schema design with indexes based on anticipated access patterns
-- Migration strategy for the initial schema and anticipated changes
-- Data volume projections and performance implications
+- Data model that supports the user-facing features described in the brief — design for the access patterns users create, not theoretical ones
+- Database engine selection justified by the actual workload, not preference
+- Migration strategy that doesn't disrupt users during delivery
+- Performance considerations tied to user-facing latency and SLOs — "this query could be faster" is only relevant if users notice
 - Where you anticipate disagreeing with the architect (on data architecture), the engineer (on ORM usage), or the UX designer (on API response shapes that require expensive queries) — state your position clearly
 
-Advocate for data integrity and query performance. The database outlives the application code.
+Advocate for data integrity that serves users. Challenge yourself: "Is this schema decision driven by the user's data needs, or by my preference for normalization purity?"
 ```
 
 #### SRE Agent
@@ -215,17 +212,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- SLO definitions for the system (availability, latency, correctness)
-- Observability strategy (metrics, logging, tracing — tools and approach)
-- Alerting strategy with severity levels and runbook requirements
-- Capacity planning and scaling strategy
-- Incident response preparedness
-- Observability and instrumentation plan (metrics design, logging architecture, tracing strategy, pipeline, cost model)
-- Instrumentation standards for the code reviewer to enforce
-- Deployment safety (health checks, rollback, canary)
+- SLOs derived from user expectations — what latency, availability, and correctness do users actually need? Don't gold-plate SLOs beyond user expectations
+- Observability that helps you detect when users are affected — not observability for its own sake
+- Alerting tied to user impact — alert on user-facing symptoms, not internal metrics that don't correlate to user experience
+- Deployment safety that protects users from bad releases (health checks, rollback, canary)
 - Where you anticipate disagreeing with the architect (on operational complexity), the engineer (on deployment practices), or the PM (on reliability work vs. feature work) — state your position clearly
 
-Advocate for reliability. The system that can't be operated is the system that will fail.
+Advocate for reliability that users experience. Challenge yourself: "If I didn't build this observability, would users notice? Would we fail to detect a user-facing problem?"
 ```
 
 #### QA Engineer Agent
@@ -240,14 +233,13 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Test pyramid design (unit, integration, E2E ratios and tooling)
-- Test environment strategy (local, CI, preprod, performance)
-- Test data strategy (synthetic generation, edge cases, volume)
-- Performance testing approach (load profiles, SLO validation)
-- Risk-based testing priorities — what's most likely to break?
+- Test strategy focused on user-facing behavior and the user value being delivered — test what users experience, not internal implementation details
+- Risk-based testing priorities — what's most likely to break the user's experience?
+- Performance testing tied to user SLOs — not abstract benchmarks
+- Test investment proportional to user impact — critical user paths get thorough testing, internal utilities get basic coverage
 - Where you anticipate disagreeing with the engineer (on test coverage), the PM (on test time), or the code reviewer (on test standards) — state your position clearly
 
-Advocate for quality. "It works on my machine" is not a test result.
+Advocate for testing that catches user-facing problems. Challenge yourself: "Does this test protect users, or does it protect my coverage metric?"
 ```
 
 #### Technical Writer Agent
@@ -262,13 +254,12 @@ Project Brief:
 [brief]
 
 Specifically address:
-- Documentation inventory — what docs does this project need? (API reference, architecture overview, onboarding guide, runbooks, developer guides, changelog)
-- Documentation-as-code approach — where do docs live, how are they maintained?
-- Definition of done — documentation requirements for each type of work item
-- Onboarding plan — how does a new team member get productive?
+- Documentation that serves users: API docs consumers actually reference, user guides that reduce support tickets, runbooks that reduce outage duration
+- Documentation proportional to user impact — critical user-facing APIs get thorough docs, internal utilities get inline comments
+- What documentation would actually reduce user friction or support burden?
 - Where you anticipate disagreeing with the engineer (on documentation effort), the PM (on documentation time in sprints), or anyone who says "we'll document it later" — state your position clearly
 
-Advocate for knowledge that survives. If it's not documented, it doesn't exist.
+Advocate for documentation that helps someone. Challenge yourself: "Will anyone read this, or am I documenting for completeness?" Write for the person who needs it, not for the audit.
 ```
 
 ### Step 3: Facilitate the Team Debate
@@ -277,13 +268,15 @@ After all agents report back, DO NOT simply concatenate their outputs. Synthesiz
 
 **3a. Identify Conflicts**
 
-Read all six outputs and identify every point where two or more personas disagree. Categorize each conflict:
+Read all outputs and identify every point where two or more personas disagree. Categorize each conflict — and critically, frame every conflict in terms of user impact, not domain preference:
 
-| Conflict | Personas | Category | Stakes |
-|----------|----------|----------|--------|
-| [Description] | Security vs. Architect | Security control complexity | [What happens if we go each way] |
-| [Description] | Engineer vs. UX | Implementation feasibility | [What happens if we go each way] |
+| Conflict | Personas | User Impact | Stakes |
+|----------|----------|------------|--------|
+| [Description] | Security vs. Architect | [How does each option affect users?] | [What happens to users if we go each way] |
+| [Description] | Engineer vs. UX | [How does each option affect users?] | [What happens to users if we go each way] |
 | ... | ... | ... | ... |
+
+Also identify a second category: **Work Creation Conflicts** — where a persona is proposing work that another persona (or the PM) believes doesn't deliver proportional user value. These are the most important conflicts to surface.
 
 **3b. Present Each Conflict**
 
@@ -298,8 +291,8 @@ For each conflict, present BOTH sides faithfully — do not average, do not pick
 **[Persona B] says:**
 [Their position, in their voice, with their reasoning]
 
-**What's at stake:**
-[What the PO gains/loses with each choice]
+**User impact:**
+[What happens to users/customers with each choice — not what happens to the architecture, the codebase, or the team]
 
 **Conflict Resolution Protocol says:**
 [Which persona has domain authority here, and what the escalation path is]
@@ -317,10 +310,11 @@ Present a clear list of decisions the PO needs to make:
 ## Decision Points
 
 ### Decision 1: [Title]
+- **User impact**: [How does this decision affect users/customers?]
 - **Context**: [Why this decision matters]
-- **Option A**: [Description] — advocated by [personas]
-- **Option B**: [Description] — advocated by [personas]
-- **Trade-off**: [What you gain/lose with each]
+- **Option A**: [Description] — advocated by [personas]. User outcome: [what users get]
+- **Option B**: [Description] — advocated by [personas]. User outcome: [what users get]
+- **Trade-off**: [What users gain/lose with each — not what the team gains/loses]
 - **Recommendation**: [If the team has a majority view, state it. If split, say so]
 
 ### Decision 2: [Title]
@@ -339,13 +333,19 @@ After the PO has made their decisions, produce a single unified plan document th
 ## Date: [Date]
 ## Participants: Security Engineer, IT Architect, Project Manager, Project Engineer, UX Designer, Code Reviewer
 
+## User Problem
+[The user/customer problem this project solves — from the brief]
+
+## Success Criteria
+[How we'll know users benefited — measurable outcomes]
+
 ## Project Brief
 [Original brief]
 
 ## Decisions Made
-| Decision | Choice | Rationale | Dissent |
-|----------|--------|-----------|---------|
-| ... | ... | PO's reasoning | [Who disagreed and why — for the record] |
+| Decision | Choice | User Impact | Rationale | Dissent |
+|----------|--------|------------|-----------|---------|
+| ... | ... | [What users get] | PO's reasoning | [Who disagreed and why — for the record] |
 
 ## Architecture
 [From architect, adjusted per decisions]

@@ -7,7 +7,7 @@ user-invocable: true
 
 # Daily Standup
 
-Fast. Focused. Blockers first. If everything is green, say so and move on. This is not a planning session, not a review, not a retro. This is "where are we, what's stuck, what does the PO need to know right now."
+Fast. Focused. User value first, blockers second. If everything is green, say so and move on. This is not a planning session, not a review, not a retro. This is "are we delivering user value, what's stuck, what does the PO need to know right now."
 
 ## Process
 
@@ -42,18 +42,19 @@ Current board state:
 Project context:
 [brief description of current sprint/project state from conversation]
 
-Rate your domain status:
+Rate your domain status — framed by user impact:
 
-- RED: Something is actively blocked, broken, or at risk. The PO needs to know NOW
-- YELLOW: A concern is developing. Not blocked yet, but heading that way without action
-- GREEN: No concerns from your domain. Everything is on track
+- RED: Something is actively preventing user value delivery — blocked, broken, or users are being harmed. The PO needs to know NOW
+- YELLOW: A concern is developing that could delay or diminish user value delivery. Not blocked yet, but heading that way without action
+- GREEN: No concerns from your domain. User value delivery is on track
 
 Rules:
 - If you are GREEN, respond with ONLY: "GREEN — no concerns"
-- If you are YELLOW, respond in 2-3 sentences: what the concern is and what would prevent it from going red
-- If you are RED, respond with: what's blocked/broken, what the impact is, and what you need to unblock it
+- If you are YELLOW, respond in 2-3 sentences: what the concern is, how it affects user value delivery, and what would prevent it from going red
+- If you are RED, respond with: what's blocked/broken, what the user/customer impact is, and what you need to unblock it
+- Frame everything in terms of user impact. "The architecture isn't elegant" is not RED. "Users will experience 10s page loads because of the architecture" is RED
 
-Do NOT pad your response. Do NOT list what's going well. The standup only cares about problems and risks.
+Do NOT pad your response. Do NOT list what's going well. Do NOT flag domain concerns that don't affect user value delivery.
 ```
 
 ### Step 2: Phase 2 — Deep Assessment (Non-Green Only)
@@ -92,6 +93,10 @@ After both phases complete, present ONLY the non-green statuses. This is excepti
 
 ```markdown
 ## Standup — [Date]
+
+### Value Delivery Status
+- **User value shipped since last standup**: [What user outcomes were delivered, if any]
+- **User value at risk**: [Any committed user outcomes that may not be delivered this sprint]
 
 ### Board Snapshot
 - **In Progress**: [count]
@@ -146,20 +151,20 @@ The standup identifies problems. Other skills solve them.
 
 ## What Each Persona Checks
 
-Quick reference for what each persona evaluates during standup:
+Quick reference — every trigger is framed by user/customer impact:
 
 | Persona | RED if... | YELLOW if... |
 |---------|----------|-------------|
-| **Security Engineer** | Critical/High finding unresolved, security scan failures blocking preprod, active vulnerability | Medium finding aging, scan coverage gaps developing, upcoming compliance deadline |
-| **IT Architect** | Architectural decision blocking implementation, design not keeping pace with sprint | ADR pending that blocks future work, tech debt accumulating, scaling concern emerging |
-| **Project Manager** | Sprint goal at risk, multiple items blocked, velocity significantly below commitment | Scope creep detected, carry-over items accumulating, risk register item materializing |
-| **Project Engineer** | Build broken, deployment pipeline failing, blocked on dependency, critical bug in progress | Test failures in CI, IaC drift detected, technical debt slowing implementation |
-| **UX Designer** | Design deliverable blocking implementation, critical usability issue in shipped feature | Design debt accumulating, component spec gaps, accessibility regression |
-| **Code Reviewer** | PRs blocked on review, critical quality issue in merged code, style guide violation pattern | Review queue growing, test quality declining across PRs, naming drift emerging |
-| **Database Engineer** | Migration failed/blocked, query performance degraded in production, data integrity issue | Slow queries trending worse, index gaps on growing tables, migration plan missing |
-| **SRE** | SLO breach, active incident, error budget exhausted, alerting gap discovered, instrumentation broken, can't diagnose production issues, cardinality explosion | Error budget burning faster than expected, capacity approaching limits, runbook gaps, dashboard rot, alert fatigue increasing, observability cost trending above budget |
-| **QA Engineer** | Test environment down, flaky tests blocking CI, critical test gap discovered | Test coverage declining, performance testing overdue, test data stale |
-| **Technical Writer** | Runbook missing for active alert, API docs don't match implementation, onboarding broken | Docs aging, changelog not updated, architecture docs drifting from reality |
+| **Security Engineer** | Users' data is actively at risk (exploitable vulnerability, breach in progress), security issue blocking feature users need | Compliance deadline approaching that could shut down service for users, medium risk aging without remediation |
+| **IT Architect** | Architectural gap preventing delivery of user-facing feature, design choice causing user-visible performance/reliability problems | Architecture decision pending that blocks user value delivery, scaling concern with evidence of real growth |
+| **Project Manager** | Sprint's user value commitment at risk, multiple user-facing items blocked, team producing work without user impact | Scope creep adding work that doesn't serve users, carry-over of user-facing items accumulating |
+| **Project Engineer** | Build/deploy broken (can't ship user value), blocked on dependency for user-facing feature, critical user-facing bug | Test failures blocking user-facing feature delivery, technical debt measurably slowing user value delivery |
+| **UX Designer** | Design gap blocking user-facing feature, critical usability issue users are actively experiencing | User friction identified but not yet addressed, accessibility regression in shipped feature |
+| **Code Reviewer** | Quality issue in user-facing code path, PR for user-facing feature blocked on review | Review queue delaying user value delivery, test quality declining on user-facing features |
+| **Database Engineer** | Migration failed blocking user-facing feature, query performance degraded causing user-visible latency, data integrity issue affecting user data | Slow queries approaching user-visible threshold, migration plan missing for upcoming user feature |
+| **SRE** | SLO breach (users experiencing degraded service), active incident affecting users, error budget exhausted, can't detect user-facing problems | Error budget burning (users will be affected soon), capacity approaching limits users will hit, alert gaps for user-facing services |
+| **QA Engineer** | Test gap on critical user path, flaky tests blocking delivery of user feature, test environment down | Test coverage declining on user-facing features, performance testing overdue for user-facing SLOs |
+| **Technical Writer** | Users can't find how to use a shipped feature, runbook gap causing longer user-facing outages, API docs wrong for external consumers | Docs drifting from reality on user-facing features, onboarding docs creating user confusion |
 
 ## Rules
 
@@ -169,3 +174,4 @@ Quick reference for what each persona evaluates during standup:
 - **Yellow is actionable.** "I'm a bit worried" is not a standup report. State the concern and what prevents it from becoming red
 - **No solutioning in standup.** Identify the problem, suggest the follow-up skill, move on
 - **Board is truth.** If the board says everything is in progress but nothing has moved in 3 days, that's a YELLOW at minimum — from the PM if nobody else
+- **Domain concerns without user impact are not standup items.** "The code could be cleaner" or "we should add more monitoring" are not RED or YELLOW — they're backlog candidates that need to pass the value gate first

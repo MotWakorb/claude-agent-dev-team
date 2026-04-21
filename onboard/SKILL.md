@@ -7,7 +7,7 @@ user-invocable: true
 
 # Project Onboarding
 
-This skill brings the full team up to speed on an existing project they've never seen. Each persona assesses the project from their domain, producing a baseline understanding with gaps, risks, and recommendations. This is a first-contact assessment — comprehensive, honest, and actionable.
+This skill brings the full team up to speed on an existing project they've never seen. Each persona assesses the project from their domain, producing a baseline understanding with gaps, risks, and recommendations. The lens for every assessment is user value: is this project delivering value to its users, and what's getting in the way?
 
 ## Process
 
@@ -389,20 +389,29 @@ Synthesize all 10 agent assessments into a unified onboarding report.
 ## Assessed By: Security Engineer, IT Architect, Project Manager, Project Engineer, UX Designer, Code Reviewer, Database Engineer, SRE, QA Engineer, Technical Writer
 ## Depth: [Quick | Full]
 
+## User Value Assessment
+
+Before the domain scorecard, answer the big question:
+
+- **Who are the users/customers of this project?** [Identified from README, docs, code, or PO input]
+- **What value does this project deliver to them?** [What user problem does it solve?]
+- **Is the project actively delivering that value?** [Shipped, used, and solving the stated problem — or still building?]
+- **What's the biggest risk to user value delivery?** [Cross-domain — not a single persona's concern]
+
 ## Health Scorecard
 
-| Domain | Persona | Status | Top Concern |
+| Domain | Persona | Status | Top Concern (User Impact) |
 |--------|---------|:------:|-------------|
-| Security | Security Engineer | [R/Y/G] | [One-line summary] |
-| Architecture | IT Architect | [R/Y/G] | [One-line summary] |
-| Delivery | Project Manager | [R/Y/G] | [One-line summary] |
-| Implementation | Project Engineer | [R/Y/G] | [One-line summary] |
-| User Experience | UX Designer | [R/Y/G] | [One-line summary] |
-| Code Quality | Code Reviewer | [R/Y/G] | [One-line summary] |
-| Data Layer | Database Engineer | [R/Y/G] | [One-line summary] |
-| Operations | SRE | [R/Y/G] | [One-line summary] |
-| Testing | QA Engineer | [R/Y/G] | [One-line summary] |
-| Documentation | Technical Writer | [R/Y/G] | [One-line summary] |
+| Security | Security Engineer | [R/Y/G] | [One-line — framed by user impact] |
+| Architecture | IT Architect | [R/Y/G] | [One-line — framed by user impact] |
+| Delivery | Project Manager | [R/Y/G] | [One-line — framed by user impact] |
+| Implementation | Project Engineer | [R/Y/G] | [One-line — framed by user impact] |
+| User Experience | UX Designer | [R/Y/G] | [One-line — framed by user impact] |
+| Code Quality | Code Reviewer | [R/Y/G] | [One-line — framed by user impact] |
+| Data Layer | Database Engineer | [R/Y/G] | [One-line — framed by user impact] |
+| Operations | SRE | [R/Y/G] | [One-line — framed by user impact] |
+| Testing | QA Engineer | [R/Y/G] | [One-line — framed by user impact] |
+| Documentation | Technical Writer | [R/Y/G] | [One-line — framed by user impact] |
 
 ## Critical Findings (RED items)
 [Any domain that rated RED — full details, immediate action required]
@@ -450,10 +459,10 @@ This is a cross-cutting reference — every persona needs to know what docs exis
 [Where personas disagree about the project state — surface both perspectives]
 
 ## Recommended First Actions
-| # | Action | Priority | Owner | Rationale |
-|---|--------|----------|-------|-----------|
-| 1 | ... | P0-P3 | [Persona] | ... |
-| 2 | ... | P0-P3 | [Persona] | ... |
+| # | Action | User Value | Priority | Owner | Rationale |
+|---|--------|-----------|----------|-------|-----------|
+| 1 | ... | [Who benefits and how] | P0-P3 | [Persona] | ... |
+| 2 | ... | [Who benefits and how] | P0-P3 | [Persona] | ... |
 
 ## PO Decisions Needed
 [If the assessment reveals decisions that need PO input before work begins]
@@ -470,10 +479,13 @@ If beads is not initialized:
 bd init
 ```
 
-Create initial beads from the critical and high-priority findings:
-- RED findings → Priority 0-1 beads
-- YELLOW findings → Priority 2 beads
+Create initial beads from findings — but apply the value gate first:
+- RED findings with direct user impact → Priority 0-1 beads (with user value statement)
+- RED findings without direct user impact → discuss with PO before creating beads
+- YELLOW findings with user impact → Priority 2 beads (with user value statement)
+- YELLOW findings without user impact → note for consideration, not automatic beads
 - GREEN items → No beads needed
+- Every bead must answer: "Who benefits and how will we know?"
 
 ### Step 5: Recommend Next Steps
 
@@ -486,7 +498,8 @@ Based on the assessment, recommend which ceremony to run next:
 ## Rules
 
 - **This is a first impression, not a verdict.** The team is seeing the project cold. Findings may be wrong — context the team doesn't have yet may explain things that look like problems
-- **Missing things are findings.** No tests, no docs, no CI/CD, no SLOs — these are not "not applicable," they are gaps
-- **Credit what's done well.** An onboarding report that only lists problems is demoralizing and incomplete. Acknowledge good work explicitly
+- **Missing things are findings — but only if they affect users.** No tests on a user-facing checkout flow is a gap. No tests on an internal helper script may be fine. Evaluate missing things by user impact, not by checklist completeness
+- **Credit what's done well.** An onboarding report that only lists problems is demoralizing and incomplete. Acknowledge good work explicitly — especially work that clearly delivers user value
 - **Cross-domain signals are strongest.** When the Security Engineer and the Code Reviewer independently flag the same issue, that's a higher-confidence finding than either alone
 - **Don't prescribe solutions in onboarding.** Identify problems and recommend the right ceremony to solve them. The onboarding report says "what is" — the team-plan says "what to do about it"
+- **Onboarding is not work generation.** Resist the urge to find a problem in every domain. Some domains may be fine. "No concerns" from 4 of 10 personas is a healthy project, not an incomplete assessment
