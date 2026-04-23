@@ -130,6 +130,39 @@ foreach ($skill in $Skills) {
     $installed++
 }
 
+# --- Manage ~/.claude/CLAUDE.md orchestration block ---
+$ClaudeMd = Join-Path (Join-Path $HOME '.claude') 'CLAUDE.md'
+$MarkerStart = '# --- Claude Agent Dev Team (managed) ---'
+$MarkerEnd = '# --- End Claude Agent Dev Team ---'
+
+$Block = @"
+$MarkerStart
+# Orchestration discipline - read before spawning agents or doing implementation work.
+# This file is managed by install.ps1. To update, re-run the installer.
+Read ~/.claude/skills/_shared/orchestration.md before spawning any agent or doing any implementation work.
+$MarkerEnd
+"@
+
+if ((Test-Path $ClaudeMd) -and (Get-Content $ClaudeMd -Raw) -match [regex]::Escape($MarkerStart)) {
+    # Replace existing managed block (idempotent update)
+    $content = Get-Content $ClaudeMd -Raw
+    $pattern = [regex]::Escape($MarkerStart) + '[\s\S]*?' + [regex]::Escape($MarkerEnd)
+    $content = [regex]::Replace($content, $pattern, $Block)
+    Set-Content -Path $ClaudeMd -Value $content -NoNewline
+    Write-Host "  CLAUDE.md: updated managed block"
+}
+else {
+    # Append managed block
+    if ((Test-Path $ClaudeMd) -and (Get-Content $ClaudeMd -Raw).Length -gt 0) {
+        Add-Content -Path $ClaudeMd -Value "`n"
+    }
+    # Ensure parent directory exists
+    $claudeDir = Split-Path $ClaudeMd
+    if (-not (Test-Path $claudeDir)) { New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null }
+    Add-Content -Path $ClaudeMd -Value $Block
+    Write-Host "  CLAUDE.md: added orchestration block to $ClaudeMd"
+}
+
 Write-Host ''
 Write-Host 'Done!'
 Write-Host "  Installed: $installed"

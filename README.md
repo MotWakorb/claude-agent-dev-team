@@ -18,7 +18,7 @@ cd claude-agent-dev-team
 ./install.ps1
 ```
 
-Updates are just `git pull` — symlinks pick up changes automatically.
+Updates are just `git pull` — symlinks pick up changes automatically. If upgrading from a version before orchestration discipline was added, re-run the installer to set up `~/.claude/CLAUDE.md`.
 
 ## Why
 
@@ -67,6 +67,7 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 |------|---------|
 | `_shared/conflict-resolution.md` | How personas disagree and resolve conflicts. Domain authority, escalation to PO, disagree-and-commit protocol. Critical security findings are non-negotiable |
 | `_shared/engineering-discipline.md` | Evidence over intuition. Verify before asserting. Completeness over sampling. Known failure modes. Naming discipline. One-way door protocol |
+| `_shared/orchestration.md` | Orchestrator discipline — how Claude dispatches agents, isolates worktrees, compresses decisions, and avoids merging past in-flight verification. Auto-loaded via `~/.claude/CLAUDE.md` |
 | `*/identity.md` | Condensed identity tier for each persona — used by two-phase standup and lightweight triage. Domain authority, professional biases, and standup triggers in ~15 lines |
 
 ## Key Design Decisions
@@ -356,6 +357,7 @@ These skills are designed to be adapted. If you install with `--copy`, you can m
 | **Retro location** | `retro/SKILL.md` | Default is `~/retros/`. Change to your preferred location |
 | **Conflict resolution** | `_shared/conflict-resolution.md` | Adjust domain authority boundaries, security escalation tiers, or the disagree-and-commit protocol |
 | **Engineering discipline** | `_shared/engineering-discipline.md` | Add your own known failure modes, naming conventions, or principles |
+| **Orchestration rules** | `_shared/orchestration.md` | Default rules for agent dispatch, worktree isolation, decision compression. Adjust for your workflow |
 
 ### Adding New Personas
 
@@ -382,7 +384,8 @@ Follow the pattern established by existing personas:
 claude-agent-dev-team/
 ├── _shared/
 │   ├── conflict-resolution.md       # Conflict resolution protocol
-│   └── engineering-discipline.md    # Engineering discipline principles
+│   ├── engineering-discipline.md    # Engineering discipline principles
+│   └── orchestration.md            # Orchestrator discipline (agent dispatch, isolation, decisions)
 ├── security-engineer/
 │   ├── SKILL.md                     # Full persona — Security Engineer (protector)
 │   └── identity.md                  # Condensed identity for triage

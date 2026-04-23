@@ -78,6 +78,25 @@ foreach ($skill in $Skills) {
     }
 }
 
+# --- Remove managed block from ~/.claude/CLAUDE.md ---
+$ClaudeMd = Join-Path (Join-Path $HOME '.claude') 'CLAUDE.md'
+$MarkerStart = '# --- Claude Agent Dev Team (managed) ---'
+$MarkerEnd = '# --- End Claude Agent Dev Team ---'
+
+if ((Test-Path $ClaudeMd) -and (Get-Content $ClaudeMd -Raw) -match [regex]::Escape($MarkerStart)) {
+    $content = Get-Content $ClaudeMd -Raw
+    $pattern = [regex]::Escape($MarkerStart) + '[\s\S]*?' + [regex]::Escape($MarkerEnd)
+    $content = [regex]::Replace($content, $pattern, '').Trim()
+    if ($content.Length -eq 0) {
+        Remove-Item $ClaudeMd -Force
+        Write-Host "  Removed: $ClaudeMd (was empty after cleanup)"
+    }
+    else {
+        Set-Content -Path $ClaudeMd -Value $content -NoNewline
+        Write-Host "  Cleaned: $ClaudeMd (removed managed block, preserved other content)"
+    }
+}
+
 Write-Host ''
 Write-Host "Done. Removed $removed skill(s) from $SkillsDir"
 Write-Host "Note: $RetroDir was not removed (may contain your retrospectives)"

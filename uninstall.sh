@@ -67,6 +67,26 @@ for skill in "${SKILLS[@]}"; do
   fi
 done
 
+# --- Remove managed block from ~/.claude/CLAUDE.md ---
+CLAUDE_MD="${HOME}/.claude/CLAUDE.md"
+MARKER_START="# --- Claude Agent Dev Team (managed) ---"
+MARKER_END="# --- End Claude Agent Dev Team ---"
+
+if [ -f "$CLAUDE_MD" ] && grep -qF "$MARKER_START" "$CLAUDE_MD"; then
+  awk -v start="$MARKER_START" -v end="$MARKER_END" '
+    $0 == start { skip=1; next }
+    skip && $0 == end { skip=0; next }
+    !skip { print }
+  ' "$CLAUDE_MD" > "${CLAUDE_MD}.tmp" && mv "${CLAUDE_MD}.tmp" "$CLAUDE_MD"
+  # Remove file if it's now empty (only whitespace)
+  if [ ! -s "$CLAUDE_MD" ] || ! grep -q '[^[:space:]]' "$CLAUDE_MD" 2>/dev/null; then
+    rm -f "$CLAUDE_MD"
+    echo "  Removed: ${CLAUDE_MD} (was empty after cleanup)"
+  else
+    echo "  Cleaned: ${CLAUDE_MD} (removed managed block, preserved other content)"
+  fi
+fi
+
 echo ""
 echo "Done. Removed ${removed} skill(s) from ${SKILLS_DIR}"
 echo "Note: ${RETRO_DIR} was not removed (may contain your retrospectives)"

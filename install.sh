@@ -115,6 +115,40 @@ for skill in "${SKILLS[@]}"; do
 done
 
 echo ""
+
+# --- Manage ~/.claude/CLAUDE.md orchestration block ---
+CLAUDE_MD="${HOME}/.claude/CLAUDE.md"
+MARKER_START="# --- Claude Agent Dev Team (managed) ---"
+MARKER_END="# --- End Claude Agent Dev Team ---"
+
+BLOCK="${MARKER_START}
+# Orchestration discipline — read before spawning agents or doing implementation work.
+# This file is managed by install.sh. To update, re-run the installer.
+Read ~/.claude/skills/_shared/orchestration.md before spawning any agent or doing any implementation work.
+${MARKER_END}"
+
+if [ -f "$CLAUDE_MD" ] && grep -qF "$MARKER_START" "$CLAUDE_MD"; then
+  # Remove existing managed block first (idempotent update)
+  awk '
+    /^# --- Claude Agent Dev Team \(managed\) ---$/ { skip=1; next }
+    skip && /^# --- End Claude Agent Dev Team ---$/ { skip=0; next }
+    !skip { print }
+  ' "$CLAUDE_MD" > "${CLAUDE_MD}.tmp" && mv "${CLAUDE_MD}.tmp" "$CLAUDE_MD"
+fi
+
+# Append managed block (fresh install or after removing old block)
+if [ -f "$CLAUDE_MD" ] && [ -s "$CLAUDE_MD" ]; then
+  # Add a blank line before the block if file doesn't end with one
+  [ "$(tail -c 1 "$CLAUDE_MD")" != "" ] && echo "" >> "$CLAUDE_MD"
+  echo "" >> "$CLAUDE_MD"
+fi
+echo "$BLOCK" >> "$CLAUDE_MD"
+
+if grep -qF "$MARKER_START" "$CLAUDE_MD"; then
+  echo "  CLAUDE.md: orchestration block in ${CLAUDE_MD}"
+fi
+
+echo ""
 echo "Done!"
 echo "  Installed: ${installed}"
 echo "  Updated:   ${updated}"

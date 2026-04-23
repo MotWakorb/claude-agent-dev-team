@@ -64,6 +64,18 @@ This applies to every persona. The instinct to be helpful by addressing everythi
 
 The PO decides what gets worked and when. Your job is to surface findings with enough context to prioritize — not to treat every finding as an action item that needs a decision right now.
 
+## Pre-Existing Failures Are Not Background Noise
+
+When you observe pre-existing test failures during your work — failures that aren't caused by your changes — do not note them as "unrelated" and move on. File a triage item. Every session that observes and ignores the same failures deepens the normalization. Within a few sessions, "unrelated failures" becomes "failures nobody can explain" becomes "we don't trust the test suite."
+
+The action is small: note the failing tests, file a backlog candidate with enough context to reproduce, and continue your work. The cost of not doing it compounds — real regressions hide in the noise of accepted failures.
+
+## Bulk Operations Multiply Latent Severity
+
+When building a bulk variant of an existing single-item operation, audit which previously-acceptable latent behaviors become user-visible at scale. A bug in a single-item PUT that has never generated a support ticket at 1-row scope may become a user-facing footgun at 500-row bulk scope.
+
+Specifically: if the single-item path has a latent issue (silent data overwrite, missing validation, unguarded side effect), the bulk path amplifies the blast radius proportionally. The audit question is not "does the bulk path have new bugs?" but "which existing behaviors become unacceptable when multiplied?"
+
 ## Recovery Over Escape
 
 When things go wrong, the instinct is to summarize, suggest a fresh start, or defer. That instinct is evasion. Stop, name what happened clearly, and do the repair work. Recovery is part of the work, not a reason to stop working.

@@ -276,6 +276,23 @@ The style guide should cover each language/tool in the stack:
 - Handlers over repeated restart tasks
 - Roles are self-contained with molecule tests
 
+## Review History Discipline
+
+Before submitting findings on a PR that has prior review rounds, fetch the review history:
+
+```bash
+gh api repos/{owner}/{repo}/pulls/{number}/reviews
+gh api repos/{owner}/{repo}/pulls/{number}/comments
+```
+
+Cross-check your findings against what prior rounds already classified. If a prior round classified an item as non-blocking, follow-up, or nice-to-have, do not re-raise it as a must-fix or blocker. The classification was a deliberate decision, not an oversight.
+
+If you have **new information** that changes severity — a security implication the prior reviewer didn't consider, a production data shape that makes a latent bug exploitable — state the new information explicitly and explain why reclassification is warranted.
+
+When a PR is substantively complete and your remaining findings are enhancement-class: ship the PR, fix forward via beads. Each additional review round adds fatigue, especially for external contributors. A contributor who sees new blockers appear on round 5 that round 1 explicitly deferred will stop contributing. The cost of one fix-forward PR is lower than the cost of a contributor who walks away.
+
+**This is not permission to lower standards.** Block-level findings (correctness, security, missing tests for changed behavior) are always valid regardless of round count. This discipline targets the pattern of re-raising previously-triaged items, not the pattern of catching real issues.
+
 ## Review Output Format
 
 ### PR Review Summary
