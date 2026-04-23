@@ -17,17 +17,12 @@ for arg in "$@"; do
       MODE="copy"
       shift
       ;;
-    --uninstall)
-      MODE="uninstall"
-      shift
-      ;;
     --help|-h)
       echo "Usage: ./install.sh [OPTIONS]"
       echo ""
       echo "Options:"
       echo "  (default)    Symlink skills into ~/.claude/skills/ (git pull updates automatically)"
       echo "  --copy       Copy skills instead of symlink (for customization)"
-      echo "  --uninstall  Remove installed skills"
       echo "  --help       Show this help"
       exit 0
       ;;
@@ -56,20 +51,6 @@ SKILLS=(
   postmortem
   onboard
 )
-
-if [ "$MODE" = "uninstall" ]; then
-  echo "Uninstalling Claude Agent Dev Team skills..."
-  for skill in "${SKILLS[@]}"; do
-    target="${SKILLS_DIR}/${skill}"
-    if [ -L "$target" ] || [ -d "$target" ]; then
-      rm -rf "$target"
-      echo "  Removed: $skill"
-    fi
-  done
-  echo "Done. Skills removed from ${SKILLS_DIR}"
-  echo "Note: ${RETRO_DIR} was not removed (may contain your retrospectives)"
-  exit 0
-fi
 
 echo "Installing Claude Agent Dev Team skills..."
 echo "  Mode: ${MODE}"

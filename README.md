@@ -118,7 +118,6 @@ The Product Owner makes all product and priority decisions. The one exception: C
 ```bash
 ./install.sh            # Symlink (default) — git pull updates automatically
 ./install.sh --copy     # Copy instead — for customization without affecting the repo
-./install.sh --uninstall  # Remove all installed skills
 ./install.sh --help     # Show options
 ```
 
@@ -126,7 +125,12 @@ The Product Owner makes all product and priority decisions. The one exception: C
 ```powershell
 ./install.ps1            # Symlink (default)
 ./install.ps1 -Copy      # Copy instead
-./install.ps1 -Uninstall # Remove installed skills
+```
+
+**Uninstall:**
+```bash
+./uninstall.sh           # macOS/Linux
+./uninstall.ps1          # Windows
 ```
 
 ### Manual Install
@@ -419,6 +423,8 @@ claude-agent-dev-team/
 ├── retro/SKILL.md                   # Session retrospective ceremony
 ├── install.sh                       # Installer script (macOS/Linux)
 ├── install.ps1                      # Installer script (Windows)
+├── uninstall.sh                     # Uninstaller script (macOS/Linux)
+├── uninstall.ps1                    # Uninstaller script (Windows)
 ├── LICENSE                          # MIT License
 └── README.md                        # This file
 ```

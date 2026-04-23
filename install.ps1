@@ -7,18 +7,14 @@
     Use -Copy to copy instead of symlink (for customization).
 .PARAMETER Copy
     Copy skills instead of symlink (for customization without affecting the repo)
-.PARAMETER Uninstall
-    Remove all installed skills
 .EXAMPLE
     ./install.ps1              # Symlink (default)
     ./install.ps1 -Copy        # Copy instead
-    ./install.ps1 -Uninstall   # Remove installed skills
 #>
 
 [CmdletBinding()]
 param(
-    [switch]$Copy,
-    [switch]$Uninstall
+    [switch]$Copy
 )
 
 $ErrorActionPreference = 'Stop'
@@ -67,20 +63,6 @@ function Get-SymlinkTarget {
     else {
         try { return (readlink $Path) } catch { return $null }
     }
-}
-
-if ($Uninstall) {
-    Write-Host 'Uninstalling Claude Agent Dev Team skills...'
-    foreach ($skill in $Skills) {
-        $target = Join-Path $SkillsDir $skill
-        if (Test-Path $target) {
-            Remove-Item $target -Recurse -Force
-            Write-Host "  Removed: $skill"
-        }
-    }
-    Write-Host "Done. Skills removed from $SkillsDir"
-    Write-Host "Note: $RetroDir was not removed (may contain your retrospectives)"
-    return
 }
 
 if ($Copy) { $Mode = 'copy' } else { $Mode = 'symlink' }
