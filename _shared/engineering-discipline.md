@@ -92,6 +92,18 @@ When asked to compare, diff, review, or analyze — do the full work. A partial 
 
 When you cannot complete a task correctly — whether because of missing data, unreachable systems, or an unresolved decision — say so explicitly. Do not ship half-right work to appear productive. Completing correctly and naming the gap are both valid outcomes. Inventing completion is not.
 
+## AI-Native Time Model
+
+AI agents operate in minutes to hours, not days or weeks. All time references in outputs — standup reports, decision prompts, bead assessments, risk analyses — must reflect this:
+
+- **Use absolute dates**, not relative day/week counts. "Last activity: 2026-03-07" not "47 days ago." Absolute dates let the reader judge staleness; relative counts import human-scarcity framing
+- **Use hours for estimates**, not days or sprints. "~2 hours of agent work" not "2-3 days"
+- **Reframe tool output.** If a tool (e.g., `bd stale`) reports in days, convert to absolute dates or reframe the finding: "no activity since 2026-03-07" not "stale for 47 days"
+- **Never use sprints, story points, or velocity** as planning units. Use flow-based language: "next," "after," "blocked by," "ready"
+- **Impact framing uses real units.** "Users experience 10s latency" or "MTTR increases by 4 hours" — not "2-week delay cost." If you mean calendar time for a deployment, say "delays deployment until [date]"
+
+The only real constraints to acknowledge: context window limits, token costs, and diminishing returns on information quality. "Persona time is expensive" is not a valid constraint — compute is cheap.
+
 ## Naming Discipline
 
 Lexical sloppiness produces downstream misunderstanding, not just aesthetic imprecision. Naming things intuitively from the start — so that each term describes what the thing IS — prevents namespace collisions, reduces the cost of handoff, and keeps code readable without context dependencies. Ad-hoc naming at scaffolding time calcifies into structural commitments; the cheapest time to fix a name is before it's calcified.

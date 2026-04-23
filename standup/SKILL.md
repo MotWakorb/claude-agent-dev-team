@@ -49,6 +49,7 @@ Rate your domain status — framed by user impact:
 - GREEN: No concerns from your domain. User value delivery is on track
 
 Rules:
+- Use absolute dates, not relative day/week counts. Reframe any tool output that uses days/weeks into absolute dates or hours. See engineering-discipline.md "AI-Native Time Model"
 - If you are GREEN, respond with ONLY: "GREEN — no concerns"
 - If you are YELLOW, respond in 2-3 sentences: what the concern is, how it affects user value delivery, and what would prevent it from going red
 - If you are RED, respond with: what's blocked/broken, what the user/customer impact is, and what you need to unblock it
@@ -76,9 +77,12 @@ Current board state:
 Project context:
 [brief description of current project state from conversation]
 
+Rules:
+- Use absolute dates, not relative day/week counts. Reframe any tool output that uses days/weeks into absolute dates or hours. See engineering-discipline.md "AI-Native Time Model"
+
 Provide a deeper assessment (still concise — 5-8 sentences max):
 1. What specifically is the issue? Name beads, files, systems, or metrics
-2. What is the impact if unaddressed?
+2. What is the impact if unaddressed? (Use absolute dates or hours, not "X-week delay")
 3. What concrete action resolves or mitigates this?
 4. Does this conflict with or depend on another persona's domain?
 ```
@@ -102,7 +106,7 @@ After both phases complete, present ONLY the non-green statuses. This is excepti
 - **In Progress**: [count]
 - **Blocked**: [count] 
 - **Ready**: [count]
-- **Stale**: [count] (not updated in [threshold])
+- **Stale**: [count] (last activity before [absolute date threshold])
 
 ### RED — Immediate Attention
 [If any persona reported RED, present their Phase 2 deep assessment]
@@ -127,13 +131,13 @@ After both phases complete, present ONLY the non-green statuses. This is excepti
 | ... | ... | ... | ... |
 
 ### Stale Beads
-[From bd stale output — if any warrant attention]
-| Bead ID | Title | Last Updated | Assigned To |
-|---------|-------|-------------|-------------|
-| ... | ... | ... | ... |
+[From bd stale output — if any warrant attention. Report last-activity as absolute date, not relative day count]
+| Bead ID | Title | Last Activity Date | Assigned To |
+|---------|-------|--------------------|-------------|
+| ... | ... | YYYY-MM-DD | ... |
 
 ### PO Decisions Needed
-[If any RED/YELLOW items require a PO decision, list them here]
+[If any RED/YELLOW items require a PO decision, list them here. Context column uses absolute dates and hours, not day/week counts]
 | Decision | Context | Urgency | Raised By |
 |----------|---------|---------|-----------|
 | ... | ... | Now / Soon | [Persona] |
@@ -173,5 +177,5 @@ Quick reference — every trigger is framed by user/customer impact:
 - **Red is specific.** "Things are concerning" is not a standup report. Name the bead, the blocker, the impact
 - **Yellow is actionable.** "I'm a bit worried" is not a standup report. State the concern and what prevents it from becoming red
 - **No solutioning in standup.** Identify the problem, suggest the follow-up skill, move on
-- **Board is truth.** If the board says everything is in progress but nothing has moved in 3 days, that's a YELLOW at minimum — from the PM if nobody else
+- **Board is truth.** If the board says everything is in progress but nothing has had activity since the last standup, that's a YELLOW at minimum — from the PM if nobody else
 - **Domain concerns without user impact are not standup items.** "The code could be cleaner" or "we should add more monitoring" are not RED or YELLOW — they're backlog candidates that need to pass the value gate first
