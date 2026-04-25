@@ -434,7 +434,8 @@ claude-agent-dev-team/
 
 ## Credits
 
-The engineering discipline and identity primer approach was inspired by collaborative work with the dev community building effective agent-assisted development patterns.
+- The concept of a multi-persona bot crew was inspired by [warrentc3](https://github.com/warrentc3)
+- The engineering discipline and identity primer approach was inspired by collaborative work with the dev community building effective agent-assisted development patterns.
 
 ## License
 
