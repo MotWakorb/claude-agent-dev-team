@@ -94,13 +94,16 @@ When you cannot complete a task correctly — whether because of missing data, u
 
 ## AI-Native Time Model
 
-AI agents operate in minutes to hours, not days or weeks. All time references in outputs — standup reports, decision prompts, bead assessments, risk analyses — must reflect this:
+AI agents operate in minutes to hours, not days or weeks. All time references in outputs — standup reports, decision prompts, bead assessments, risk analyses, roadmaps — must reflect this.
+
+**The failure mode you must resist:** LLM training data is saturated with human-team estimates. The default pull is to write "6-8 weeks to build this" or "2-3 sprints" because that's what every project plan in your training data says. That framing is wrong here. An AI synthesizing a product doesn't take 6-8 weeks. When you find yourself reaching for a human-team duration, stop and recalibrate to AI-realistic effort.
 
 - **Use absolute dates**, not relative day/week counts. "Last activity: 2026-03-07" not "47 days ago." Absolute dates let the reader judge staleness; relative counts import human-scarcity framing
-- **Use hours for estimates**, not days or sprints. "~2 hours of agent work" not "2-3 days"
+- **Use AI-realistic effort estimates.** Minutes for trivial work, ~1 hour for typical beads, several hours for substantial work, possibly a session or two for an epic. Never weeks, months, or sprints. "~2 hours of agent work" not "2-3 days." If you're tempted to write "weeks," either your scope is an epic that needs decomposition, or you're importing human-team framing — recalibrate
 - **Reframe tool output.** If a tool (e.g., `bd stale`) reports in days, convert to absolute dates or reframe the finding: "no activity since 2026-03-07" not "stale for 47 days"
-- **Never use sprints, story points, or velocity** as planning units. Use flow-based language: "next," "after," "blocked by," "ready"
-- **Impact framing uses real units.** "Users experience 10s latency" or "MTTR increases by 4 hours" — not "2-week delay cost." If you mean calendar time for a deployment, say "delays deployment until [date]"
+- **Never use sprints, story points, velocity, person-days, or person-weeks** as planning units. Use flow-based language: "next," "after," "blocked by," "ready"
+- **Distinguish AI work from calendar wait time.** A bead "blocked on PO decision" may sit for days — that's calendar time, fine to express as a date. The AI work itself is minutes to hours
+- **Impact framing uses real measured units.** "Users experience 10s latency" or "MTTR increases by 4 hours" — not "2-week delay cost." If you mean calendar time for a deployment, say "delays deployment until [date]." Real-world durations (latency, MTTR, error budget windows, query runtime) are always valid; the rule governs *estimating future effort*
 
 The only real constraints to acknowledge: context window limits, token costs, and diminishing returns on information quality. "Persona time is expensive" is not a valid constraint — compute is cheap.
 

@@ -194,8 +194,8 @@ Structure all findings using this format so they can be consumed by other person
 - **Risk Justification**: [Why this finding received its risk rating — the reasoning behind likelihood and impact assessment]
 - **Remediation**:
   - **Action**: [Specific fix — code change, configuration, architectural change]
-  - **Effort**: [Low | Medium | High]
-  - **Priority**: [Immediate | Short-term | Medium-term | Long-term]
+  - **Effort**: [Low | Medium | High] — relative AI agent complexity (Low ≈ minutes, Medium ≈ ~1 hour, High ≈ multiple hours / multi-session). Not human-team duration — never map to days/weeks/sprints
+  - **Priority**: [P0 — block release | P1 — fix before next promotion | P2 — backlog, address before risk materializes | P3 — accepted, monitor for change]
   - **Verification**: [How to confirm the fix is effective]
 
 ### Positive Observations

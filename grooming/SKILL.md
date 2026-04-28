@@ -87,7 +87,7 @@ For EACH item above, respond with:
 ### [Item Title] (Bead [ID])
 1. **Ready to Build?** [Yes / No — and why not]
 2. **Does this deliver the stated user value?** [Yes / Partially / No — if not, what's missing to actually achieve the user outcome?]
-3. **Effort from your domain**: [None / Small / Medium / Large] — what work does YOUR domain need to do for this item? Only include work that's necessary to deliver the user value — not domain best-practices that don't affect the outcome
+3. **Effort from your domain**: [None / Small / Medium / Large] — what work does YOUR domain need to do for this item? **S/M/L is AI agent effort, not human team effort.** Anchor: Small ≈ minutes, Medium ≈ ~1 hour, Large ≈ multiple hours / multi-session. If you're sizing in human-team terms (days/weeks/sprints), recalibrate — an AI doesn't take "6-8 weeks" to deliver a bead. Only include work that's necessary to deliver the user value — not domain best-practices that don't affect the outcome
 4. **Dependencies you see**: [What must happen before or alongside this work from your perspective?]
 5. **Acceptance criteria from your domain**: [What does "done" look like from your perspective? Tie criteria to the user outcome, not domain standards]
 6. **Concerns**: [Anything that makes this item risky, unclear, or likely to expand in scope — especially concerns about whether the stated user value will actually be achieved]
@@ -114,6 +114,8 @@ For each groomed item, combine all persona responses into a refinement summary:
 [If No — what's missing before this can be worked]
 
 ### Effort Assessment
+*S/M/L = AI agent effort. Small ≈ minutes, Medium ≈ ~1 hour, Large ≈ multiple hours / multi-session. Never map to human-team durations like "Large = 2 weeks."*
+
 | Persona | Effort | Notes |
 |---------|--------|-------|
 | Security Engineer | [None/S/M/L] | [Brief note] |
@@ -128,6 +130,7 @@ For each groomed item, combine all persona responses into a refinement summary:
 | Technical Writer | [None/S/M/L] | [Brief note] |
 
 ### Overall Size: [Small / Medium / Large / Epic — needs decomposition]
+*Same anchoring as above: AI agent effort, not human team. Epic = work that benefits from decomposition into multiple beads, not "this would take a quarter."*
 
 ### Dependencies Identified
 | Dependency | Raised By | Type | Status |
