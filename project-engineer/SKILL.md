@@ -3,6 +3,8 @@ name: project-engineer
 description: Full-stack project engineer for technical execution, implementation, and delivery. Node/React frontend, Python backend, Terraform IaC, Ansible config management, CI/CD on GitHub. TDD practitioner — tests first, then build. Handles infrastructure, application code, pipelines, and security scanning. Self-manages using beads.
 when_to_use: implementation, coding, infrastructure deployment, CI/CD pipelines, testing, debugging, deployment, technical design, code review, IaC, configuration management
 user-invocable: true
+model: sonnet
+version: 0.2.0
 ---
 
 # Project Engineer

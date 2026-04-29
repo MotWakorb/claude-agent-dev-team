@@ -3,11 +3,20 @@ name: onboard
 description: Project onboarding — spawns all 10 personas to assess an existing project cold. Reads the codebase, docs, infrastructure, and git history, then produces a baseline assessment with gaps, risks, and an initial backlog.
 when_to_use: onboarding, new project, project assessment, baseline, first look, getting started, project health check
 user-invocable: true
+version: 0.2.0
 ---
 
 # Project Onboarding
 
 This skill brings the full team up to speed on an existing project they've never seen. Each persona assesses the project from their domain, producing a baseline understanding with gaps, risks, and recommendations. The lens for every assessment is user value: is this project delivering value to its users, and what's getting in the way?
+
+## Model Selection
+
+When spawning agents, pass `model:` explicitly per `_shared/orchestration.md` (Agent Model Selection). For this skill:
+- **IT Architect (leads component identification + tier proposal)**: `opus` — needs reasoning to draft the component list and propose tiers from observable signals
+- **Other personas**: `sonnet`
+
+Onboarding runs *before* `COMPONENTS.md` exists, so no tier modulation applies. Use the assignments above as written.
 
 ## Process
 
@@ -134,6 +143,21 @@ Default to **quick** for initial orientation. Use **full** when making investmen
 
 Launch all 10 persona agents simultaneously using the Agent tool. **IMPORTANT: All agents must be spawned as `general-purpose` type** (subagent_type: "general-purpose"). The persona identity comes from the prompt, not the agent type. Each agent reads its persona skill file as its first action.
 
+**Tier signals during onboarding:** No `COMPONENTS.md` exists yet — that's an output of this onboarding run. Each agent prompt includes the instruction below; the orchestrator synthesizes their tier signals in Step 3.
+
+Add this snippet to **every** agent prompt:
+
+```
+Read ~/.claude/skills/_shared/deployment-tier.md.
+
+In addition to your domain assessment:
+- Note any **components** you can identify in your domain (services, modules, deployable units, data stores, dashboards, customer-facing surfaces vs. internal tools)
+- For each component you mention, propose a deployment tier (home-lab / small-team / startup / enterprise) with a one-line reason based on what you can observe (deployment target, customer-facing references, presence/absence of security scanning, backup discipline, formal docs, etc.)
+- If you cannot tell, say so — do not guess
+```
+
+The IT Architect leads component identification (the primary author). Other personas contribute tier signals from their domain. The orchestrator reconciles in Step 3.
+
 #### Security Engineer Agent
 ```
 Read ~/.claude/skills/security-engineer/SKILL.md and ~/.claude/skills/_shared/engineering-discipline.md.
@@ -178,6 +202,8 @@ Assess:
 - Phase assessment — is this Phase 1 (getting started) or Phase 2 (scaling)?
 - Single points of failure — what breaks if one component goes down?
 - ADR inventory — do architectural decision records exist? Are they current?
+
+**Component inventory (you lead this):** Produce a draft component list — every deployable unit, service, dashboard, data store, or distinct surface you can identify. For each, propose a deployment tier (home-lab / small-team / startup / enterprise) per `deployment-tier.md`, with the signal that drove your choice (e.g., "kubernetes manifests + customer references → startup", "single docker-compose + LAN bind → home-lab"). This draft becomes `COMPONENTS.md` after PO confirmation.
 
 Rate: RED / YELLOW / GREEN
 ```
@@ -378,7 +404,37 @@ Assess:
 Rate: RED / YELLOW / GREEN
 ```
 
-### Step 3: Produce the Baseline Assessment
+### Step 3: Component Inventory & Tier Confirmation
+
+After agents report back, before producing the baseline, reconcile component identification across all personas.
+
+**3a. Consolidate the component list.**
+- Start with the IT Architect's draft.
+- Add any components other personas mentioned that the architect missed.
+- De-duplicate — different personas may name the same component differently. Pick one name per component.
+
+**3b. Reconcile tier proposals.**
+For each component, look at every persona's tier proposal. If they agree, that's the proposed tier. If they disagree, pick the highest tier any persona proposed *and* note the disagreement so the PO can adjudicate.
+
+**3c. Present the tier proposal to the PO.**
+
+```markdown
+## Proposed Component Tiers
+
+See `_shared/deployment-tier.md` for what each tier expects from each persona.
+
+| Component | Proposed Tier | Reasoning | Persona Disagreement |
+|-----------|---------------|-----------|---------------------|
+| [name] | [tier] | [signal that drove the proposal] | [if any persona proposed differently, note it; otherwise blank] |
+
+**PO**: confirm or override. Once you confirm, the orchestrator writes `COMPONENTS.md` to the repo root, and subsequent skills (`/team-plan`, `/grooming`, `/standup`, `/spike`, `/team-review`, `/postmortem`) use it to calibrate persona rigor.
+```
+
+**3d. After PO confirmation, write `COMPONENTS.md` at the repo root** in the format from `_shared/deployment-tier.md`.
+
+If the PO declines to commit to tiers right now, the onboarding still produces the baseline assessment, but every other team skill will refuse to run until `COMPONENTS.md` exists. Make this trade-off visible: "Without `COMPONENTS.md`, personas will default to enterprise rigor across the board, which is the failure mode this system is designed to prevent."
+
+### Step 4: Produce the Baseline Assessment
 
 Synthesize all 10 agent assessments into a unified onboarding report.
 
@@ -421,6 +477,16 @@ Before the domain scorecard, answer the big question:
 
 ## What's Working Well (GREEN items)
 [Domains that are healthy — credit what's done well]
+
+## Component Inventory & Deployment Tiers
+
+Confirmed in Step 3 and written to `COMPONENTS.md`. See `_shared/deployment-tier.md` for tier definitions.
+
+| Component | Tier | Purpose |
+|-----------|------|---------|
+| [name] | [tier] | [one-line purpose] |
+
+If `COMPONENTS.md` was deferred (PO declined to set tiers), note that here and flag it as a P0 follow-up — every other team skill will refuse to run until it exists.
 
 ## Documentation Inventory
 
@@ -472,7 +538,7 @@ This is a cross-cutting reference — every persona needs to know what docs exis
 | ... | ... | ... |
 ```
 
-### Step 4: Set Up Project Infrastructure
+### Step 5: Set Up Project Infrastructure
 
 If beads is not initialized:
 ```bash
@@ -487,7 +553,7 @@ Create initial beads from findings — but apply the value gate first:
 - GREEN items → No beads needed
 - Every bead must answer: "Who benefits and how will we know?"
 
-### Step 5: Recommend Next Steps
+### Step 6: Recommend Next Steps
 
 Based on the assessment, recommend which ceremony to run next:
 - Many RED findings → `/team-review` in full mode to deep-dive

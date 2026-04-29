@@ -3,11 +3,16 @@ name: retro
 description: End-of-session retrospective capturing what went well, what the PO could improve, what the agent got wrong, and what would make the project better — with input from every persona that participated.
 when_to_use: end of session, retrospective, session review, lessons learned
 user-invocable: true
+version: 0.1.0
 ---
 
 # Session Retrospective
 
 Write a retrospective for the current session. Be honest — the PO can take meaningful feedback and expects it.
+
+## Model Selection
+
+If you spawn agents to gather per-persona perspectives, pass `model: sonnet`. Tier modulation does not apply — retros are session-scoped, not component-scoped.
 
 ## Process
 

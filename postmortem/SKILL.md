@@ -3,11 +3,43 @@ name: postmortem
 description: Blameless incident postmortem — SRE-led structured analysis of what went wrong, why, and how to prevent recurrence. Pulls relevant personas for contributing factor analysis. Timeline-driven, evidence-based, action-oriented.
 when_to_use: incident postmortem, outage review, post-incident review, blameless postmortem, incident analysis, root cause analysis
 user-invocable: true
+version: 0.2.0
 ---
 
 # Incident Postmortem
 
 Blameless. The question is "what failed?" not "who failed?" If a human error caused the incident, the system that allowed the human error is the root cause. We fix systems, not blame people.
+
+## Preflight: Verify Onboarding & Effective Tier
+
+Before any other step, verify deployment-tier setup. Action items from a postmortem should match the affected component's tier — recommending on-call rotations and chaos game days for a home-lab service is not a useful follow-up.
+
+1. **Check `COMPONENTS.md` exists at the repo root.** If missing, **refuse to run** and tell the PO:
+   > This project hasn't been onboarded yet. Run `/onboard` first — it produces `COMPONENTS.md`, which records each component's deployment tier. Postmortem action items need to match component tiers. See `_shared/deployment-tier.md` for the tier model.
+
+   Do not proceed.
+
+2. **Identify the affected component(s)** from the incident.
+
+3. **Look up tiers in `COMPONENTS.md`.** If the affected component is missing, ask the PO to add it (with reasoning) before proceeding.
+
+4. **Resolve cross-tier impact** using strictest-wins by default — if the incident affected a startup-tier component, action items align to startup-tier even if the failure originated in a home-lab dependency.
+
+5. **Inject tier context into every agent prompt.** Every prompt below must additionally include:
+   ```
+   Read ~/.claude/skills/_shared/deployment-tier.md.
+   Affected components and tiers: [component] ([tier]), ...
+   Effective tier for action items: [tier]
+   Generate action items at the effective tier. Do not recommend enterprise practices (on-call rotations, formal chaos schedules, audit logging) on home-lab components unless the postmortem itself shows the home-lab framing was the root cause.
+   ```
+
+## Model Selection
+
+When spawning agents, pass `model:` explicitly per `_shared/orchestration.md` (Agent Model Selection). For this skill:
+- **Fact-gathering and timeline construction**: `sonnet`
+- **Root cause analysis (SRE + relevant personas)**: `opus` — getting the root cause right matters more than getting it cheap
+
+Tier modulation: at home-lab effective tier for the affected component, downshift root cause analysis to sonnet *except* for security-engineer (holds at opus).
 
 ## Process
 

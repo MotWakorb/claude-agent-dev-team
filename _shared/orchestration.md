@@ -35,6 +35,61 @@ When continuing prior agent work, do not spawn a fresh agent with no context. Th
 
 Do not reference tools that may not exist in the current environment. Frame continuation rules in terms of actions ("include prior context in the new dispatch") not tools ("use SendMessage"). A rule that depends on a tool you don't have is worse than no rule — it creates false confidence.
 
+## Agent Model Selection
+
+Spawn agents with the smallest model that does the work. Opus everywhere is wasteful; haiku everywhere is wrong. Match the model to the task type, not to the persona.
+
+### Three-Layer Precedence
+
+When the Agent tool runs, model is resolved top-down:
+
+1. **Explicit `model:` argument** to the Agent call — orchestrator override per spawn. Highest precedence.
+2. **`model:` in the skill's frontmatter** — persona default. Used when no override is passed.
+3. **Inherited from parent** — falls back to the orchestrator's own model. Lowest precedence.
+
+Persona SKILL.md files default to `model: sonnet` — the right baseline for direct invocations (`/sre`, `/security-engineer`, etc.). Skill orchestrators (team-plan, standup, grooming, etc.) override per the table below based on the *task type*, not the persona.
+
+### Task-Type Model Map
+
+| Skill / phase | Model | Reason |
+|---|---|---|
+| `/standup` Phase 1 (identity.md only, all 10 personas) | haiku | Short formulaic R/Y/G across many parallel agents |
+| `/standup` Phase 2 (full SKILL.md, non-green only) | sonnet | Needs depth, but only 1-3 personas |
+| `/grooming` (all personas) | sonnet | Sizing and acceptance criteria — pattern-matching |
+| `/team-plan` quick mode | sonnet | Bullet points, top conflicts |
+| `/team-plan` full mode — security, architect, DBA | opus | Decisions are sticky and expensive to undo |
+| `/team-plan` full mode — other personas | sonnet | |
+| `/team-review` quick mode | sonnet | |
+| `/team-review` full mode — security, architect | opus | |
+| `/team-review` full mode — other personas | sonnet | |
+| `/spike` lead persona | opus | Investigation depth is the deliverable |
+| `/spike` supporting personas | sonnet | |
+| `/onboard` — IT architect (component identification) | opus | Needs reasoning to identify components and propose tiers |
+| `/onboard` — other personas | sonnet | |
+| `/postmortem` — fact-gathering, timeline construction | sonnet | |
+| `/postmortem` — root cause analysis (SRE + relevant) | opus | Worth the cycles to get this right |
+| `/retro` (all personas) | sonnet | |
+
+### Tier Modulation
+
+The deployment tier of the in-scope component (from `COMPONENTS.md`) modulates the model:
+
+- **Effective tier = home-lab**: downshift one level (opus → sonnet, sonnet → haiku) for all personas *except* security-engineer. A home-lab service can still ship a real CVE, and the security-engineer's recommendations have outsized cost-of-being-wrong.
+- **Effective tier = small-team**: use the table as written.
+- **Effective tier = startup**: use the table as written.
+- **Effective tier = enterprise**: hold or upshift. Critical-path personas (security, architect, DBA) at enterprise tier can be bumped to opus even in skills where the table specifies sonnet.
+
+### What Counts as a Critical Path
+
+For enterprise upshifts and home-lab security-holds, "critical path" means: any persona output that would be expensive to redo, that informs a hard-to-reverse decision (architecture, schema, security control), or that the PO will use as basis for a downstream commitment. Quick informational questions don't qualify.
+
+### Practical Notes
+
+- **Haiku is excellent for triage.** Short response, structured format, parallel calls. Phase 1 standup is the canonical fit.
+- **Sonnet is the workhorse.** Most domain reasoning, sizing, criteria definition, and review work is in sonnet's range.
+- **Opus is for irreversible decisions.** Use it where being wrong is expensive to fix later, not where being right is impressive.
+- **Don't use opus to compensate for an underspecified prompt.** A clear sonnet prompt beats a vague opus prompt every time.
+
 ## Don't Merge Past In-Flight Verification
 
 If a QA, review, or test agent is running against a PR or artifact, do not merge, release, or take action on that artifact until the agent reports.

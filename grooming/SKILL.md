@@ -3,11 +3,39 @@ name: grooming
 description: Backlog refinement — pull upcoming beads from the backlog, have each persona evaluate readiness, size effort, identify dependencies, define acceptance criteria, and determine if items are ready to build.
 when_to_use: backlog refinement, grooming, backlog grooming, preparation, story refinement, sizing, estimation
 user-invocable: true
+version: 0.2.0
 ---
 
 # Backlog Grooming / Refinement
 
 This is not planning. This is preparing work to BE planned — but only work that delivers user value. Before an item gets sized, scoped, and handed to personas for evaluation, it passes through a user value gate. If we can't articulate who benefits and how we'll know, we don't refine it — we question whether it belongs on the board.
+
+## Preflight: Verify Onboarding & Effective Tier
+
+Before any other step, verify deployment-tier setup. Defaulting to enterprise rigor across the board is the failure mode this preflight prevents.
+
+1. **Check `COMPONENTS.md` exists at the repo root.** If missing, **refuse to run** and tell the PO:
+   > This project hasn't been onboarded yet. Run `/onboard` first — it produces `COMPONENTS.md`, which records each component's deployment tier. Without it, grooming will inflate effort estimates and acceptance criteria with enterprise rigor. See `_shared/deployment-tier.md` for the tier model.
+
+   Do not proceed.
+
+2. **For each candidate bead being groomed, identify the in-scope component(s)** and their tiers from `COMPONENTS.md`. Beads should reference components in their description; if not, ask the PO before grooming.
+
+3. **Resolve cross-tier conflicts per bead** using strictest-wins by default. A bead that touches a startup-tier and a home-lab-tier component is groomed at startup tier.
+
+4. **Inject tier context into every agent prompt.** Every prompt below must include, per bead:
+   ```
+   Read ~/.claude/skills/_shared/deployment-tier.md.
+   Bead [ID] in-scope components and tiers: [component] ([tier]), ...
+   Effective tier for this bead: [tier]
+   Size effort, define acceptance criteria, and identify dependencies at the effective tier — not above. Do not require enterprise acceptance criteria for home-lab work.
+   ```
+
+## Model Selection
+
+When spawning agents, pass `model: sonnet` for all 10 grooming agents. Sizing and acceptance-criteria work is pattern-matching — sonnet handles it.
+
+Tier modulation: at home-lab effective tier per bead, downshift to `haiku` for all personas *except* security-engineer (holds at sonnet).
 
 ## Process
 

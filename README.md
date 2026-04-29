@@ -33,6 +33,56 @@ This project creates that dynamic by giving each persona:
 
 The result: when you run `/team-plan` or `/team-review`, ten agents work in parallel, each bringing their genuine domain perspective, and the synthesis surfaces real conflicts for the Product Owner to decide — not smoothed-over consensus.
 
+## Project Onboarding (Required Before Team Skills Run)
+
+After installing the skills, you need to onboard each project before the team ceremonies (`/team-plan`, `/grooming`, `/standup`, `/spike`, `/team-review`, `/postmortem`) will run. Onboarding produces a `COMPONENTS.md` at the repo root that identifies each component and assigns it a **deployment tier**.
+
+### Why This Exists
+
+LLM training data is saturated with enterprise practices. Without a tier signal, personas default to recommending SLOs, on-call rotations, formal threat models, and SOC 2 controls for *every* project — including a Raspberry Pi running a home Plex server. That's wasteful and produces noise that crowds out real findings.
+
+`COMPONENTS.md` tells personas what rigor each component actually expects. A home-lab metrics stack is rated against home-lab expectations. A customer-facing API is rated against startup or enterprise expectations. Right rigor for the right context.
+
+### The Flow
+
+```bash
+# 1. Install the skills (one time per machine)
+./install.sh
+
+# 2. In each project, run /onboard
+cd /path/to/your/project
+# In Claude Code: /onboard
+#   - Reads the codebase, docs, infra config, and CI/CD
+#   - Identifies components (services, dashboards, deployable units)
+#   - Proposes a deployment tier per component with observed signals
+#   - You confirm or override
+#   - Writes COMPONENTS.md at the repo root
+
+# 3. Now the team ceremonies work
+# In Claude Code: /team-plan, /grooming, /standup, /team-review, /spike, /postmortem
+```
+
+### What Happens Without Onboarding
+
+`/team-plan`, `/grooming`, `/standup`, `/spike`, `/team-review`, and `/postmortem` **refuse to run** if `COMPONENTS.md` is missing. They tell you to run `/onboard` first.
+
+`/onboard` itself does not require `COMPONENTS.md` — producing it is the job. `/retro` is session-scoped (not component-scoped) and runs without `COMPONENTS.md`.
+
+Single-persona invocations (e.g., `/sre`, `/security-engineer`) ask which tier the work is for if `COMPONENTS.md` doesn't exist or doesn't cover the component.
+
+### The Tier Model
+
+| Tier | What it means | Stakes if it breaks |
+|------|---------------|---------------------|
+| **home-lab** | Personal infrastructure, single user, hobbyist context | Inconvenience for the operator |
+| **small-team** | Internal tool used by a small group, not customer-facing | Team productivity hit |
+| **startup** | External users, real business stakes, resource-constrained | Customer churn, revenue impact |
+| **enterprise** | Large user base, regulatory or contractual obligations | Legal exposure, regulatory penalty |
+
+Tier is **per-component, not per-project** — a project can have a home-lab metrics stack alongside a startup-tier customer API. When work spans tiers, **strictest tier wins** by default (or surface as a decision when applying it across the board would be clearly wasteful).
+
+See [`_shared/deployment-tier.md`](./_shared/deployment-tier.md) for the full per-persona calibration table — what each tier expects from SRE, security, architect, DBA, code reviewer, tech writer, QA, etc.
+
 ## The Team
 
 | Persona | Slash Command | Domain |
@@ -67,7 +117,8 @@ The result: when you run `/team-plan` or `/team-review`, ten agents work in para
 |------|---------|
 | `_shared/conflict-resolution.md` | How personas disagree and resolve conflicts. Domain authority, escalation to PO, disagree-and-commit protocol. Critical security findings are non-negotiable |
 | `_shared/engineering-discipline.md` | Evidence over intuition. Verify before asserting. Completeness over sampling. Known failure modes. Naming discipline. One-way door protocol |
-| `_shared/orchestration.md` | Orchestrator discipline — how Claude dispatches agents, isolates worktrees, compresses decisions, and avoids merging past in-flight verification. Auto-loaded via `~/.claude/CLAUDE.md` |
+| `_shared/orchestration.md` | Orchestrator discipline — how Claude dispatches agents, isolates worktrees, picks models per task, compresses decisions, and avoids merging past in-flight verification. Auto-loaded via `~/.claude/CLAUDE.md` |
+| `_shared/deployment-tier.md` | Tier definitions (home-lab / small-team / startup / enterprise) and per-persona calibration tables. Personas read this to right-size their recommendations to the deployment context |
 | `*/identity.md` | Condensed identity tier for each persona — used by two-phase standup and lightweight triage. Domain authority, professional biases, and standup triggers in ~15 lines |
 
 ## Key Design Decisions
@@ -86,6 +137,12 @@ Protectors can say no. Their findings don't need to justify themselves through f
 
 ### User Value Lens
 Every persona is oriented toward delivering **user outcomes**, not domain work. The PM owns a **value gate** — no work enters the backlog without a stated user benefit ("who benefits and how will we know?"). Standup triggers are framed by user impact ("users will experience 10s page loads" not "the architecture isn't elegant"). Domain expertise serves user needs — it doesn't generate them.
+
+### Tier-Aware Personas
+Personas calibrate to the **deployment tier** of the component they're working on (`home-lab` / `small-team` / `startup` / `enterprise`). The SRE doesn't recommend SLOs and on-call rotations for a Raspberry Pi; the security engineer doesn't write a SOC 2 gap analysis for an internal scratch tool. Tier is set per-component in `COMPONENTS.md` (produced by `/onboard`) and read by every team ceremony before agents spawn. See `_shared/deployment-tier.md` for the per-persona calibration tables.
+
+### Per-Task Model Selection
+Each persona's `SKILL.md` declares a default model in frontmatter (`model: sonnet`). Skill orchestrators override per task type — `haiku` for fast triage (Phase 1 standup), `sonnet` for most domain work, `opus` for sticky decisions (architecture proposals, security findings, root cause analysis). At home-lab tier, models downshift one level (except security-engineer holds — a home-lab CVE is still a CVE). See `_shared/orchestration.md` "Agent Model Selection" for the full mapping.
 
 ### Two-Tier Identity System
 Each persona has two files:
@@ -150,6 +207,36 @@ mkdir -p ~/retros
 
 To install for a single project instead of globally, copy into your project's `.claude/skills/` directory.
 
+## Versioning & Rollback
+
+This project uses semantic versioning at the system level. Releases are git tags (`v0.2.0`, etc.). Each `SKILL.md` carries a `version:` field in its frontmatter showing the system version it last changed in.
+
+**Check what's installed:**
+```bash
+grep -E "^name:|^version:" ~/.claude/skills/*/SKILL.md
+```
+
+**Update to latest** (symlink installs pick up changes automatically):
+```bash
+cd /path/to/claude-agent-dev-team
+git pull
+```
+
+**Pin to a specific version** (or roll back):
+```bash
+cd /path/to/claude-agent-dev-team
+git checkout v0.2.0    # or any tag
+# Symlink installs now resolve to that tag's content
+```
+
+**If you installed with `--copy`**, re-run the installer after switching tags:
+```bash
+git checkout v0.2.0
+./install.sh --copy
+```
+
+See [CHANGELOG.md](./CHANGELOG.md) for what changed in each release.
+
 ## Usage
 
 ### Individual Personas
@@ -188,10 +275,11 @@ Use ceremonies to coordinate the full team:
 Here's when to use each ceremony in a typical project lifecycle:
 
 ```
-Existing Project
-  └─ /onboard ──────────── All personas assess the project cold, produce health scorecard + backlog
+Any Project (Required First — see "Project Onboarding" above)
+  └─ /onboard ──────────── Identify components, assign deployment tiers, write COMPONENTS.md
+                            + health scorecard + initial backlog
 
-New Project
+New Project (after /onboard)
   └─ /team-plan (full) ─── Deep planning, all personas, architecture + security + UX + implementation
        └─ Creates initial epics and beads
 
@@ -384,8 +472,9 @@ Follow the pattern established by existing personas:
 claude-agent-dev-team/
 ├── _shared/
 │   ├── conflict-resolution.md       # Conflict resolution protocol
+│   ├── deployment-tier.md           # Tier definitions + per-persona calibration tables
 │   ├── engineering-discipline.md    # Engineering discipline principles
-│   └── orchestration.md            # Orchestrator discipline (agent dispatch, isolation, decisions)
+│   └── orchestration.md            # Orchestrator discipline (agent dispatch, isolation, model selection, decisions)
 ├── security-engineer/
 │   ├── SKILL.md                     # Full persona — Security Engineer (protector)
 │   └── identity.md                  # Condensed identity for triage
@@ -428,6 +517,8 @@ claude-agent-dev-team/
 ├── install.ps1                      # Installer script (Windows)
 ├── uninstall.sh                     # Uninstaller script (macOS/Linux)
 ├── uninstall.ps1                    # Uninstaller script (Windows)
+├── CHANGELOG.md                     # Per-release changes — Keep a Changelog format
+├── CONTRIBUTING.md                  # Contributor guide (versioning, PR conventions)
 ├── LICENSE                          # MIT License
 └── README.md                        # This file
 ```

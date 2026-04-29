@@ -28,8 +28,14 @@ name: my-persona
 description: One-line summary of the role and its focus area.
 when_to_use: comma, separated, keywords, that, trigger, this, persona
 user-invocable: true
+model: sonnet              # default model for direct invocation; orchestrators may override
+version: 0.2.0             # system version this skill last changed in
 ---
 ```
+
+`model:` declares the persona's default model when invoked directly (`/my-persona ...`). Skill orchestrators (team-plan, standup, etc.) override per task type — see `_shared/orchestration.md` "Agent Model Selection." Most personas default to `sonnet`.
+
+`version:` is an echo of the system semver this skill last meaningfully changed in. When you make a meaningful change, bump it to the next system version you expect to ship (or leave it for the maintainer to update at release time).
 
 Then the body should include:
 
@@ -123,6 +129,18 @@ Changes to `_shared/conflict-resolution.md` or `_shared/engineering-discipline.m
 - Removing or softening a persona's bias — the disagreements are features, not bugs
 - Adding personas that don't have a clear domain authority boundary
 - Changes that break the `_shared/` contract without updating all affected personas
+
+## Versioning
+
+This project uses semantic versioning at the system level. Releases are tagged in git (`v0.1.0`, `v0.2.0`, ...) and tracked in [CHANGELOG.md](./CHANGELOG.md).
+
+- **MAJOR** (`v1.0.0` → `v2.0.0`): Breaking changes — frontmatter format changes, skill removals, behavioral changes that require user action
+- **MINOR** (`v0.2.0` → `v0.3.0`): New skills, new shared docs, new persona capabilities, additive changes to skill behavior
+- **PATCH** (`v0.2.0` → `v0.2.1`): Bug fixes, doc fixes, no behavioral change
+
+Each `SKILL.md` carries a `version:` field showing the system version it last meaningfully changed in. Bump it in your PR if you make a meaningful change.
+
+Update `CHANGELOG.md` in the same PR. Use [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format. The maintainer tags releases.
 
 ## License
 

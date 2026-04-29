@@ -3,11 +3,38 @@ name: standup
 description: Daily standup — parallel status check across all personas using red/yellow/green scale. Leads with blockers. Green personas stay silent. Fast, focused, action-oriented.
 when_to_use: standup, daily standup, status check, daily sync, what's blocked, where are we
 user-invocable: true
+version: 0.2.0
 ---
 
 # Daily Standup
 
 Fast. Focused. User value first, blockers second. If everything is green, say so and move on. This is not a planning session, not a review, not a retro. This is "are we delivering user value, what's stuck, what does the PO need to know right now."
+
+## Preflight: Verify Onboarding & Effective Tier
+
+Before any other step, verify deployment-tier setup. Defaulting to enterprise rigor across the board is the failure mode this preflight prevents.
+
+1. **Check `COMPONENTS.md` exists at the repo root.** If missing, **refuse to run** and tell the PO:
+   > This project hasn't been onboarded yet. Run `/onboard` first — it produces `COMPONENTS.md`, which records each component's deployment tier. Without it, the standup will surface home-lab components as RED for missing enterprise practices. See `_shared/deployment-tier.md` for the tier model.
+
+   Do not proceed.
+
+2. **Read `COMPONENTS.md`** to know each component's tier. The standup is project-wide, so all components are in scope, but each is rated against its own tier — a home-lab metrics stack is not RED for missing SLOs.
+
+3. **Inject tier context into every agent prompt.** Every prompt below must additionally include:
+   ```
+   Read ~/.claude/skills/_shared/deployment-tier.md.
+   Components and tiers in this project: [component] ([tier]), ...
+   When rating R/Y/G, calibrate to each component's tier. A home-lab component is not YELLOW for missing enterprise baseline expectations — it's GREEN if it meets its own tier's baseline. Only flag concerns relative to the component's own tier.
+   ```
+
+## Model Selection
+
+When spawning agents, pass `model:` explicitly per `_shared/orchestration.md` (Agent Model Selection). For this skill:
+- **Phase 1 (all 10 identity.md triage agents)**: `haiku` — short, formulaic R/Y/G across many parallel agents
+- **Phase 2 (non-green deep assessment, 1-3 agents)**: `sonnet` — needs depth on a small number of personas
+
+Tier modulation applies to Phase 2 only. If a persona is assessing a home-lab component, downshift to haiku — except security-engineer, which holds at sonnet (a home-lab CVE is still a CVE).
 
 ## Process
 

@@ -3,11 +3,43 @@ name: spike
 description: Technical spike — targeted investigation when a decision is blocked by unknowns. Spawns only the relevant personas to research a specific question and report back with findings, not all 11.
 when_to_use: technical spike, investigation, research, unknowns, proof of concept, feasibility, exploration
 user-invocable: true
+version: 0.2.0
 ---
 
 # Technical Spike
 
 A spike answers a specific question that's blocking a decision. It is not a planning session, not a review, not a free-form exploration. One question in, findings out.
+
+## Preflight: Verify Onboarding & Effective Tier
+
+Before any other step, verify deployment-tier setup. A spike that recommends an enterprise-tier solution for a home-lab problem is wasted compute.
+
+1. **Check `COMPONENTS.md` exists at the repo root.** If missing, **refuse to run** and tell the PO:
+   > This project hasn't been onboarded yet. Run `/onboard` first — it produces `COMPONENTS.md`, which records each component's deployment tier. Spikes need this to scope investigation appropriately. See `_shared/deployment-tier.md` for the tier model.
+
+   Do not proceed.
+
+2. **Identify the in-scope component(s)** the spike question is about. If the question doesn't make this obvious, ask the PO.
+
+3. **Look up tiers in `COMPONENTS.md`.** If the in-scope component is missing, ask the PO to add it (with reasoning) before proceeding.
+
+4. **Resolve cross-tier conflicts** using strictest-wins by default.
+
+5. **Inject tier context into every agent prompt.** Every prompt below must additionally include:
+   ```
+   Read ~/.claude/skills/_shared/deployment-tier.md.
+   In-scope components and tiers: [component] ([tier]), ...
+   Effective tier for this spike: [tier]
+   Investigate at the effective tier. Do not recommend enterprise-tier solutions for a home-lab problem. If the answer to the question changes by tier, present both — but anchor your recommendation at the effective tier.
+   ```
+
+## Model Selection
+
+When spawning agents, pass `model:` explicitly per `_shared/orchestration.md` (Agent Model Selection). For this skill:
+- **Lead persona for the spike question**: `opus` — investigation depth is the deliverable
+- **Supporting personas**: `sonnet`
+
+Tier modulation: at home-lab effective tier, downshift one level *except* security-engineer.
 
 ## Process
 

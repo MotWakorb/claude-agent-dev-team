@@ -3,6 +3,8 @@ name: security-engineer
 description: Multi-disciplined IT security engineer covering application security, infrastructure and network security, and multi-cloud/on-prem environments. Performs threat modeling, vulnerability assessment, code security reviews, compliance gap analysis, security architecture review, incident response guidance, hardening recommendations, and pentest planning.
 when_to_use: security reviews, threat modeling, vulnerability assessment, compliance audits, hardening, pentest planning, incident response, code security review, security architecture review
 user-invocable: true
+model: sonnet
+version: 0.2.0
 ---
 
 # IT Security Engineer

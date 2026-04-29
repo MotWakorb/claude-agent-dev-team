@@ -3,11 +3,44 @@ name: team-review
 description: Parallel team review — spawns all six persona agents to review existing work (code, architecture, design, infrastructure) simultaneously, then facilitates a team debate surfacing findings and decision points for the PO.
 when_to_use: code review, architecture review, security review, design review, comprehensive review, team review
 user-invocable: true
+version: 0.2.0
 ---
 
 # Team Review Session
 
 This skill orchestrates a parallel review session across all six personas. Each persona reviews the target independently from their domain perspective, then the team comes together to debate findings and produce a unified assessment with decision points for the PO.
+
+## Preflight: Verify Onboarding & Effective Tier
+
+Before any other step, verify deployment-tier setup. Defaulting to enterprise rigor across the board is the failure mode this preflight prevents.
+
+1. **Check `COMPONENTS.md` exists at the repo root.** If missing, **refuse to run** and tell the PO:
+   > This project hasn't been onboarded yet. Run `/onboard` first — it produces `COMPONENTS.md`, which records each component's deployment tier (home-lab / small-team / startup / enterprise). Without it, personas calibrate to enterprise rigor across the board. See `_shared/deployment-tier.md` for the tier model.
+
+   Do not proceed.
+
+2. **Identify in-scope components** for this run (from the review target — codebase path, PR scope, component under review).
+
+3. **Look up tiers in `COMPONENTS.md`.** If an in-scope component is missing, ask the PO to add it (with reasoning) before proceeding.
+
+4. **Resolve cross-tier conflicts** using strictest-wins by default. If applying that across the board produces clearly wasteful review findings (e.g., flagging a home-lab component for missing SOC 2 controls), surface it as a decision per `_shared/deployment-tier.md`.
+
+5. **Inject tier context into every agent prompt.** Every prompt below must additionally include:
+   ```
+   Read ~/.claude/skills/_shared/deployment-tier.md.
+   In-scope components and tiers: [component] ([tier]), ...
+   Effective tier for this work: [tier]
+   Calibrate your findings to the effective tier. Do not flag missing enterprise practices on home-lab components. If something would be a finding at a higher tier but isn't at this tier, note it as "at a higher tier this would be a finding" rather than as an actual finding.
+   ```
+
+## Model Selection
+
+When spawning agents, pass `model:` explicitly per `_shared/orchestration.md` (Agent Model Selection). For this skill:
+- **Quick mode (all personas)**: `sonnet`
+- **Full mode — security-engineer, it-architect**: `opus` — review findings here drive remediation roadmaps
+- **Full mode — other personas**: `sonnet`
+
+Tier modulation: at home-lab effective tier, downshift one level *except* security-engineer.
 
 ## Process
 

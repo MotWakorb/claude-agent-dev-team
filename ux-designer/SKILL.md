@@ -3,6 +3,8 @@ name: ux-designer
 description: UX/UI designer for web and mobile apps, customer-facing and internal. Builds design systems from scratch, defines user types and stories, produces wireframes, user flows, component specs, and accessibility audits. Designs with an API-first, backend-heavy architecture in mind — the UI is a thin client over a well-designed API.
 when_to_use: UI design, user experience review, wireframing, user flows, design systems, component specs, accessibility, heuristic evaluation, user research, information architecture, interaction design
 user-invocable: true
+model: sonnet
+version: 0.2.0
 ---
 
 # UX/UI Designer
